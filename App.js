@@ -1,19 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Button, Text, View } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';                                                                                                                          
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-const Stack = createNativeStackNavigator();
+const HomeStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function HomeTab() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="MyNiceView" component={NiceView} />
-    </Stack.Navigator>
+    <HomeStack.Navigator>
+      <HomeStack.Screen 
+        name="Hoe" 
+        component={HomeScreen} 
+      />
+      <HomeStack.Screen 
+        name="MyNiceView" 
+        component={NiceView} 
+      />
+    </HomeStack.Navigator>
   )
 }
 
@@ -45,14 +50,22 @@ function SettingsScreen() {
   );
 }
 
+function TabNavigator() {
+  return (
+    <Tab.Navigator screenOptions={{
+      headerShown: false,
+    }} >
+      <Tab.Screen name="Home" component={HomeTab} />
+      <Tab.Screen name="Settings" component={SettingsScreen} />
+    </Tab.Navigator>
+  )
+}
+
 
 function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
-      </Tab.Navigator>
+      <TabNavigator/>
     </NavigationContainer>
   );
 }
