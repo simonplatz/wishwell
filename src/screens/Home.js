@@ -1,8 +1,18 @@
 import React from 'react';
-import { StyleSheet, FlatList, Button, Text, View } from 'react-native';
+import { ScrollView,  StyleSheet, FlatList, Button, Text, View } from 'react-native';
 import { useFonts, OpenSans_700Bold } from "@expo-google-fonts/open-sans"
 
 import Card from "../components/Card.js";
+
+function header() { 
+  return ( 
+    <View >
+      <Text style={style.headerText} >
+        Wishlists
+      </Text>
+    </View>
+  )
+}
 
 export default Home = ({navigation}) => {
   let [fontsLoaded] = useFonts({OpenSans_700Bold, });
@@ -18,31 +28,27 @@ export default Home = ({navigation}) => {
     })
   }
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item }) => (
       <Card 
         title={item.title}
         imageUri={item.imageUri}
         imageUri2={item.imageUri2}
       />
-  }
+  )
 
   if(!fontsLoaded) {
     return <View></View>
   }
   else {
-    console.log(wishList)
     return (
-      <View style={style.home}>
-        <View style={style.textContainer}>
-          <Text style={style.headerText}>
-            Wishlists
-          </Text>
-        </View>
-        <FlatList>
-            data={wishList}
-            renderItem={renderItem}
-            keyExtractor={item => item.id}
-        </FlatList>
+      <View>
+          <FlatList
+              data={wishList}
+              renderItem={renderItem}
+              contentContainerStyle={style.home}
+              ListHeaderComponent={header}
+          >
+          </FlatList>
         <Text>Home Screen</Text>
         <Button title="go to next view" onPress={ () => {
           navigation.navigate('MyNiceView', { viewName: "titlesd"})
@@ -55,19 +61,14 @@ export default Home = ({navigation}) => {
 const style = StyleSheet.create({
   home : {
     display: "flex", 
-    alignItems: 'center', 
+    alignItems: 'flex-start', 
     justifyContent: 'center',
     flexDirection: "column",
     margin: "5%"
   },
-  textContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    width: "100%"
-  },
   headerText: {
     fontFamily: 'OpenSans_700Bold',
     fontSize: 36,
-    textAlign: 'left'
+    width: "100%", 
   }
 })
