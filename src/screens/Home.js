@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Button, Text, View } from 'react-native';
+import { StyleSheet, FlatList, Button, Text, View } from 'react-native';
 import { useFonts, OpenSans_700Bold } from "@expo-google-fonts/open-sans"
 
 import Card from "../components/Card.js";
@@ -7,10 +7,30 @@ import Card from "../components/Card.js";
 export default Home = ({navigation}) => {
   let [fontsLoaded] = useFonts({OpenSans_700Bold, });
 
+  let wishList = []
+
+  for(let i = 0; i < 5; i++) {
+    wishList.push({          
+      id: i,
+      title: "WishList",
+      imageUri: require('../../assets/img/img1.jpg'),
+      imageUri2: require('../../assets/img/img2.jpg')
+    })
+  }
+
+  const renderItem = ({ item }) => {
+      <Card 
+        title={item.title}
+        imageUri={item.imageUri}
+        imageUri2={item.imageUri2}
+      />
+  }
+
   if(!fontsLoaded) {
     return <View></View>
   }
   else {
+    console.log(wishList)
     return (
       <View style={style.home}>
         <View style={style.textContainer}>
@@ -18,12 +38,11 @@ export default Home = ({navigation}) => {
             Wishlists
           </Text>
         </View>
-        <Card 
-          title="Tiles" 
-          subtitle="20 wishes"
-          imageUri={require('../../assets/img/img1.jpg')}
-          imageUri2={require('../../assets/img/img2.jpg')}
-        />
+        <FlatList>
+            data={wishList}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+        </FlatList>
         <Text>Home Screen</Text>
         <Button title="go to next view" onPress={ () => {
           navigation.navigate('MyNiceView', { viewName: "titlesd"})
