@@ -9,7 +9,7 @@ export default function HomeStackNavigator() {
   return (
     <HomeStack.Navigator>
       <HomeStack.Screen 
-        name="Hoe" 
+        name="Home" 
         component={Home} 
       />
       <HomeStack.Screen 
