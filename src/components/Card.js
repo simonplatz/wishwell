@@ -40,10 +40,10 @@ export default function Card(props) {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: "#EBEBEB",
-    width: "90%",
+    width: "100%",
     display: "flex",
     borderRadius: 4, 
-    marginTop: 5,
+    marginTop: 15,
     overflow: 'hidden'
   }, 
   imageContainer: {
