@@ -4,6 +4,18 @@ import { useFonts, OpenSans_700Bold, OpenSans_600SemiBold } from "@expo-google-f
 
 export default function Card(props) {
   let [fontsLoaded] = useFonts({OpenSans_700Bold, OpenSans_600SemiBold });
+  console.log("image1 " + props.imageUri)
+  console.log("image2 " + props.imageUri2)
+
+  let image
+  if (props.imageUri2 == undefined) {
+    image = <Image style={styles.image} source={props.imageUri} />
+  } else {
+    image = <View style={styles.imageContainer}> 
+        <Image style={styles.imageMatrix} source={props.imageUri} /> 
+        <Image style={styles.imageMatrix} source={props.imageUri2} /> 
+      </View>
+  }
 
   if (!fontsLoaded) {
     return (<View></View>)
@@ -11,7 +23,7 @@ export default function Card(props) {
   else {
     return (
       <View style={styles.card}>
-        <Image style={styles.image} source={require('../../assets/img/img1.jpg')} />
+        {image}
         <View style={styles.textbox}>
           <Text style={styles.text}>
             {props.title}
@@ -34,6 +46,10 @@ const styles = StyleSheet.create({
     marginTop: 5,
     overflow: 'hidden'
   }, 
+  imageContainer: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
   textbox: {
     margin: 15,
     marginLeft: 20
@@ -50,6 +66,10 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 225,
     resizeMode: 'cover',
-    backgroundColor: '#fff'
+  },
+  imageMatrix: {
+    width: '50%',
+    height: 225,
+    resizeMode: 'cover',
   }
 })
