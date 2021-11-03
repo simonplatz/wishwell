@@ -6,7 +6,7 @@ import Card from "../components/Card.js";
 export default Home = ({navigation}) => {
   return (
     <View style={style.home}>
-      <Card title="titles"/>
+      <Card title="Tiles" subtitle="20 wishes"/>
       <Text>Home Screen</Text>
       <Button title="go to next view" onPress={ () => {
         navigation.navigate('MyNiceView', { viewName: "titlesd"})
