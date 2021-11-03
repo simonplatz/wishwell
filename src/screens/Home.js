@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView,  StyleSheet, FlatList, Button, Text, View } from 'react-native';
+import { StyleSheet, FlatList, Button, Text, View } from 'react-native';
 import { useFonts, OpenSans_700Bold } from "@expo-google-fonts/open-sans"
 
 import Card from "../components/Card.js";
@@ -23,6 +23,7 @@ export default Home = ({navigation}) => {
     wishList.push({          
       id: i,
       title: "WishList",
+      numGifts: i * 10 + 2,
       imageUri: require('../../assets/img/img1.jpg'),
       imageUri2: require('../../assets/img/img2.jpg')
     })
@@ -31,6 +32,7 @@ export default Home = ({navigation}) => {
   const renderItem = ({ item }) => (
       <Card 
         title={item.title}
+        subtitle={item.numGifts + " wishes"}
         imageUri={item.imageUri}
         imageUri2={item.imageUri2}
       />
