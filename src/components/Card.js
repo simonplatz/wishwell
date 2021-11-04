@@ -4,8 +4,6 @@ import { useFonts, OpenSans_700Bold, OpenSans_600SemiBold } from "@expo-google-f
 
 export default function Card(props) {
   let [fontsLoaded] = useFonts({OpenSans_700Bold, OpenSans_600SemiBold });
-  console.log("image1 " + props.imageUri)
-  console.log("image2 " + props.imageUri2)
 
   let image
   if (props.imageUri2 == undefined) {
@@ -43,7 +41,6 @@ const styles = StyleSheet.create({
     width: "100%",
     display: "flex",
     borderRadius: 4, 
-    marginTop: 15,
     overflow: 'hidden'
   }, 
   imageContainer: {

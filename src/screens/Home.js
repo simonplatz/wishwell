@@ -1,8 +1,7 @@
 import React from 'react';
-import { StyleSheet, FlatList, Button, Text, View } from 'react-native';
+import { StyleSheet, FlatList, Pressable, Text, View } from 'react-native';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { useFonts, OpenSans_700Bold } from "@expo-google-fonts/open-sans"
-
 import Card from "../components/Card.js";
 
 function header() { 
@@ -15,6 +14,13 @@ function header() {
   )
 }
 
+function separator() {
+  return (
+    <View style={{height:10}}>
+    </View>
+  )
+}
+
 export default Home = ({navigation}) => {
   let [fontsLoaded] = useFonts({OpenSans_700Bold, });
 
@@ -23,7 +29,7 @@ export default Home = ({navigation}) => {
   for(let i = 0; i < 5; i++) {
     wishList.push({          
       id: i,
-      title: "WishList",
+      title: "WishList" + i,
       numGifts: i * 10 + 2,
       imageUri: require('../../assets/img/img1.jpg'),
       imageUri2: require('../../assets/img/img2.jpg')
@@ -31,12 +37,23 @@ export default Home = ({navigation}) => {
   }
 
   const renderItem = ({ item }) => (
+    <Pressable
+      onPress={() => {
+        navigation.navigate('Wishes', 
+          {
+            id: item.id,
+            title: item.title 
+          }
+        )
+      }}
+    >
       <Card 
         title={item.title}
         subtitle={item.numGifts + " wishes"}
         imageUri={item.imageUri}
         imageUri2={item.imageUri2}
       />
+    </Pressable>
   )
 
   const bottomTabHeight = useBottomTabBarHeight()
@@ -46,30 +63,25 @@ export default Home = ({navigation}) => {
   }
   else {
     return (
-      <View>
-          <FlatList
-              data={wishList}
-              renderItem={renderItem}
-              contentContainerStyle={style.home}
-              ListHeaderComponent={header}
-              ListFooterComponent={<View style={{height: bottomTabHeight }}></View>}
-          >
-          </FlatList>
-        <Text>Home Screen</Text>
-        <Button title="go to next view" onPress={ () => {
-          navigation.navigate('MyNiceView', { viewName: "titlesd"})
-        }}></Button>
+      <View style={style.main}>
+        <FlatList
+          data={wishList}
+          renderItem={renderItem}
+          contentContainerStyle={style.home}
+          ListHeaderComponent={header}
+          ListFooterComponent={<View style={{height: bottomTabHeight }}></View>}
+          ItemSeparatorComponent={separator}
+        />
       </View>
     );
   }
 }
 
 const style = StyleSheet.create({
-  home : {
-    display: "flex", 
-    alignItems: 'flex-start', 
-    justifyContent: 'center',
-    flexDirection: "column",
+  main: {
+    width: '100%'
+  },
+  home: {
     margin: "5%"
   },
   headerText: {
