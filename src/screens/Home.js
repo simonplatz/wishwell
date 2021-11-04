@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, FlatList, Button, Text, View } from 'react-native';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { useFonts, OpenSans_700Bold } from "@expo-google-fonts/open-sans"
 
 import Card from "../components/Card.js";
@@ -38,6 +39,8 @@ export default Home = ({navigation}) => {
       />
   )
 
+  const bottomTabHeight = useBottomTabBarHeight()
+
   if(!fontsLoaded) {
     return <View></View>
   }
@@ -49,6 +52,7 @@ export default Home = ({navigation}) => {
               renderItem={renderItem}
               contentContainerStyle={style.home}
               ListHeaderComponent={header}
+              ListFooterComponent={<View style={{height: bottomTabHeight }}></View>}
           >
           </FlatList>
         <Text>Home Screen</Text>
