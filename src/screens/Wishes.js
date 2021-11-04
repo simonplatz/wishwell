@@ -1,6 +1,8 @@
 import React from 'react';
 import { Pressable, StyleSheet, FlatList, Text, View } from 'react-native';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faShare } from '@fortawesome/free-solid-svg-icons'
 import Card from "../components/Card.js";
 
 const data = [
@@ -19,7 +21,7 @@ const data = [
 function header(route) {
   return (
     <View >
-      <Text style={style.headerText} >
+      <Text style={styles.headerText} >
         {route.params.title}
       </Text>
     </View>
@@ -32,6 +34,30 @@ function separator() {
     </View>
   )
 }
+
+function generateBoxShadowStyle (
+  xOffset,
+  yOffset,
+  shadowColorIos,
+  shadowOpacity,
+  shadowRadius,
+  elevation,
+  shadowColorAndroid,
+)  {
+  if (Platform.OS === 'ios') {
+    styles.boxShadow = {
+      shadowColor: shadowColorIos,
+      shadowOffset: {width: xOffset, height: yOffset},
+      shadowOpacity,
+      shadowRadius,
+    };
+  } else if (Platform.OS === 'android') {
+    styles.boxShadow = {
+      elevation,
+      shadowColor: shadowColorAndroid,
+    };
+  }
+};
 
 export default NiceView = ({route}) => {
   const bottomTabHeight = useBottomTabBarHeight()
@@ -47,13 +73,21 @@ export default NiceView = ({route}) => {
       />
     </Pressable>
   )
+  generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717');
 
   return (
     <View>
+      <View style={[styles.floatingShare, styles.boxShadow]}>
+          <FontAwesomeIcon 
+            icon={faShare}
+            style={styles.shareIcon}
+            size={30}
+          />
+      </View>
       <FlatList
         data={wishlist.wishes}
         renderItem={renderItem}
-        contentContainerStyle={style.home}
+        contentContainerStyle={styles.home}
         ListHeaderComponent={header(route)}
         ListFooterComponent={<View style={{height: bottomTabHeight }}></View>}
         ItemSeparatorComponent={separator}
@@ -62,7 +96,7 @@ export default NiceView = ({route}) => {
   );
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   home : {
     margin: "5%",
   },
@@ -70,5 +104,21 @@ const style = StyleSheet.create({
     fontFamily: 'OpenSans_700Bold',
     fontSize: 36,
     width: "100%", 
-  }
+  },
+  floatingShare: {
+    position: "absolute",
+    right: 25,
+    bottom: 25,
+    width: 65,
+    height: 65,
+    borderRadius: 50,
+    backgroundColor: "#ebebeb",
+    zIndex: 2,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+shareIcon: {
+  },
+  boxShadow: {}
 })

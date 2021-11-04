@@ -2,12 +2,13 @@ import React from 'react';
 import { StyleSheet, FlatList, Pressable, Text, View } from 'react-native';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { useFonts, OpenSans_700Bold } from "@expo-google-fonts/open-sans"
+
 import Card from "../components/Card.js";
 
 function header() { 
   return ( 
     <View >
-      <Text style={style.headerText} >
+      <Text style={styles.headerText} >
         Wishlists
       </Text>
     </View>
@@ -20,6 +21,7 @@ function separator() {
     </View>
   )
 }
+
 
 export default Home = ({navigation}) => {
   let [fontsLoaded] = useFonts({OpenSans_700Bold, });
@@ -58,16 +60,17 @@ export default Home = ({navigation}) => {
 
   const bottomTabHeight = useBottomTabBarHeight()
 
+
   if(!fontsLoaded) {
     return <View></View>
   }
   else {
     return (
-      <View style={style.main}>
+      <View style={styles.main}>
         <FlatList
           data={wishList}
           renderItem={renderItem}
-          contentContainerStyle={style.home}
+          contentContainerStyle={styles.home}
           ListHeaderComponent={header}
           ListFooterComponent={<View style={{height: bottomTabHeight }}></View>}
           ItemSeparatorComponent={separator}
@@ -77,7 +80,7 @@ export default Home = ({navigation}) => {
   }
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   main: {
     width: '100%'
   },
@@ -88,5 +91,5 @@ const style = StyleSheet.create({
     fontFamily: 'OpenSans_700Bold',
     fontSize: 36,
     width: "100%", 
-  }
+  },
 })
