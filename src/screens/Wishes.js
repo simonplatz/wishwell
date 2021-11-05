@@ -1,6 +1,5 @@
 import React from 'react';
-import { Pressable, StyleSheet, FlatList, Text, View } from 'react-native';
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
+import { Pressable, StyleSheet, FlatList, ScrollView, Text, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faShare } from '@fortawesome/free-solid-svg-icons'
 
@@ -11,15 +10,20 @@ import generateBoxShadowStyle from "../tools/dropShadow.js"
 
 const data = [
   { key: '0', wishes: [
-    {key: '0', name: "Kettle", price: '1299', manufacturer: 'Chemex'},
-    {key: '1', name: 'Coffee', price: '100', manufacturer: 'BestCoffee'},
-    {key: '2', name: 'Espresso Machine', price: '3899', manufacturer: 'Rancilio'},
-    {key: '3', name: 'Tamper', price: '400', manufacturer: 'Joe Frex'}
+    {key: '10', name: "Kettle", price: '1299', manufacturer: 'Chemex'},
+    {key: '11', name: 'Coffee', price: '100', manufacturer: 'BestCoffee'},
+    {key: '12', name: 'Espresso Machine', price: '3899', manufacturer: 'Rancilio'},
+    {key: '13', name: 'Tamper', price: '400', manufacturer: 'Joe Frex'}
   ]},
-  { key: '1'},
   { key: '2'},
   { key: '3'},
   { key: '4'}
+]
+
+const suggestionData = [
+  {key: '1231j' , name: "Filters", manufacturer: "Chemex"},
+  {key: '123123', name: "Scale", manufacturer: "Acacia"},
+  {key: '12312313', name: "Espresso Cup", manufacturer: "Bodum"}
 ]
 
 function header(route) {
@@ -39,26 +43,34 @@ function separator() {
   )
 }
 
-const renderItem = ({ item }) => (
-  <SuggestionCard
-    title={item.name}
-  /> 
-)
 
 function footer() {
   return (
     <View>
       <AddButton/>
-      <FlatList
-        
-      />
+      <View style={{flexDirection: "row"}}>
+        <ScrollView
+          horizontal
+        >
+        {
+          suggestionData.map((item) => (
+              <SuggestionCard
+                key={item.key}
+                title={item.name}
+                subtitle={item.manufacturer}
+                imageUri={require("../../assets/img/img1.jpg")}
+              /> 
+            //return <Text key={item.key}>{item.name}</Text>
+          ))
+        }
+        </ScrollView>
+      </View>
     </View>
   )
 }
 
 
 export default NiceView = ({route}) => {
-  const bottomTabHeight = useBottomTabBarHeight()
   const wishlist = data.find(item => item.key == route.params.id) 
 
   const renderItem = ({ item }) => (
@@ -87,7 +99,7 @@ export default NiceView = ({route}) => {
         renderItem={renderItem}
         contentContainerStyle={styles.home}
         ListHeaderComponent={header(route)}
-        ListFooterComponent={<AddButton/>}
+        ListFooterComponent={footer}
         ItemSeparatorComponent={separator}
       />
     </View>

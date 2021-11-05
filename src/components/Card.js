@@ -58,7 +58,11 @@ export default function Card(props) {
           </Text>
         </View>
   } else {
-
+    text = <View style={styles.textbox}>
+          <Text style={styles.text}>
+            {props.title}
+          </Text>
+        </View>
   }
 
   if (!fontsLoaded) {
@@ -80,25 +84,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row'
   },
-  textbox: {
-    margin: 15,
-    marginLeft: 20
-  },
-  image: {
-    width: '100%',
-    height: 200,
-    resizeMode: 'cover'
-  },
   imageMatrix: {
     width: '50%',
     height: 225,
     resizeMode: 'cover',
   }, boxShadow: {},
-  titlePriceBox: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    margin: 15,
-    marginLeft: 20
-  }
 })

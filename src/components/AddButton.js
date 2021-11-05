@@ -1,5 +1,5 @@
 import React from "react"
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import generateBoxShadowStyle from "../tools/dropShadow.js"
