@@ -82,14 +82,16 @@ export default Home = ({navigation}) => {
 
 const styles = StyleSheet.create({
   main: {
-    width: '100%'
+    width: '100%',
   },
   home: {
-    margin: "5%"
+    margin: "2.5%",
+    display: "flex"
   },
   headerText: {
     fontFamily: 'OpenSans_700Bold',
     fontSize: 36,
     width: "100%", 
+    marginLeft: "2.5%"
   },
 })

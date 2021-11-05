@@ -4,13 +4,14 @@ import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faShare } from '@fortawesome/free-solid-svg-icons'
 import Card from "../components/Card.js";
+import generateBoxShadowStyle from "../tools/dropShadow.js"
 
 const data = [
   { key: '0', wishes: [
-    {key: '0', name: "Kettle", price: '1299'},
-    {key: '1', name: 'Coffee', price: '100'},
-    {key: '2', name: 'Espresso Machine', price: '3899'},
-    {key: '3', name: 'Tamper', price: '400'}
+    {key: '0', name: "Kettle", price: '1299', manufacturer: 'Chemex'},
+    {key: '1', name: 'Coffee', price: '100', manufacturer: 'BestCoffee'},
+    {key: '2', name: 'Espresso Machine', price: '3899', manufacturer: 'Rancilio'},
+    {key: '3', name: 'Tamper', price: '400', manufacturer: 'Joe Frex'}
   ]},
   { key: '1'},
   { key: '2'},
@@ -35,45 +36,22 @@ function separator() {
   )
 }
 
-function generateBoxShadowStyle (
-  xOffset,
-  yOffset,
-  shadowColorIos,
-  shadowOpacity,
-  shadowRadius,
-  elevation,
-  shadowColorAndroid,
-)  {
-  if (Platform.OS === 'ios') {
-    styles.boxShadow = {
-      shadowColor: shadowColorIos,
-      shadowOffset: {width: xOffset, height: yOffset},
-      shadowOpacity,
-      shadowRadius,
-    };
-  } else if (Platform.OS === 'android') {
-    styles.boxShadow = {
-      elevation,
-      shadowColor: shadowColorAndroid,
-    };
-  }
-};
 
 export default NiceView = ({route}) => {
   const bottomTabHeight = useBottomTabBarHeight()
   const wishlist = data.find(item => item.key == route.params.id) 
-  console.log(wishlist.wishes)
 
   const renderItem = ({ item }) => (
     <Pressable>
       <Card
         title={item.name}
-        subtitle={item.price}
+        price={item.price}
+        subtitle={item.manufacturer}
         imageUri={require('../../assets/img/img1.jpg')}
       />
     </Pressable>
   )
-  generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717');
+  generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717', styles);
 
   return (
     <View>
@@ -98,12 +76,14 @@ export default NiceView = ({route}) => {
 
 const styles = StyleSheet.create({
   home : {
-    margin: "5%",
+    margin: "1%",
+    marginTop: "2%"
   },
   headerText: {
     fontFamily: 'OpenSans_700Bold',
     fontSize: 36,
     width: "100%", 
+    marginLeft: "2.5%"
   },
   floatingShare: {
     position: "absolute",
