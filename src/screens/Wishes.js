@@ -4,6 +4,7 @@ import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faShare } from '@fortawesome/free-solid-svg-icons'
 import Card from "../components/Card.js";
+import AddButton from "../components/AddButton.js"
 import generateBoxShadowStyle from "../tools/dropShadow.js"
 
 const data = [
@@ -67,7 +68,7 @@ export default NiceView = ({route}) => {
         renderItem={renderItem}
         contentContainerStyle={styles.home}
         ListHeaderComponent={header(route)}
-        ListFooterComponent={<View style={{height: bottomTabHeight }}></View>}
+        ListFooterComponent={<AddButton/>}
         ItemSeparatorComponent={separator}
       />
     </View>
@@ -98,7 +99,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
   },
-shareIcon: {
+  shareIcon: {
+  color: "#0E1D31"
   },
   boxShadow: {}
 })
