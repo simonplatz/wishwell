@@ -3,6 +3,7 @@ import { StyleSheet, FlatList, Pressable, Text, View } from 'react-native';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { useFonts, OpenSans_700Bold } from "@expo-google-fonts/open-sans"
 
+import AddButton from "../components/AddButton.js"
 import Card from "../components/Card.js";
 
 function header() { 
@@ -58,7 +59,6 @@ export default Home = ({navigation}) => {
     </Pressable>
   )
 
-  const bottomTabHeight = useBottomTabBarHeight()
 
 
   if(!fontsLoaded) {
@@ -72,7 +72,7 @@ export default Home = ({navigation}) => {
           renderItem={renderItem}
           contentContainerStyle={styles.home}
           ListHeaderComponent={header}
-          ListFooterComponent={<View style={{height: bottomTabHeight }}></View>}
+          ListFooterComponent={<AddButton/>}
           ItemSeparatorComponent={separator}
         />
       </View>
