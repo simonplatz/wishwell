@@ -3,8 +3,10 @@ import { Pressable, StyleSheet, FlatList, Text, View } from 'react-native';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faShare } from '@fortawesome/free-solid-svg-icons'
+
 import Card from "../components/Card.js";
 import AddButton from "../components/AddButton.js"
+import SuggestionCard from "../components/SuggestionCard.js"
 import generateBoxShadowStyle from "../tools/dropShadow.js"
 
 const data = [
@@ -33,6 +35,23 @@ function header(route) {
 function separator() {
   return (
     <View style={{height:10}}>
+    </View>
+  )
+}
+
+const renderItem = ({ item }) => (
+  <SuggestionCard
+    title={item.name}
+  /> 
+)
+
+function footer() {
+  return (
+    <View>
+      <AddButton/>
+      <FlatList
+        
+      />
     </View>
   )
 }
