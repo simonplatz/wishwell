@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image, StyleSheet, Text, StatusBar, SafeAreaView } from "react-native";
+import { View, Image, StyleSheet, Text, SafeAreaView, Button, Alert } from "react-native";
 import {FlatList} from "react-native-gesture-handler";
 
 
@@ -16,59 +16,84 @@ export default SettingsImage => {
           height: 125,
           width: 125,
           borderRadius: 125/2,
+          paddingTop: 10,
+          alignSelf:"center"
         }}
         source={require("../../assets/wishwlll.png")} />
-
-        <SafeAreaView style={style.container}>
-          <FlatList 
-          data={USERDATA} 
+        <SafeAreaView style={style.item}>
+          <FlatList style={style.flatlistview}
+          data={USERDATA}  
           renderItem={infomrationrender}
-          keyExtractor={item => item.id}
-          />
+          keyExtractor={item => item.id}/>
+            <View style={style.button}>
+            <Button 
+            onPress={() => Alert.alert('Change email')}  
+            title="Change Name"
+            color = "#3BBA6C"
+            />
+            <View style={style.space}/>
+            <Button 
+            onPress={() => Alert.alert('Change email')}  
+            title="Change email"
+            color = "#3BBA6C"
+            />
+            <View style={style.space}/>
+            <Button 
+            onPress={() => Alert.alert('Change birthdate')}  
+            title="Change birthdate"
+            color = "#3BBA6C"
+            />
+            </View>
         </SafeAreaView>
-
-        
       </View>
   );
 }
+
 // uses userdata to set the title
 const Information = ({title}) => (
-  <View style={style.item}>
+  <View style={style.flatlistview}>
     <Text style={style.text}>{title}</Text>
   </View>
 )
 
 const style = StyleSheet.create({
   container: {
-    width: 250,
-    flexDirection: "row",
-    paddingLeft: 20,
-    paddingTop: 10,
+    width: "100%",
   },
   item:{
-    padding: 3,
-    marginVertical: 2,
-    marginHorizontal: 16,
+    padding: 4,
+    marginVertical: 10,   
+    flexDirection: "row",
+    width:"100%",
+    height:"60%",
+  },
+  flatlistview:{
     borderColor: "black",
-    borderWidth: 1,
+    paddingBottom: 20,
+
+  },
+  button: {
   },
   text:{
-    fontSize: 20
-    
+    fontSize: 15,
+  },
+  space: {
+    width: 20,
+    height: 20
   }
 });
 
 const USERDATA = [
   {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    id: 'id1',
     title: 'Joakim'
   },
   {
-    id:'3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    id:'id2',
     title:'email@email.com'
   },
   {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    id: 'id3',
     title: '17-07-1997'
   }
 
