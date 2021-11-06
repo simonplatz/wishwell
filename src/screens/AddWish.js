@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Button} from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Button, Alert} from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import TextBox from '../components/TextBox';
 import Card from '../components/Card';
@@ -18,8 +18,10 @@ export default function AddWish() {
             renderItem={textRender}
             keyExtractor={item => item.id}
         />
+
         <View style = {Styling.button}>
         <Button 
+            onPress={() => Alert.alert("Wish added!")}
             title = "Add wish to wishlist"
             color = "#3BBA6C"
         />

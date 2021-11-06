@@ -1,12 +1,12 @@
 import React from "react"
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, TextInput, View, Image } from 'react-native';
 
 const TextBox = ({title}) => {
     let text = 
     <View>
-        <Text style = {StyleText.text}>
-            {title}
-        </Text>
+        <TextInput style = {StyleText.text}
+            placeholder = {title}
+        />
     </View>
 
     return (
@@ -28,7 +28,7 @@ const StyleText = StyleSheet.create({
         padding: 10,
         height: 40,
         fontFamily: "OpenSans_700Bold",
-        color: "black",
+        color: "#0E1D31",
         borderColor: "#3BBA6C",
         borderRadius: 10,
         borderWidth: 1,
