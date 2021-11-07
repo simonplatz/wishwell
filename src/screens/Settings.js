@@ -1,7 +1,8 @@
-import React from "react";
-import { View, Image, StyleSheet, Text, SafeAreaView, Button, Alert } from "react-native";
-import {FlatList} from "react-native-gesture-handler";
-
+import React, {useState} from "react";
+import { View, Image, StyleSheet, Text, SafeAreaView, Button, Alert, Modal, Pressable, StatusBar } from "react-native";
+import {FlatList, TextInput} from "react-native-gesture-handler";
+import Dialog from "react-native-dialog";
+import DialogInput from "react-native-dialog/lib/Input";
 
 export default SettingsImage => {
   const infomrationrender = ({item}) => (
@@ -37,19 +38,15 @@ export default SettingsImage => {
               color = "#3BBA6C"
               />
               </View>
+              
           </SafeAreaView>
             <View style={style.bottombuttom}>
-            <Button
-              onPress={() => Alert.alert('Change birthdate')}  
-              title="Change Password"
-              color = "#3BBA6C"
-              />
+              <Buttonview/>
               <View style={style.space}/>
               <Button
               onPress={() => Alert.alert('Change birthdate')}  
               title="logout"
-              color = "#3BBA6C"
-              />
+              color = "#3BBA6C"/>
             </View>
     </View>
   );
@@ -61,6 +58,47 @@ const Information = ({title}) => (
     <Text style={style.text}>{title}</Text>
   </View>
 )
+
+const Buttonview = () => {
+  // mange the model state
+  const [isModalVisible, setModalVisible] = useState(false);
+  // control input value
+  const [inputValue, setInputValue] = useState("");
+  // controls the visibility of the pop-up window
+  const toggleModalVisibility = () => {
+    setModalVisible(!isModalVisible);
+};
+return (
+  <SafeAreaView style={style.popupwindow}>
+      <StatusBar style="auto" />
+
+      {/**  We are going to create a Modal with Text Input. */}
+      <Button title="Change Password" onPress={toggleModalVisibility} color = "#3BBA6C" />
+
+      {/** This is our modal component containing textinput and a button */}
+      <Modal animationType="slide" 
+             transparent visible={isModalVisible} 
+             presentationStyle="overFullScreen" 
+             onDismiss={toggleModalVisibility}>
+          <View style={style.viewWrapper}>
+              <View style={style.modalView}>
+                  <Text> Change your Password </Text>
+                  <TextInput placeholder="Enter here!" 
+                             value={inputValue} style={style.text} 
+                             onChangeText={(value) => setInputValue(value)}
+                             multiline />
+
+                  {/** This button is responsible to close the modal */}
+                  <View style={{flexDirection: "row"}}>
+                  <Button title="Close" onPress={toggleModalVisibility} color = "#3BBA6C"/>
+                  <View style={style.space}/>
+                  <Button title="Confirm" onPress={toggleModalVisibility} color = "#3BBA6C"/>
+                  </View>
+              </View>
+          </View>
+      </Modal>
+  </SafeAreaView>
+);}
 
 const style = StyleSheet.create({
   container: {
@@ -101,7 +139,28 @@ const style = StyleSheet.create({
       width: 125,
       borderRadius: 125/2,
       alignSelf:"center"
-  }
+  },
+  popupwindow: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#fff",
+  },
+  viewWrapper: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.2)",
+},
+modalView: {
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
+    top: "50%",
+    height: "20%",
+    width: "70%",
+    backgroundColor: "#fff",
+    borderRadius: 7,
+},
 });
 
 const USERDATA = [
