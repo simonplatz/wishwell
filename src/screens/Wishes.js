@@ -2,9 +2,8 @@ import React from 'react';
 import { Pressable, StyleSheet, FlatList, Text, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faShare } from '@fortawesome/free-solid-svg-icons'
-import { ScrollView } from 'react-native-gesture-handler'
 
-import Card from "../components/Card.js";
+import Card from '../components/Card.js'
 import AddButton from "../components/AddButton.js"
 import SuggestionCard from "../components/SuggestionCard.js"
 import generateBoxShadowStyle from "../tools/dropShadow.js"
@@ -45,8 +44,48 @@ function separator() {
 }
 
 
+function footer() {
+  const renderItem = ({ item, index }) => (
+    <View
+      key={index}
+      style={{ height: 400, width: 320}}
+    >
+      <SuggestionCard
+        title={item.name}
+        subtitle={item.manufacturer}
+        imageUri={require("../../assets/img/img1.jpg")}
+      /> 
+    </View>
+  )
+
+  return (
+    <View style={{height: 430}}>
+      <AddButton/>
+      <View style={{flexDirection: "row"}}>
+        <FlatList
+          horizontal
+          data={suggestionData}
+          renderItem={renderItem}
+        />
+      </View>
+    </View>
+  )
+}
+
+
 export default NiceView = ({route}) => {
   const wishlist = data.find(item => item.key == route.params.id) 
+
+  const renderItem = ({ item }) => (
+    <Pressable>
+      <Card
+        title={item.name}
+        price={item.price}
+        subtitle={item.manufacturer}
+        imageUri={require('../../assets/img/img1.jpg')}
+      />
+    </Pressable>
+  )
 
   generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717', styles);
   
@@ -60,37 +99,14 @@ export default NiceView = ({route}) => {
             size={30}
           />
       </View>
-      <ScrollView>
-        {
-        wishlist.wishes.map((item) => (
-          <Pressable
-            key={item.key}
-          >
-            <Card
-              title={item.name}
-              price={item.price}
-              subtitle={item.manufacturer}
-              imageUri={require('../../assets/img/img1.jpg')}
-            />
-          </Pressable>
-        ))
-        }
-        <AddButton/>
-        <ScrollView
-          horizontal
-        >
-          {
-            suggestionData.map((suggestItem) => (
-              <SuggestionCard
-                key={suggestItem.key}
-                title={suggestItem.name}
-                subtitle={suggestItem.manufacturer}
-                imageUri={require("../../assets/img/img1.jpg")}
-              /> 
-            ))
-          }
-        </ScrollView>
-      </ScrollView>
+      <FlatList
+        data={wishlist.wishes}
+        renderItem={renderItem}
+        contentContainerStyle={styles.home}
+        ListHeaderComponent={header(route)}
+        ListFooterComponent={footer}
+        ItemSeparatorComponent={separator}
+      />
     </View>
   );
 }
