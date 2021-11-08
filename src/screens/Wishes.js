@@ -3,9 +3,6 @@ import { Pressable, StyleSheet, FlatList, Text, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faShare } from '@fortawesome/free-solid-svg-icons'
 import { ScrollView } from 'react-native-gesture-handler'
-import {RecyclerListView } from "recyclerlistview";
-
-
 
 import Card from "../components/Card.js";
 import AddButton from "../components/AddButton.js"
@@ -49,20 +46,25 @@ function separator() {
 
 
 function footer() {
-  const renderItem = ({ item }) => (
-    <SuggestionCard
-      key={item.key}
-      title={item.name}
-      subtitle={item.manufacturer}
-      imageUri={require("../../assets/img/img1.jpg")}
-    /> 
+  const renderItem = ({ item, index }) => (
+    <View
+      key={index}
+      style={{ height: 400, width: 320}}
+    >
+      <SuggestionCard
+        title={item.name}
+        subtitle={item.manufacturer}
+        imageUri={require("../../assets/img/img1.jpg")}
+      /> 
+    </View>
   )
 
   return (
-    <View>
+    <View style={{height: 430}}>
       <AddButton/>
       <View style={{flexDirection: "row"}}>
         <FlatList
+          horizontal
           data={suggestionData}
           renderItem={renderItem}
         />
