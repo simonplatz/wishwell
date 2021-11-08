@@ -1,8 +1,9 @@
 import React from "react"
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import generateBoxShadowStyle from "../tools/dropShadow.js"
+import { card } from "../styleobject/CardStyle.js"
 
 export default function AddButton() {
   generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717', styles);
@@ -19,11 +20,7 @@ export default function AddButton() {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#EBEBEB",
-    width: "95%",
-    marginLeft: "2.5%",
-    display: "flex",
-    borderRadius: 4, 
+    ...card.card,
     overflow: 'hidden',
     justifyContent: "center",
     alignItems: "center",

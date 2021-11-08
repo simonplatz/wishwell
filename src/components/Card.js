@@ -2,6 +2,7 @@ import React from "react"
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { useFonts, OpenSans_700Bold, OpenSans_600SemiBold } from "@expo-google-fonts/open-sans"
 import generateBoxShadowStyle from "../tools/dropShadow.js"
+import {card} from "../styleobject/CardStyle.js"
 
 export default function Card(props) {
   let [fontsLoaded] = useFonts({OpenSans_700Bold, OpenSans_600SemiBold });
@@ -57,7 +58,11 @@ export default function Card(props) {
           </Text>
         </View>
   } else {
-
+    text = <View style={styles.textbox}>
+          <Text style={styles.text}>
+            {props.title}
+          </Text>
+        </View>
   }
 
   if (!fontsLoaded) {
@@ -74,45 +79,14 @@ export default function Card(props) {
 }
 
 const styles = StyleSheet.create({
-  card: {
-    backgroundColor: "#EBEBEB",
-    width: "95%",
-    marginLeft: "2.5%",
-    display: "flex",
-    borderRadius: 4, 
-    overflow: 'hidden',
-  }, 
+  ...card,
   imageContainer: {
     display: 'flex',
     flexDirection: 'row'
-  },
-  textbox: {
-    margin: 15,
-    marginLeft: 20
-  },
-  text: {
-    fontFamily: 'OpenSans_700Bold',
-    fontSize: 24,
-  },
-  subtext: {
-    fontFamily: 'OpenSans_600SemiBold',
-    fontSize: 14
-  },
-  image: {
-    width: '100%',
-    height: 200,
-    resizeMode: 'cover'
   },
   imageMatrix: {
     width: '50%',
     height: 225,
     resizeMode: 'cover',
   }, boxShadow: {},
-  titlePriceBox: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    margin: 15,
-    marginLeft: 20
-  }
 })
