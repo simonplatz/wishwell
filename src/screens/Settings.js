@@ -1,8 +1,6 @@
 import React, {useState} from "react";
 import { View, Image, StyleSheet, Text, SafeAreaView, Button, Alert, Modal, Pressable, StatusBar } from "react-native";
 import {FlatList, TextInput} from "react-native-gesture-handler";
-import Dialog from "react-native-dialog";
-import DialogInput from "react-native-dialog/lib/Input";
 
 export default SettingsImage => {
   const infomrationrender = ({item}) => (
@@ -61,25 +59,25 @@ const Information = ({title}) => (
 
 const Buttonview = () => {
   // mange the model state
-  const [isModalVisible, setModalVisible] = useState(false);
+  const [isVisible, setWindowVisible] = useState(false);
   // control input value
   const [inputValue, setInputValue] = useState("");
   // controls the visibility of the pop-up window
-  const toggleModalVisibility = () => {
-    setModalVisible(!isModalVisible);
+  const togglePopupwindow = () => {
+    setWindowVisible(!isVisible);
 };
 return (
-  <SafeAreaView style={style.popupwindow}>
+  <SafeAreaView>
       <StatusBar style="auto" />
 
-      {/**  We are going to create a Modal with Text Input. */}
-      <Button title="Change Password" onPress={toggleModalVisibility} color = "#3BBA6C" />
+      {/**  The first button on the screen */}
+      <Button title="Change Password" onPress={togglePopupwindow} color = "#3BBA6C" />
 
       {/** This is our modal component containing textinput and a button */}
       <Modal animationType="slide" 
-             transparent visible={isModalVisible} 
+             transparent visible={isVisible} 
              presentationStyle="overFullScreen" 
-             onDismiss={toggleModalVisibility}>
+             onDismiss={togglePopupwindow}>
           <View style={style.viewWrapper}>
               <View style={style.modalView}>
                   <Text> Change your Password </Text>
@@ -87,12 +85,11 @@ return (
                              value={inputValue} style={style.text} 
                              onChangeText={(value) => setInputValue(value)}
                              multiline />
-
                   {/** This button is responsible to close the modal */}
                   <View style={{flexDirection: "row"}}>
-                  <Button title="Close" onPress={toggleModalVisibility} color = "#3BBA6C"/>
+                  <Button title="Close" onPress={togglePopupwindow} color = "#3BBA6C"/>
                   <View style={style.space}/>
-                  <Button title="Confirm" onPress={toggleModalVisibility} color = "#3BBA6C"/>
+                  <Button title="Confirm" onPress={togglePopupwindow} color = "#3BBA6C"/>
                   </View>
               </View>
           </View>
