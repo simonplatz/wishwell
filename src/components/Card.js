@@ -24,27 +24,29 @@ export default function Card(props) {
     && props.price != undefined
   ) {
     text = 
-    <View style={styles.titlePriceBox}>
-      <View>
+    <View style={styles.textbox}>
+      <View style={styles.titlePriceBox}>
         <Text style={styles.text}>
           {props.title}
         </Text>
+        <Text style={styles.text}>
+          {props.price}
+        </Text>
+      </View>
         <Text style={styles.subtext}>
           {props.subtitle}
         </Text>
-      </View>
-      <Text style={styles.text}>
-        {props.price}
-      </Text>
     </View>
   } else if (props.title != undefined && props.price != undefined) {
-    text = <View style={styles.titlePriceBox}>
+    text = <View style={styles.textbox}>
+      <View style={styles.titlePriceBox}>
           <Text style={styles.text}>
             {props.title}
           </Text>
           <Text style={styles.text}>
             {props.price}
           </Text>
+      </View>
         </View>
   } else if (props.title != undefined 
       && props.subtitle != undefined

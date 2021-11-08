@@ -28,8 +28,7 @@ export const card = {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    margin: 15,
-    marginLeft: 20
+    alignItems: "center"
   },
   boxShadow: {}
 }
