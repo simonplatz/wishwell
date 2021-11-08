@@ -11,16 +11,19 @@ export default function SuggestionCard(props) {
   return (
     <View style={[styles.card, styles.boxShadow]}>
       <Image style={styles.image} source={props.imageUri} />
-      <View style={styles.textbox}>
-        <View style={styles.titlePriceBox}>
+      <View style={styles.titlePriceBox}>
+        <View style={styles.text}>
           <Text style={styles.text}>
             {props.title}
           </Text>
-          <FontAwesomeIcon icon={faPlus}/>
+          <Text style={styles.subtext}>
+              {props.subtitle}
+          </Text>
         </View>
-        <Text style={styles.subtext}>
-            {props.subtitle}
-        </Text>
+        <FontAwesomeIcon 
+          icon={faPlus}
+          size={24}
+        />
       </View>
     </View>
   )

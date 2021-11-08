@@ -1,7 +1,11 @@
 import React from 'react';
-import { Pressable, StyleSheet, FlatList, ScrollView, Text, View } from 'react-native';
+import { Pressable, StyleSheet, FlatList, Text, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faShare } from '@fortawesome/free-solid-svg-icons'
+import { ScrollView } from 'react-native-gesture-handler'
+import {RecyclerListView } from "recyclerlistview";
+
+
 
 import Card from "../components/Card.js";
 import AddButton from "../components/AddButton.js"
@@ -45,25 +49,23 @@ function separator() {
 
 
 function footer() {
+  const renderItem = ({ item }) => (
+    <SuggestionCard
+      key={item.key}
+      title={item.name}
+      subtitle={item.manufacturer}
+      imageUri={require("../../assets/img/img1.jpg")}
+    /> 
+  )
+
   return (
     <View>
       <AddButton/>
       <View style={{flexDirection: "row"}}>
-        <ScrollView
-          horizontal
-        >
-        {
-          suggestionData.map((item) => (
-              <SuggestionCard
-                key={item.key}
-                title={item.name}
-                subtitle={item.manufacturer}
-                imageUri={require("../../assets/img/img1.jpg")}
-              /> 
-            //return <Text key={item.key}>{item.name}</Text>
-          ))
-        }
-        </ScrollView>
+        <FlatList
+          data={suggestionData}
+          renderItem={renderItem}
+        />
       </View>
     </View>
   )
@@ -101,6 +103,7 @@ export default NiceView = ({route}) => {
         ListHeaderComponent={header(route)}
         ListFooterComponent={footer}
         ItemSeparatorComponent={separator}
+        nestedScrollEnabled
       />
     </View>
   );
