@@ -72,6 +72,16 @@ function footer() {
   )
 }
 
+function scrollOn(event ) {
+  event = event.nativeEvent
+  if (event.contentSize.height < 
+    (event.contentOffset.y + event.layoutMeasurement.height) - 400
+  ) {
+    console.log("down more" + (event.contentOffset.y + event.layoutMeasurement.height) - 400)
+  } else {
+    console.log("not down more" + (event.contentOffset.y + event.layoutMeasurement.height) - 400)
+  }
+}
 
 export default NiceView = ({route}) => {
   const wishlist = data.find(item => item.key == route.params.id) 
@@ -88,7 +98,6 @@ export default NiceView = ({route}) => {
   )
 
   generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717', styles);
-  
 
   return (
     <View>
@@ -106,6 +115,7 @@ export default NiceView = ({route}) => {
         ListHeaderComponent={header(route)}
         ListFooterComponent={footer}
         ItemSeparatorComponent={separator}
+        onScroll={scrollOn}
       />
     </View>
   );
