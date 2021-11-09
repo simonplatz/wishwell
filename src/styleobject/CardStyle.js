@@ -1,8 +1,8 @@
 export const card = {
   card: {
     backgroundColor: "#EBEBEB",
-    width: "95%",
-    marginLeft: "2.5%",
+    width: "97.5%",
+    marginLeft: "1.25%",
     display: "flex",
     borderRadius: 4, 
     overflow: 'hidden',

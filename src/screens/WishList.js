@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Animated, Pressable, StyleSheet, FlatList, Text, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faShare } from '@fortawesome/free-solid-svg-icons'
+import { header as headerStyle, scrollEnv} from "../styleobject/Text.js"
 
 import Card from '../components/Card.js'
 import AddButton from "../components/AddButton.js"
@@ -92,7 +93,11 @@ export default WishList = ({navigation, route}) => {
   const renderItem = ({ item }) => (
     <Pressable
       onPress={() => {
-        navigation.navigate("Wish")
+        navigation.navigate("Wish",
+          {
+            key: item.key
+          }
+        )
       }}
     >
       <Card
@@ -118,7 +123,7 @@ export default WishList = ({navigation, route}) => {
       <FlatList
         data={wishlist.wishes}
         renderItem={renderItem}
-        contentContainerStyle={styles.home}
+        contentContainerStyle={styles.scrollEnv}
         ListHeaderComponent={header(route)}
         ListFooterComponent={footer}
         ItemSeparatorComponent={separator}
@@ -129,16 +134,8 @@ export default WishList = ({navigation, route}) => {
 }
 
 const styles = StyleSheet.create({
-  home : {
-    margin: "1%",
-    marginTop: "2%"
-  },
-  headerText: {
-    fontFamily: 'OpenSans_700Bold',
-    fontSize: 36,
-    width: "100%", 
-    marginLeft: "2.5%"
-  },
+  ...headerStyle,
+  ...scrollEnv,
   floatingShare: {
     position: "absolute",
     right: 25,

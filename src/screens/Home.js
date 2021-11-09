@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, FlatList, Pressable, Text, View } from 'react-native';
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs'
 import { useFonts, OpenSans_700Bold } from "@expo-google-fonts/open-sans"
+import { header as headerStyle, scrollEnv} from "../styleobject/Text.js"
 
 import AddButton from "../components/AddButton.js"
 import Card from "../components/Card.js";
@@ -70,7 +70,7 @@ export default Home = ({navigation}) => {
         <FlatList
           data={wishList}
           renderItem={renderItem}
-          contentContainerStyle={styles.home}
+          contentContainerStyle={styles.scrollEnv}
           ListHeaderComponent={header}
           ListFooterComponent={<AddButton/>}
           ItemSeparatorComponent={separator}
@@ -81,17 +81,9 @@ export default Home = ({navigation}) => {
 }
 
 const styles = StyleSheet.create({
+  ...headerStyle,
+  ...scrollEnv,
   main: {
     width: '100%',
-  },
-  home: {
-    margin: "2.5%",
-    display: "flex"
-  },
-  headerText: {
-    fontFamily: 'OpenSans_700Bold',
-    fontSize: 36,
-    width: "100%", 
-    marginLeft: "2.5%"
   },
 })
