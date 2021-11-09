@@ -19,6 +19,8 @@ import React, { Component } from 'react';
 import { Text, StyleSheet, View, TextInput, Button, TouchableOpacity } from 'react-native';
 import md5 from 'md5';
 
+//https://code.tutsplus.com/tutorials/how-to-hash-and-decrypt-with-md5-in-javascript--cms-38297
+//Validate = hash det igen, og tjek om det samme
 
 export default class App extends Component {
 
