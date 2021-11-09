@@ -73,7 +73,7 @@ function footer() {
 }
 
 
-export default NiceView = ({route}) => {
+export default NiceView = ({route, navigation}) => {
   const wishlist = data.find(item => item.key == route.params.id) 
 
   const renderItem = ({ item }) => (
@@ -92,13 +92,17 @@ export default NiceView = ({route}) => {
 
   return (
     <View>
-      <View style={[styles.floatingShare, styles.boxShadow]}>
+      <Pressable style={[styles.floatingShare, styles.boxShadow]}
+          onPress={() => {
+            navigation.navigate('Share')
+          }}
+          >
           <FontAwesomeIcon 
             icon={faShare}
             style={styles.shareIcon}
             size={30}
           />
-      </View>
+        </Pressable>
       <FlatList
         data={wishlist.wishes}
         renderItem={renderItem}
