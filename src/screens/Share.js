@@ -36,7 +36,7 @@ const Styling = StyleSheet.create({
         color: "#0E1D31",
     },
     space: {
-        paddingBottom: 30,
+        paddingBottom: 20,
     }
 })
 

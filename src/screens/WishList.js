@@ -44,7 +44,7 @@ function separator() {
 }
 
 
-function footer() {
+function footer(navigation) {
   const renderItem = ({ item, index }) => (
     <View
       key={index}
@@ -60,7 +60,13 @@ function footer() {
 
   return (
     <View style={{height: 430}}>
-      <AddButton/>
+      <Pressable
+          onPress={() => {
+            navigation.navigate('AddWish')
+          }}
+          >
+          <AddButton/>
+        </Pressable>
       <View style={{flexDirection: "row"}}>
         <FlatList
           horizontal
@@ -119,7 +125,7 @@ export default NiceView = ({route, navigation}) => {
         renderItem={renderItem}
         contentContainerStyle={styles.home}
         ListHeaderComponent={header(route)}
-        ListFooterComponent={footer}
+        ListFooterComponent={footer(navigation)}
         ItemSeparatorComponent={separator}
         onScroll={scrollOn}
       />
