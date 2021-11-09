@@ -21,7 +21,7 @@ export const subHeader = {
 
 export const scrollEnv = {
   scrollEnv: {
-    margin: "2.5%",
-    display: "flex"
+    padding: "2.5%",
+    display: "flex",
   },
 }

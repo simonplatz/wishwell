@@ -20,10 +20,10 @@ const lorem = new LoremIpsum({
 )
 
 const data = [
-  {key: '10', name: "Kettle", price: '1299', manufacturer: 'Chemex', description: lorem.generateParagraphs(3)},
-  {key: '11', name: 'Coffee', price: '100', manufacturer: 'BestCoffee'},
-  {key: '12', name: 'Espresso Machine', price: '3899', manufacturer: 'Rancilio'},
-  {key: '13', name: 'Tamper', price: '400', manufacturer: 'Joe Frex'}
+  {key: '10', name: "Kettle", price: '1299', manufacturer: 'Chemex', description: lorem.generateParagraphs(2)},
+  {key: '11', name: 'Coffee', price: '100', manufacturer: 'BestCoffee', description: lorem.generateParagraphs(2)},
+  {key: '12', name: 'Espresso Machine', price: '3899', manufacturer: 'Rancilio', description: lorem.generateParagraphs(2)},
+  {key: '13', name: 'Tamper', price: '400', manufacturer: 'Joe Frex', description: lorem.generateParagraphs(2)}
 ]
 
 export default Wish = ({route}) => {
@@ -57,15 +57,17 @@ export default Wish = ({route}) => {
               source={require('../../assets/img/img1.jpg')} 
             /> 
           </View>
-          <Text style={styles.subHeader}>
-            {wish.price} kr 
-          </Text>
-          <Text style={styles.manufacture}>
-            {wish.manufacturer}
-          </Text>
-          <Text>
-            {wish.description}
-          </Text>
+          <View style={styles.textContainer}>
+            <Text style={styles.subHeader}>
+              {wish.price} kr 
+            </Text>
+            <Text style={styles.manufacture}>
+              {wish.manufacturer}
+            </Text>
+            <Text style={styles.textBox}>
+              {wish.description}
+            </Text>
+          </View>
         </ScrollView>
       </View>
     )
@@ -76,7 +78,6 @@ const styles = StyleSheet.create({
   ...headerStyle,
   ...scrollEnv,
   ...card,
-  ...subHeader,
   image: {
     width: '100%',
     height: 300,
@@ -95,6 +96,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#3BBA6C",
     zIndex: 2
   },
+  subHeader: {
+    fontFamily: "OpenSans_700Bold",
+    fontSize: 26
+  },
   colorHeader: {
     ...subHeader.subHeader,
     fontFamily: "OpenSans_600SemiBold",
@@ -103,9 +108,17 @@ const styles = StyleSheet.create({
     color: "#F9F9F9"
   },
   manufacture: {
-    ...subHeader.subHeader,
     margin: 0,
     fontFamily: "OpenSans_600SemiBold",
     fontSize: 22
+  },
+  textContainer: {
+    margin: '3%',
+    marginBottom: 100
+  },
+  textBox: {
+    margin: 10,
+    marginLeft: 0,
+    marginRight: 0
   }
 })
