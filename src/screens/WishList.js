@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Animated, Pressable, StyleSheet, FlatList, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { Pressable, StyleSheet, FlatList, Text, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faShare } from '@fortawesome/free-solid-svg-icons'
 import { header as headerStyle, scrollEnv} from "../styleobject/Text.js"
@@ -119,7 +119,7 @@ export default WishList = ({navigation, route}) => {
 
   return (
     <View>
-      <Pressable style={[styles.floatingShare, styles.boxShadow]}
+      <Pressable style={[showShare ? styles.floatingShare : styles.hiddenShare, styles.boxShadow]}
           onPress={() => {
             navigation.navigate('Share')
           }}

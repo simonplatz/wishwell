@@ -26,13 +26,15 @@ const data = [
   {key: '13', name: 'Tamper', price: '400', manufacturer: 'Joe Frex', description: lorem.generateParagraphs(2)}
 ]
 
-export default Wish = ({route}) => {
+export default Wish = ({route, navigation}) => {
   let [fontsLoaded] = useFonts({OpenSans_700Bold, OpenSans_600SemiBold });
 
 
   const wish = data.find(item => item.key == route.params.key)
   generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717', styles);
   
+  navigation.setOptions({ title: wish.name})
+
   if(!fontsLoaded) {
     return (<View></View>)
   } else {
@@ -59,12 +61,14 @@ export default Wish = ({route}) => {
               /> 
             </View>
             <View style={styles.textContainer}>
-              <Text style={styles.subHeader}>
-                {wish.price} kr 
-              </Text>
-              <Text style={styles.manufacture}>
-                {wish.manufacturer}
-              </Text>
+              <View style={styles.priceManufacturer}>
+                <Text style={styles.manufacture}>
+                  {wish.manufacturer}
+                </Text>
+                <Text style={styles.subHeader}>
+                  {wish.price} kr 
+                </Text>
+              </View>
               <Text style={styles.textBox}>
                 {wish.description}
               </Text>
@@ -90,10 +94,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: "center",
     alignItems: "center",
-    width: '92.5%',
+    width: '70%',
     borderRadius: 4,
     bottom: 10,
-    left: '3.75%',
+    left: '15%',
     height: 55,
     backgroundColor: "#3BBA6C",
     zIndex: 2
@@ -112,7 +116,7 @@ const styles = StyleSheet.create({
   manufacture: {
     margin: 0,
     fontFamily: "OpenSans_600SemiBold",
-    fontSize: 22
+    fontSize: 26
   },
   textContainer: {
     margin: '3%',
@@ -121,6 +125,13 @@ const styles = StyleSheet.create({
   textBox: {
     margin: 10,
     marginLeft: 0,
-    marginRight: 0
+    marginRight: 0,
+    fontSize: 16
+  },
+  priceManufacturer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-end",
   }
 })
