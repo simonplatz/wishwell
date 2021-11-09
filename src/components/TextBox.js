@@ -22,7 +22,7 @@ const StyleText = StyleSheet.create({
         flexDirection: "column",
         paddingLeft: 25,
         paddingRight: 25,
-        paddingTop: 15,
+        paddingTop: 0,
       },
       text:{
         padding: 10,
