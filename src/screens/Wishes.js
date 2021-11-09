@@ -1,5 +1,5 @@
-import React from 'react';
-import { Pressable, StyleSheet, FlatList, Text, View } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
+import { Animated, Pressable, StyleSheet, FlatList, Text, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faShare } from '@fortawesome/free-solid-svg-icons'
 
@@ -76,6 +76,19 @@ function footer() {
 export default NiceView = ({route}) => {
   const wishlist = data.find(item => item.key == route.params.id) 
 
+  const [showShare, setShowShare] = useState(true)
+
+  function scrollOn(event) {
+    event = event.nativeEvent
+    if (event.contentSize.height - 500 >
+      (event.contentOffset.y + event.layoutMeasurement.height) - 400
+    ) {
+      setShowShare(true)
+    } else {
+      setShowShare(false)
+    }
+  }
+
   const renderItem = ({ item }) => (
     <Pressable>
       <Card
@@ -88,11 +101,10 @@ export default NiceView = ({route}) => {
   )
 
   generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717', styles);
-  
 
   return (
     <View>
-      <View style={[styles.floatingShare, styles.boxShadow]}>
+      <View style={[styles.boxShadow, showShare ? styles.floatingShare : styles.hiddenShare]}>
           <FontAwesomeIcon 
             icon={faShare}
             style={styles.shareIcon}
@@ -106,6 +118,7 @@ export default NiceView = ({route}) => {
         ListHeaderComponent={header(route)}
         ListFooterComponent={footer}
         ItemSeparatorComponent={separator}
+        onScroll={scrollOn}
       />
     </View>
   );
@@ -134,6 +147,10 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center"
+  },
+  hiddenShare: {
+    display: 'none',
+    backgroundColor: "#f00"
   },
   shareIcon: {
   color: "#0E1D31"
