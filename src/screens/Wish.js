@@ -38,7 +38,7 @@ export default Wish = ({route}) => {
   } else {
     return (
       <View style={{flex: 1}}>
-        <View style={styles.buyButton}>
+        <View style={[styles.buyButton, styles.boxShadow]}>
           <Text style={styles.colorHeader}>
               Køb
           </Text>
@@ -46,27 +46,29 @@ export default Wish = ({route}) => {
         <ScrollView
           style={styles.scrollEnv}
         >
-          <Text style={styles.headerText}>
-            {wish.name} 
-          </Text>
-          <View 
-            style={[styles.card, styles.boxShadow,]}
+          <View
           >
-            <Image 
-              style={styles.image}
-              source={require('../../assets/img/img1.jpg')} 
-            /> 
-          </View>
-          <View style={styles.textContainer}>
-            <Text style={styles.subHeader}>
-              {wish.price} kr 
+            <Text style={styles.headerText}>
+              {wish.name} 
             </Text>
-            <Text style={styles.manufacture}>
-              {wish.manufacturer}
-            </Text>
-            <Text style={styles.textBox}>
-              {wish.description}
-            </Text>
+            <View 
+            >
+              <Image 
+                style={styles.image}
+                source={require('../../assets/img/img1.jpg')} 
+              /> 
+            </View>
+            <View style={styles.textContainer}>
+              <Text style={styles.subHeader}>
+                {wish.price} kr 
+              </Text>
+              <Text style={styles.manufacture}>
+                {wish.manufacturer}
+              </Text>
+              <Text style={styles.textBox}>
+                {wish.description}
+              </Text>
+            </View>
           </View>
         </ScrollView>
       </View>

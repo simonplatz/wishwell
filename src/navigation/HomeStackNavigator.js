@@ -5,12 +5,20 @@ import WishList from "../screens/WishList.js";
 import Wish from "../screens/Wish.js"
 import Share from '../screens/Share.js';
 import AddWish from '../screens/AddWish.js'
+import { out } from 'react-native/Libraries/Animated/Easing';
 
 const HomeStack = createStackNavigator();
 
 export default function HomeStackNavigator() {
   return (
-    <HomeStack.Navigator>
+    <HomeStack.Navigator
+      screenOptions={{
+        headerTintColor: 'white', 
+        headerStyle: { 
+          backgroundColor: '#3BBA6C',
+        }
+      }}
+    >
       <HomeStack.Screen 
         name="Home" 
         component={Home} 
