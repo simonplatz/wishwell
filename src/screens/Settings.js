@@ -1,54 +1,44 @@
 import React, {useState} from "react";
 import { View, Image, StyleSheet, Text, SafeAreaView, Button, Alert, Modal, Pressable, StatusBar } from "react-native";
 import {FlatList, TextInput} from "react-native-gesture-handler";
+import ModalButtonView from "../components/ModalButtonView";
+import TextBox from "../components/TextBox";
 
-export default SettingsImage => {
-  const infomrationrender = ({item}) => (
+export default Settings = () => {
+  const InformationRender = ({item}) => (
     <Information title = {item.title} />
   );
   return (
     <View style={style.container}>
       <Image style={style.image}
         source={require("../../assets/wishwlll.png")} />
-        <View style={style.text, {paddingTop: 10, alignSelf: "center"}}><Text> Username: Hellokitty</Text></View>
+        <View style={style.text, {paddingTop: 10, alignSelf: "center"}}></View>
           <SafeAreaView style={style.item}>
+
             <FlatList style={style.flatlistview}
             data={USERDATA}  
-            renderItem={infomrationrender}
+            renderItem={InformationRender}
             keyExtractor={item => item.id}
             />
               <View style={style.button}>
-              <Button 
-              onPress={() => Alert.alert('Change Username')}  
-              title="Change Username"
-              color = "#3BBA6C"
-              />
+              <ModalButtonView text="Change your name here!" buttontext="Change Name"/>
               <View style={style.space}/>
-              <Button 
-              onPress={() => Alert.alert('Change email')}  
-              title="Change email"
-              color = "#3BBA6C"
-              />
+              <ModalButtonView text="Change your email here!" buttontext="Change Email"/>
               <View style={style.space}/>
-              <Button 
-              onPress={() => Alert.alert('Change birthdate')}  
-              title="Change birthdate"
-              color = "#3BBA6C"
-              />
-              </View>
-              
+              <ModalButtonView text="Change your birthdate here!" buttontext="Change Birthdate"/>
+              </View>              
           </SafeAreaView>
             <View style={style.bottombuttom}>
-              <Buttonview/>
+              <ModalButtonView 
+              text="Change your password here!"
+              buttontext="Change Password"
+              />
               <View style={style.space}/>
-              <Button
-              onPress={() => Alert.alert('Change birthdate')}  
-              title="logout"
-              color = "#3BBA6C"/>
-            </View>
+              <Button title = "logout" color = "#3BBA6C" />
+          </View>
     </View>
   );
-}
+};
 
 // uses userdata to set the title
 const Information = ({title}) => (
@@ -57,45 +47,6 @@ const Information = ({title}) => (
   </View>
 )
 
-const Buttonview = () => {
-  // mange the model state
-  const [isVisible, setWindowVisible] = useState(false);
-  // control input value
-  const [inputValue, setInputValue] = useState("");
-  // controls the visibility of the pop-up window
-  const togglePopupwindow = () => {
-    setWindowVisible(!isVisible);
-};
-return (
-  <SafeAreaView>
-      <StatusBar style="auto" />
-
-      {/**  The first button on the screen */}
-      <Button title="Change Password" onPress={togglePopupwindow} color = "#3BBA6C" />
-
-      {/** This is our modal component containing textinput and a button */}
-      <Modal animationType="slide" 
-             transparent visible={isVisible} 
-             presentationStyle="overFullScreen" 
-             onDismiss={togglePopupwindow}>
-          <View style={style.viewWrapper}>
-              <View style={style.modalView}>
-                  <Text> Change your Password </Text>
-                  <TextInput placeholder="Enter here!" 
-                             value={inputValue} style={style.text} 
-                             onChangeText={(value) => setInputValue(value)}
-                             multiline />
-                  {/** This button is responsible to close the modal */}
-                  <View style={{flexDirection: "row"}}>
-                  <Button title="Close" onPress={togglePopupwindow} color = "#3BBA6C"/>
-                  <View style={style.space}/>
-                  <Button title="Confirm" onPress={togglePopupwindow} color = "#3BBA6C"/>
-                  </View>
-              </View>
-          </View>
-      </Modal>
-  </SafeAreaView>
-);}
 
 const style = StyleSheet.create({
   container: {
@@ -110,20 +61,17 @@ const style = StyleSheet.create({
     alignItems: "center"
   },
   flatlistview:{
-    borderColor: "black",
-    paddingBottom: 20,
-    paddingTop: 20,
+    paddingBottom: 12,
+    paddingTop: 12,
+    paddingLeft: 5,
+    width: "90%"
   },
   button: {
     alignItems: "center"
   },
-  text:{
-    fontSize: 15,
-    alignSelf: "center"
-  },
   space: {
-    width: 20,
-    height: 20
+    width: 30,
+    height: 30
   },
   bottombuttom:{
     alignItems: "center",
@@ -137,27 +85,15 @@ const style = StyleSheet.create({
       borderRadius: 125/2,
       alignSelf:"center"
   },
-  popupwindow: {
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#fff",
-  },
-  viewWrapper: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.2)",
-},
-modalView: {
-    alignItems: "center",
-    justifyContent: "center",
-    position: "absolute",
-    top: "50%",
-    height: "20%",
-    width: "70%",
-    backgroundColor: "#fff",
-    borderRadius: 7,
-},
+      text:{
+        padding: 10,
+        height: 40,
+        fontFamily: "OpenSans_700Bold",
+        color: "#0E1D31",
+        borderColor: "#3BBA6C",
+        borderRadius: 10,
+        borderWidth: 1,
+      }
 });
 
 const USERDATA = [

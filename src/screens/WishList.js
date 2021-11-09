@@ -45,7 +45,7 @@ function separator() {
 }
 
 
-function footer() {
+function footer(navigation) {
   const renderItem = ({ item, index }) => (
     <View
       key={index}
@@ -61,7 +61,13 @@ function footer() {
 
   return (
     <View style={{height: 430}}>
-      <AddButton/>
+      <Pressable
+          onPress={() => {
+            navigation.navigate('AddWish')
+          }}
+          >
+          <AddButton/>
+        </Pressable>
       <View style={{flexDirection: "row"}}>
         <FlatList
           horizontal
@@ -113,19 +119,23 @@ export default WishList = ({navigation, route}) => {
 
   return (
     <View>
-      <View style={[styles.boxShadow, showShare ? styles.floatingShare : styles.hiddenShare]}>
+      <Pressable style={[styles.floatingShare, styles.boxShadow]}
+          onPress={() => {
+            navigation.navigate('Share')
+          }}
+          >
           <FontAwesomeIcon 
             icon={faShare}
             style={styles.shareIcon}
             size={30}
           />
-      </View>
+        </Pressable>
       <FlatList
         data={wishlist.wishes}
         renderItem={renderItem}
         contentContainerStyle={styles.scrollEnv}
         ListHeaderComponent={header(route)}
-        ListFooterComponent={footer}
+        ListFooterComponent={footer(navigation)}
         ItemSeparatorComponent={separator}
         onScroll={scrollOn}
       />
