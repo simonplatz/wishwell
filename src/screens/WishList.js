@@ -73,7 +73,7 @@ function footer() {
 }
 
 
-export default NiceView = ({route}) => {
+export default WishList = ({route}) => {
   const wishlist = data.find(item => item.key == route.params.id) 
 
   const [showShare, setShowShare] = useState(true)
