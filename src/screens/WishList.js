@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Animated, Pressable, StyleSheet, FlatList, Text, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faShare } from '@fortawesome/free-solid-svg-icons'
+import { header as headerStyle, scrollEnv} from "../styleobject/Text.js"
 
 import Card from '../components/Card.js'
 import AddButton from "../components/AddButton.js"
@@ -78,7 +79,8 @@ function footer(navigation) {
   )
 }
 
-export default NiceView = ({route, navigation}) => {
+
+export default WishList = ({navigation, route}) => {
   const wishlist = data.find(item => item.key == route.params.id) 
 
   const [showShare, setShowShare] = useState(true)
@@ -95,7 +97,15 @@ export default NiceView = ({route, navigation}) => {
   }
 
   const renderItem = ({ item }) => (
-    <Pressable>
+    <Pressable
+      onPress={() => {
+        navigation.navigate("Wish",
+          {
+            key: item.key
+          }
+        )
+      }}
+    >
       <Card
         title={item.name}
         price={item.price}
@@ -123,7 +133,7 @@ export default NiceView = ({route, navigation}) => {
       <FlatList
         data={wishlist.wishes}
         renderItem={renderItem}
-        contentContainerStyle={styles.home}
+        contentContainerStyle={styles.scrollEnv}
         ListHeaderComponent={header(route)}
         ListFooterComponent={footer(navigation)}
         ItemSeparatorComponent={separator}
@@ -134,16 +144,8 @@ export default NiceView = ({route, navigation}) => {
 }
 
 const styles = StyleSheet.create({
-  home : {
-    margin: "1%",
-    marginTop: "2%"
-  },
-  headerText: {
-    fontFamily: 'OpenSans_700Bold',
-    fontSize: 36,
-    width: "100%", 
-    marginLeft: "2.5%"
-  },
+  ...headerStyle,
+  ...scrollEnv,
   floatingShare: {
     position: "absolute",
     right: 25,
