@@ -73,7 +73,7 @@ function footer() {
 }
 
 
-export default WishList = ({route}) => {
+export default WishList = ({navigation, route}) => {
   const wishlist = data.find(item => item.key == route.params.id) 
 
   const [showShare, setShowShare] = useState(true)
@@ -90,7 +90,11 @@ export default WishList = ({route}) => {
   }
 
   const renderItem = ({ item }) => (
-    <Pressable>
+    <Pressable
+      onPress={() => {
+        navigation.navigate("Wish")
+      }}
+    >
       <Card
         title={item.name}
         price={item.price}
