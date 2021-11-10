@@ -3,6 +3,7 @@ import { StyleSheet, FlatList, Pressable, Text, View } from 'react-native';
 import { useFonts, OpenSans_700Bold } from "@expo-google-fonts/open-sans"
 import { header as headerStyle, scrollEnv} from "../styleobject/Text.js"
 
+import AddWishlistModal from "../components/AddWishlistModal.js"
 import AddButton from "../components/AddButton.js"
 import Card from "../components/Card.js";
 
@@ -74,6 +75,9 @@ export default Home = ({navigation}) => {
           ListHeaderComponent={header}
           ListFooterComponent={<AddButton/>}
           ItemSeparatorComponent={separator}
+        />
+        <AddWishlistModal
+          modalVisible={true}
         />
       </View>
     );
