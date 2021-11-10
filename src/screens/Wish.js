@@ -33,7 +33,7 @@ export default Wish = ({route, navigation}) => {
   const wish = data.find(item => item.key == route.params.key)
   generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717', styles);
   
-  navigation.setOptions({ title: wish.name})
+  useEffect(() => {navigation.setOptions({ title: wish.name})}, []);
 
   if(!fontsLoaded) {
     return (<View></View>)

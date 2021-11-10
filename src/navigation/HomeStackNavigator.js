@@ -5,7 +5,6 @@ import WishList from "../screens/WishList.js";
 import Wish from "../screens/Wish.js"
 import Share from '../screens/Share.js';
 import AddWish from '../screens/AddWish.js'
-import { out } from 'react-native/Libraries/Animated/Easing';
 
 const HomeStack = createStackNavigator();
 
