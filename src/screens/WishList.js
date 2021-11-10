@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { Animated, Pressable, StyleSheet, FlatList, Text, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faShare } from '@fortawesome/free-solid-svg-icons'
@@ -83,15 +83,18 @@ function footer(navigation) {
 export default WishList = ({navigation, route}) => {
   const wishlist = data.find(item => item.key == route.params.id) 
 
+
   const [showShare, setShowShare] = useState(true)
 
   function scrollOn(event) {
     event = event.nativeEvent
-    if (event.contentSize.height - 500 >
-      (event.contentOffset.y + event.layoutMeasurement.height) - 400
+    if (event.contentSize.height - 100 >
+      (event.contentOffset.y + event.layoutMeasurement.height)
     ) {
+      fadeIn()
       setShowShare(true)
     } else {
+      fadeOut()
       setShowShare(false)
     }
   }
@@ -117,19 +120,52 @@ export default WishList = ({navigation, route}) => {
 
   generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717', styles);
 
+  const fadeShare = useRef(new Animated.Value(1)).current
+
+  const fadeIn = () => {
+    Animated.timing(fadeShare, {
+      toValue: 1, 
+      duration: 250,
+      useNativeDriver: true
+    }).start()
+  }
+
+  const fadeOut = () => {
+    Animated.timing(fadeShare, {
+      toValue: 0, 
+      duration: 250,
+      useNativeDriver: true
+    }).start()
+  }
+
   return (
     <View>
-      <Pressable style={[styles.floatingShare, styles.boxShadow]}
+      <Animated.View
+        style={[styles.floatingShare, styles.boxShadow, {
+          opacity: fadeShare 
+        }]}
+      >
+        <Pressable 
           onPress={() => {
-            navigation.navigate('Share')
+            if(showShare) {
+              navigation.navigate('Share')
+            }
           }}
-          >
+          style={({ pressed }) => [
+            styles.button,
+            {
+              backgroundColor: pressed ? 
+               '#ababab' : '#ebebeb',
+            },
+          ]}
+        >
           <FontAwesomeIcon 
             icon={faShare}
             style={styles.shareIcon}
             size={30}
           />
         </Pressable>
+      </Animated.View>
       <FlatList
         data={wishlist.wishes}
         renderItem={renderItem}
@@ -137,6 +173,7 @@ export default WishList = ({navigation, route}) => {
         ListHeaderComponent={header(route)}
         ListFooterComponent={footer(navigation)}
         ItemSeparatorComponent={separator}
+        scrollEventThrottle={16}
         onScroll={scrollOn}
       />
     </View>
@@ -153,18 +190,22 @@ const styles = StyleSheet.create({
     width: 65,
     height: 65,
     borderRadius: 50,
-    backgroundColor: "#ebebeb",
     zIndex: 2,
+  },
+  button: {
     display: "flex",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    height: '100%',
+    width: '100%',
+    borderRadius: 50
   },
   hiddenShare: {
     display: 'none',
     backgroundColor: "#f00"
   },
   shareIcon: {
-  color: "#0E1D31"
+    color: "#0E1D31"
   },
   boxShadow: {}
 })
