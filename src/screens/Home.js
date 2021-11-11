@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { StyleSheet, FlatList, Pressable, Text, View } from 'react-native';
 import { useFonts, OpenSans_700Bold } from "@expo-google-fonts/open-sans"
 import { header as headerStyle, scrollEnv} from "../styleobject/Text.js"
@@ -60,7 +60,7 @@ export default Home = ({navigation}) => {
     </Pressable>
   )
 
-
+  const [modalVisible, setModalVisible] = useState(false)
 
   if(!fontsLoaded) {
     return <View></View>
@@ -73,11 +73,18 @@ export default Home = ({navigation}) => {
           renderItem={renderItem}
           contentContainerStyle={styles.scrollEnv}
           ListHeaderComponent={header}
-          ListFooterComponent={<AddButton/>}
+          ListFooterComponent={
+            <Pressable
+              onPress={() => setModalVisible(true)}
+            >
+              <AddButton/>
+            </Pressable>
+          }
           ItemSeparatorComponent={separator}
         />
         <AddWishlistModal
-          modalVisible={true}
+          modalVisible={modalVisible}
+          setModalVisible={setModalVisible}
         />
       </View>
     );
