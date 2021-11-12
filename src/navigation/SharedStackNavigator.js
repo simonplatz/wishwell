@@ -1,13 +1,13 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Settings from "../screens/Settings.js";
+import SharedWithMe from "../screens/SharedWithMe";
 
-const SettingsStack = createStackNavigator();
+const SharedStack = createStackNavigator();
 
 export default function HomeStackNavigator() {
   return (
-    <SettingsStack.Navigator
+    <SharedStack.Navigator
         screenOptions={{
         headerTintColor: 'white', 
         headerStyle: { 
@@ -15,10 +15,10 @@ export default function HomeStackNavigator() {
         }
       }}
       >
-      <SettingsStack.Screen 
-        name="Settings"
-        component={Settings}
+      <SharedStack.Screen 
+        name="Shared with me"
+        component={SharedWithMe}
       />
-    </SettingsStack.Navigator>
+    </SharedStack.Navigator>
   )
 }

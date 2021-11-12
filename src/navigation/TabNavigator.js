@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeStackNavigator from "./HomeStackNavigator.js";
 import SettingsStackNavigator from "./SettingsStackNavigator.js";
-import SharedWithMe from "../screens/SharedWithMe.js"
+import SharedStackNavigator from "./SharedStackNavigator.js"
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faListAlt, faCog, faUserFriends } from '@fortawesome/free-solid-svg-icons'
 
@@ -35,8 +35,8 @@ function TabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Shared" 
-        component={SharedWithMe} 
+        name="Shared with me" 
+        component={SharedStackNavigator} 
         options={{
           tabBarIcon: ({ color, size }) => (
             <FontAwesomeIcon 
