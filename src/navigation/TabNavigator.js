@@ -2,7 +2,6 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeStackNavigator from "./HomeStackNavigator.js";
 import SettingsStackNavigator from "./SettingsStackNavigator.js";
-import NavigtionLogin from "./NavigationLogin";
 
 import SharedStackNavigator from "./SharedStackNavigator.js"
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
