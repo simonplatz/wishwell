@@ -24,11 +24,6 @@ function TabNavigator() {
         display: 'flex',
       }
     }} >
-
-      <Tab.Screen name="Wishlists" component={HomeStackNavigator} />
-      <Tab.Screen name="Settings" component={SettingsStackNavigator} />
-      <Tab.Screen name="Login" component={NavigtionLogin}/>
-
       <Tab.Screen 
         name="Wishlists" 
         component={HomeStackNavigator} 
