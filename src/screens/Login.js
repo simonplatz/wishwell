@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Button, StyleSheet, Text, View, Image } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
-import TextBox from '../components/TextBox';
 
 export default Login => {
     const [inputValue, setInputValue] = useState("");
@@ -10,26 +9,27 @@ export default Login => {
             <View style={style.space}/>
             <Image style={style.image}
             source={require("../../assets/wishwlll.png")} />
-             <View style={{flexDirection:"column",paddingBottom: "10%", width: "80%"}}>
+             <View style={style.body}>
                 <View style={style.space}/>
                 <View style={style.space}/>
                     <TextInput 
                     placeholder= "Email" 
-                    EmailValue={inputValue} style={style.text} 
+                    emailValue={inputValue} style={style.text} 
                     onChangeText={(EmailValue) => setInputValue(EmailValue)}/>
                     <View style={style.space}/>
                     <TextInput
                     placeholder= "Password" 
-                    Passwordvalue={inputValue} style={style.text} 
-                    onChangeText={(Passwordvalue) => setInputValue(Passwordvalue)}/>
+                    passwordValue={inputValue} style={style.text} 
+                    onChangeText={(PasswordValue) => setInputValue(PasswordValue)}/>
              </View>
-           <View style={{flexDirection: "row",}}>
-               <Button style={style.Button} title="Cancel" color="#3BBA6C"/>
+           <View style={{flexDirection: "row", alignSelf: "center" }}>
+               <Button style={style.button} title="Cancel" color="#3BBA6C"/>
                <View style={style.space}/>
-               <Button style={style.Button} title="Confirm" color="#3BBA6C"/>
+               <Button style={style.button} title="Confirm" color="#3BBA6C"/>
            </View>
            <View style={style.space}/>
-            <View>
+           <View style={style.space}/>
+            <View style={style.footer}>
                 <Button title="Sign up" color="#3BBA6C"/>
             </View>
         </View>
@@ -38,9 +38,7 @@ export default Login => {
 
 const style = StyleSheet.create({
     container: {
-      width: "100%",
       padding: 4,
-      alignItems: "center"
     },  
     image:{
         borderColor: "black",
@@ -53,6 +51,12 @@ const style = StyleSheet.create({
         width:25,
         height:25
     },
+    body:{
+        flexDirection:"column",
+        paddingBottom: "10%", 
+        width: "80%",
+        alignSelf:"center"
+    },
     text:{
         padding: 10,
         height: 40,
@@ -63,10 +67,12 @@ const style = StyleSheet.create({
         borderWidth: 1,
         textAlign: "center"
       },
-      Button:{
-          width: 200,
-          height: 200,
-          borderColor:"black",
-          borderWidth: 1
+      footer:{
+          paddingLeft: 5,
+          paddingRight: 5
+      },
+      button:{
+          width:80,
+          height:80
       }
 });
