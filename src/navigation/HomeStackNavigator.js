@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from "../screens/Home.js";
 import WishList from "../screens/WishList.js";
+import Login from '../screens/Login.js';
 import Wish from "../screens/Wish.js"
 import Share from '../screens/Share.js';
 import AddWish from '../screens/AddWish.js'
@@ -21,6 +22,10 @@ export default function HomeStackNavigator() {
       <HomeStack.Screen 
         name="Home" 
         component={Home} 
+      />
+      <HomeStack.Screen
+      name="Login"
+      component={Login}
       />
       <HomeStack.Screen 
         name="Wishes" 

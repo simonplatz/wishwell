@@ -2,9 +2,12 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeStackNavigator from "./HomeStackNavigator.js";
 import SettingsStackNavigator from "./SettingsStackNavigator.js";
-import SharedWithMe from "../screens/SharedWithMe.js"
+import NavigtionLogin from "./NavigationLogin";
+
+import SharedStackNavigator from "./SharedStackNavigator.js"
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faListAlt, faCog, faUserFriends } from '@fortawesome/free-solid-svg-icons'
+
 
 const Tab = createBottomTabNavigator();
 
@@ -21,6 +24,11 @@ function TabNavigator() {
         display: 'flex',
       }
     }} >
+
+      <Tab.Screen name="Wishlists" component={HomeStackNavigator} />
+      <Tab.Screen name="Settings" component={SettingsStackNavigator} />
+      <Tab.Screen name="Login" component={NavigtionLogin}/>
+
       <Tab.Screen 
         name="Wishlists" 
         component={HomeStackNavigator} 
@@ -35,8 +43,8 @@ function TabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Shared" 
-        component={SharedWithMe} 
+        name="Shared with me" 
+        component={SharedStackNavigator} 
         options={{
           tabBarIcon: ({ color, size }) => (
             <FontAwesomeIcon 
