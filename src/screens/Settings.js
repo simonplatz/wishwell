@@ -14,7 +14,6 @@ export default Settings = () => {
         source={require("../../assets/wishwlll.png")} />
         <View style={style.text, {paddingTop: 10, alignSelf: "center"}}></View>
           <SafeAreaView style={style.item}>
-
             <FlatList style={style.flatlistview}
             data={USERDATA}  
             renderItem={InformationRender}
