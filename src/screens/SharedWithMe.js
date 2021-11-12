@@ -9,7 +9,7 @@ function separator() {
   )
 }
 
-export default function Share() {
+export default function SharedWithMe() {
   let wishList = []
 
     wishList.push({          
