@@ -13,6 +13,9 @@ export default function AddWish() {
         <Card 
 
         />
+        <View style={Styling.container}>
+
+        </View>
         <FlatList
             data={addWishData}
             renderItem={textRender}
@@ -32,8 +35,10 @@ export default function AddWish() {
 }
 
 const Styling = StyleSheet.create({
-    button: {
+    container: {
         paddingTop: 15,
+    },
+    button: {
         paddingLeft: 25,
         paddingRight: 25,
     }

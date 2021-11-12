@@ -1,7 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { Animated, Pressable, StyleSheet, FlatList, Text, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faShare } from '@fortawesome/free-solid-svg-icons'
+import { header as headerStyle, scrollEnv} from "../styleobject/Text.js"
 
 import Card from '../components/Card.js'
 import AddButton from "../components/AddButton.js"
@@ -44,7 +45,7 @@ function separator() {
 }
 
 
-function footer() {
+function footer(navigation) {
   const renderItem = ({ item, index }) => (
     <View
       key={index}
@@ -60,7 +61,13 @@ function footer() {
 
   return (
     <View style={{height: 430}}>
-      <AddButton/>
+      <Pressable
+          onPress={() => {
+            navigation.navigate('AddWish')
+          }}
+          >
+          <AddButton/>
+        </Pressable>
       <View style={{flexDirection: "row"}}>
         <FlatList
           horizontal
@@ -73,24 +80,35 @@ function footer() {
 }
 
 
-export default WishList = ({route}) => {
+export default WishList = ({navigation, route}) => {
   const wishlist = data.find(item => item.key == route.params.id) 
+
 
   const [showShare, setShowShare] = useState(true)
 
   function scrollOn(event) {
     event = event.nativeEvent
-    if (event.contentSize.height - 500 >
-      (event.contentOffset.y + event.layoutMeasurement.height) - 400
+    if (event.contentSize.height - 100 >
+      (event.contentOffset.y + event.layoutMeasurement.height)
     ) {
+      fadeIn()
       setShowShare(true)
     } else {
+      fadeOut()
       setShowShare(false)
     }
   }
 
   const renderItem = ({ item }) => (
-    <Pressable>
+    <Pressable
+      onPress={() => {
+        navigation.navigate("Wish",
+          {
+            key: item.key
+          }
+        )
+      }}
+    >
       <Card
         title={item.name}
         price={item.price}
@@ -102,22 +120,60 @@ export default WishList = ({route}) => {
 
   generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717', styles);
 
+  const fadeShare = useRef(new Animated.Value(1)).current
+
+  const fadeIn = () => {
+    Animated.timing(fadeShare, {
+      toValue: 1, 
+      duration: 250,
+      useNativeDriver: true
+    }).start()
+  }
+
+  const fadeOut = () => {
+    Animated.timing(fadeShare, {
+      toValue: 0, 
+      duration: 250,
+      useNativeDriver: true
+    }).start()
+  }
+
   return (
     <View>
-      <View style={[styles.boxShadow, showShare ? styles.floatingShare : styles.hiddenShare]}>
+      <Animated.View
+        style={[styles.floatingShare, styles.boxShadow, {
+          opacity: fadeShare 
+        }]}
+      >
+        <Pressable 
+          onPress={() => {
+            if(showShare) {
+              navigation.navigate('Share')
+            }
+          }}
+          style={({ pressed }) => [
+            styles.button,
+            {
+              backgroundColor: pressed ? 
+               '#ababab' : '#ebebeb',
+            },
+          ]}
+        >
           <FontAwesomeIcon 
             icon={faShare}
             style={styles.shareIcon}
             size={30}
           />
-      </View>
+        </Pressable>
+      </Animated.View>
       <FlatList
         data={wishlist.wishes}
         renderItem={renderItem}
-        contentContainerStyle={styles.home}
+        contentContainerStyle={styles.scrollEnv}
         ListHeaderComponent={header(route)}
-        ListFooterComponent={footer}
+        ListFooterComponent={footer(navigation)}
         ItemSeparatorComponent={separator}
+        scrollEventThrottle={16}
         onScroll={scrollOn}
       />
     </View>
@@ -125,16 +181,8 @@ export default WishList = ({route}) => {
 }
 
 const styles = StyleSheet.create({
-  home : {
-    margin: "1%",
-    marginTop: "2%"
-  },
-  headerText: {
-    fontFamily: 'OpenSans_700Bold',
-    fontSize: 36,
-    width: "100%", 
-    marginLeft: "2.5%"
-  },
+  ...headerStyle,
+  ...scrollEnv,
   floatingShare: {
     position: "absolute",
     right: 25,
@@ -142,18 +190,22 @@ const styles = StyleSheet.create({
     width: 65,
     height: 65,
     borderRadius: 50,
-    backgroundColor: "#ebebeb",
     zIndex: 2,
+  },
+  button: {
     display: "flex",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    height: '100%',
+    width: '100%',
+    borderRadius: 50
   },
   hiddenShare: {
     display: 'none',
     backgroundColor: "#f00"
   },
   shareIcon: {
-  color: "#0E1D31"
+    color: "#0E1D31"
   },
   boxShadow: {}
 })
