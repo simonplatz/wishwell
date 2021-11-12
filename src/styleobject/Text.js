@@ -4,7 +4,8 @@ export const header = {
     fontSize: 36,
     width: "100%", 
     marginLeft: "1.25%",
-    marginBottom: 5
+    marginBottom: 5,
+    color: '#0E1D31'
   },
 }
 
@@ -15,7 +16,8 @@ export const subHeader = {
     width: "100%", 
     margin: 15,
     marginLeft: "5%",
-    marginBottom: 0
+    marginBottom: 0,
+    color: '#0E1D31'
   }
 }
 

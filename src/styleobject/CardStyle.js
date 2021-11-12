@@ -10,10 +10,12 @@ export const card = {
   text: {
     fontFamily: 'OpenSans_700Bold',
     fontSize: 24,
+    color: "#0E1D31"
   },
   subtext: {
     fontFamily: 'OpenSans_600SemiBold',
-    fontSize: 14
+    fontSize: 14,
+    color: "#0E1D31"
   },
   image: {
     width: '100%',

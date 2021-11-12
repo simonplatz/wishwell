@@ -3,10 +3,10 @@ import { Modal, StyleSheet, Button, TextInput, View, Pressable, Text } from 'rea
 import { header as headerStyle } from "../styleobject/Text.js"
 import generateBoxShadowStyle from "../tools/dropShadow.js"
 import {card} from "../styleobject/CardStyle.js"
+import TextBox from "../components/TextBox";
 
 export default function AddWishlistModal(props) {
   generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717', styles);
-
 
   return (
     <Modal
@@ -26,18 +26,22 @@ export default function AddWishlistModal(props) {
             style={styles.input}
             placeholder={"Wishlist title"}
           />
-          <Pressable
-            style={styles.button}
-            onPress={() => props.setModalVisible(false)}
+          <View
+            style={styles.buttonContainer}
           >
-            <Text>{'Cancel'}</Text>
-          </Pressable>
-          <Pressable
-            style={styles.button}
-            onPress={() => props.setModalVisible(false)}
-          >
-            <Text>{'Add'}</Text>
-          </Pressable>
+            <Pressable
+              style={styles.button}
+              onPress={() => props.setModalVisible(false)}
+            >
+              <Text>{'Cancel'}</Text>
+            </Pressable>
+            <Pressable
+              style={styles.button}
+              onPress={() => props.setModalVisible(false)}
+            >
+              <Text>{'Add'}</Text>
+            </Pressable>
+          </View>
         </View>
       </View>
     </Modal>
@@ -54,18 +58,31 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   cardContent: {
-    padding: 10,
-    width: '95%', 
+    padding: 20,
+    width: '90%', 
     display: "flex",
     justifyContent: 'center',
     flexDirection: "row",
     flexWrap: 'wrap'
   },
   input: {
-    ...headerStyle.headerText    
+    ...headerStyle.headerText,
+    borderWidth: 2,
+    borderRadius: 4,
+    padding: 5,
+    paddingLeft: 10,
+    borderColor: "#3BBA6C",
+  },
+  buttonContainer: {
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: 'row',
+    marginTop: 20,
+    marginBottom: 20,
+    width: '100%'
   },
   button: {
     width: 100,

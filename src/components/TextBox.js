@@ -1,11 +1,11 @@
 import React from "react"
-import { StyleSheet, TextInput, View, Image } from 'react-native';
+import { StyleSheet, TextInput, View } from 'react-native';
 
 const TextBox = ({title}) => {
     let text = 
     <View>
         <TextInput style = {StyleText.text}
-            placeholder = {title}
+           placeholder = {title}
         />
     </View>
 

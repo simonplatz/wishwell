@@ -14,7 +14,7 @@ function TabNavigator() {
   return (
     <Tab.Navigator screenOptions={{
       headerShown: false,
-      tabBarActiveTintColor: "#444444",
+      tabBarActiveTintColor: "#0E1D31",
       tabBarInactiveTintColor: "#a4a4a4",
       tabBarLabelStyle: {
         display: 'none'
