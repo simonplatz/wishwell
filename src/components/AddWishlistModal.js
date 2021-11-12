@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import { Modal, StyleSheet, Button, TextInput, View } from 'react-native';
-import { useFonts, OpenSans_700Bold } from "@expo-google-fonts/open-sans"
-import { header as headerStyle, scrollEnv} from "../styleobject/Text.js"
+import React from 'react';
+import { Modal, StyleSheet, Button, TextInput, View, Pressable, Text } from 'react-native';
+import { header as headerStyle } from "../styleobject/Text.js"
 import generateBoxShadowStyle from "../tools/dropShadow.js"
 import {card} from "../styleobject/CardStyle.js"
 
@@ -27,16 +26,18 @@ export default function AddWishlistModal(props) {
             style={styles.input}
             placeholder={"Wishlist title"}
           />
-          <Button 
+          <Pressable
             style={styles.button}
-            title={"Cancel"}
             onPress={() => props.setModalVisible(false)}
-          />
-          <Button 
+          >
+            <Text>{'Cancel'}</Text>
+          </Pressable>
+          <Pressable
             style={styles.button}
-            title={"Add"}
-            onPress={() => props.setModalVisible(true)}
-          />
+            onPress={() => props.setModalVisible(false)}
+          >
+            <Text>{'Add'}</Text>
+          </Pressable>
         </View>
       </View>
     </Modal>
@@ -58,7 +59,6 @@ const styles = StyleSheet.create({
   cardContent: {
     padding: 10,
     width: '95%', 
-    height: 100,
     display: "flex",
     justifyContent: 'center',
     flexDirection: "row",
@@ -68,6 +68,14 @@ const styles = StyleSheet.create({
     ...headerStyle.headerText    
   },
   button: {
-    width: '100%'
+    width: 100,
+    borderRadius: 4,
+    borderWidth: 3,
+    borderColor: '#35a761',
+    height: 40,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 5
   }
 })
