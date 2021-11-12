@@ -4,7 +4,7 @@ import {FlatList, TextInput} from "react-native-gesture-handler";
 import ModalButtonView from "../components/ModalButtonView";
 import TextBox from "../components/TextBox";
 
-export default Settings = () => {
+export default Settings = ({navigation}) => {
   const InformationRender = ({item}) => (
     <Information title = {item.title} />
   );
@@ -33,6 +33,9 @@ export default Settings = () => {
               buttontext="Change Password"
               />
               <View style={style.space}/>
+              <Button title = "login" color = "#3BBA6C" 
+                onPress={() => navigation.navigate("Login")}
+              />
               <Button title = "logout" color = "#3BBA6C" />
           </View>
     </View>
