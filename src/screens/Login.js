@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Text, Button, StyleSheet, View, Image } from 'react-native';
+import { Button, StyleSheet, View, Image } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { LoginContext } from '../contexts/LoginContext.js'
 
@@ -8,8 +8,6 @@ export default Login = () => {
   const [passwordValue, setPasswordValue] = useState("")
 
   const context = useContext(LoginContext)
-
-  console.log(context)
 
   return (
     <View style={style.container}>
@@ -34,20 +32,18 @@ export default Login = () => {
       <View style={{flexDirection: "row", alignSelf: "center" }}>
         <Button style={style.button} title="Cancel" color="#3BBA6C"/>
         <View style={style.space}/>
-        <Button style={style.button} title="Confirm" color="#3BBA6C"/>
+        <Button 
+          style={style.button} 
+          title="Login" 
+          color="#3BBA6C"
+          onPress={() => {context.toggleLogin(true)}}
+        />
       </View>
       <View style={style.space}/>
       <View style={style.footer}>
         <Button 
           title="Sign up" color="#3BBA6C"
         />
-          <View>
-            <Text>{"state " + context.loggedIn.toString()}</Text>
-            <Button 
-              title="Login" color="#3BBA6C"
-              onPress={() => {context.toggleLogin(!context.loggedIn)}}
-            />
-          </View>
       </View>
     </View>
   )
