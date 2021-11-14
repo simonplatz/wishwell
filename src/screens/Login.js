@@ -3,19 +3,23 @@ import { Text, Button, StyleSheet, View, Image } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { LoginContext } from '../contexts/LoginContext.js'
 
-export default Login => {
+export default Login = () => {
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("")
 
-  const context = useContext(LoginContext)
-  console.log(context)
-  context.toggleLogin()
+  const loggedIn = useContext(LoginContext)
+
+  console.log(loggedIn)
+  loggedIn.toggleLogin(true)
+  console.log(loggedIn)
 
   return (
     <View style={style.container}>
       <View style={style.space}/>
-      <Image style={style.image}
-        source={require("../../assets/wishwlll.png")} />
+      <Image 
+        style={style.image}
+        source={require("../../assets/wishwlll.png")} 
+      />
       <View style={style.body}>
         <View style={style.space}/>
         <View style={style.space}/>
@@ -40,11 +44,11 @@ export default Login => {
           title="Sign up" color="#3BBA6C"
         />
           <View>
-            <Text>{"state "}</Text>
-            <Button 
-              title="Login" color="#3BBA6C"
-              onPress={() => context.setLoggedIn}
-            />
+                  <Text>{"state "}</Text>
+                  <Button 
+                    title="Login" color="#3BBA6C"
+                    onPress={() => context.setLoggedIn}
+                  />
           </View>
       </View>
     </View>

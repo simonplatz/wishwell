@@ -1,8 +1,7 @@
-import React, {useState} from "react";
-import { View, Image, StyleSheet, Text, SafeAreaView, Button, Alert, Modal, Pressable, StatusBar } from "react-native";
-import {FlatList, TextInput} from "react-native-gesture-handler";
+import React  from "react";
+import { View, Image, StyleSheet, Text, SafeAreaView, Button } from "react-native";
+import {FlatList } from "react-native-gesture-handler";
 import ModalButtonView from "../components/ModalButtonView";
-import TextBox from "../components/TextBox";
 
 export default Settings = ({navigation}) => {
   const InformationRender = ({item}) => (
