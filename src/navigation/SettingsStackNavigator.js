@@ -13,7 +13,8 @@ export default function HomeStackNavigator() {
         headerTintColor: 'white', 
         headerStyle: { 
           backgroundColor: '#3BBA6C',
-        }
+        },
+        cardStyle: {backgroundColor: '#ffffff'}
       }}
     >
       <SettingsStack.Screen 

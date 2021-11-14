@@ -1,9 +1,9 @@
 import React from 'react';
-import { Modal, StyleSheet, Button, TextInput, View, Pressable, Text } from 'react-native';
-import { header as headerStyle } from "../styleobject/Text.js"
+import { Modal, StyleSheet, TextInput, View, Pressable, Text } from 'react-native';
+import { header as headerStyle, subHeader } from "../styleobject/Text.js"
 import generateBoxShadowStyle from "../tools/dropShadow.js"
 import {card} from "../styleobject/CardStyle.js"
-import TextBox from "../components/TextBox";
+import {textInput} from "../styleobject/Text.js"
 
 export default function AddWishlistModal(props) {
   generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717', styles);
@@ -11,6 +11,7 @@ export default function AddWishlistModal(props) {
   return (
     <Modal
       visible={props.modalVisible}
+      animationType={"fade"}
       transparent={true}
     >
       <View
@@ -19,12 +20,18 @@ export default function AddWishlistModal(props) {
         <View style={[
           styles.card, 
           styles.boxShadow, 
-          styles.cardContent
+          styles.cardContent,
+          {backgroundColor:"#fff"}
           ]}
         >
+          <Text
+            style={styles.head}
+          >
+            {"Tilføj ønskeliste"}
+          </Text>
           <TextInput
+            placeholder={"My wishlist"}
             style={styles.input}
-            placeholder={"Wishlist title"}
           />
           <View
             style={styles.buttonContainer}
@@ -50,15 +57,21 @@ export default function AddWishlistModal(props) {
 
 const styles = StyleSheet.create({
   ...card,
+  ...textInput,
   modal: {
     width: 100,
     height: 100,
+  },
+  head: {
+    ...subHeader.subHeader,
+    marginBottom: 15
   },
   modalContainer: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)'
   },
   cardContent: {
     padding: 20,
@@ -67,14 +80,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: "row",
     flexWrap: 'wrap'
-  },
-  input: {
-    ...headerStyle.headerText,
-    borderWidth: 2,
-    borderRadius: 4,
-    padding: 5,
-    paddingLeft: 10,
-    borderColor: "#3BBA6C",
   },
   buttonContainer: {
     display: "flex",

@@ -21,7 +21,7 @@ function TabNavigator() {
       },
       tabBarStyle : {
         display: 'flex',
-      }
+      },
     }} >
       <Tab.Screen 
         name="Wishlists" 

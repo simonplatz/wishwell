@@ -104,12 +104,12 @@ const style = StyleSheet.create({
   },
   text:{
     padding: 10,
-    height: 40,
     fontFamily: "OpenSans_700Bold",
     color: "#0E1D31",
-    borderColor: "#3BBA6C",
-    borderRadius: 10,
-    borderWidth: 1,
+    backgroundColor: "#F5F3F5",
+    borderColor: "#F5F3F5",
+    borderRadius: 5,
+    borderWidth: 1.5,
   }
 });
 

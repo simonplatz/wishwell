@@ -21,6 +21,16 @@ export const subHeader = {
   }
 }
 
+export const textInput = {
+  input: {
+    backgroundColor: "#F5F3F5",
+    borderColor: "#F5F3F5",
+    padding: 10,
+    borderRadius: 5,
+    borderWidth: 1.5,
+  }
+}
+
 export const scrollEnv = {
   scrollEnv: {
     padding: "2.5%",
