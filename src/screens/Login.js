@@ -1,10 +1,15 @@
 import React, { useState, useContext } from 'react';
-import { Button, StyleSheet, View, Image } from 'react-native';
+import { Text, Button, StyleSheet, View, Image } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import { LoginContext } from '../contexts/LoginContext.js'
 
 export default Login => {
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("")
+
+  const context = useContext(LoginContext)
+  console.log(context)
+  context.toggleLogin()
 
   return (
     <View style={style.container}>
@@ -30,14 +35,17 @@ export default Login => {
         <Button style={style.button} title="Confirm" color="#3BBA6C"/>
       </View>
       <View style={style.space}/>
-      <View style={style.space}/>
       <View style={style.footer}>
         <Button 
           title="Sign up" color="#3BBA6C"
         />
-        <Button 
-          title="Login" color="#3BBA6C"
-        />
+          <View>
+            <Text>{"state "}</Text>
+            <Button 
+              title="Login" color="#3BBA6C"
+              onPress={() => context.setLoggedIn}
+            />
+          </View>
       </View>
     </View>
   )

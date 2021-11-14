@@ -1,13 +1,24 @@
-import React, {createContext} from 'react';
+import React, {setState}  from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'react-native'
 import TabNavigator from "./src/navigation/TabNavigator.js"
 
-const LoginContext =  createContext(false)
+import { LoginContext } from './src/contexts/LoginContext.js'
 
 function App() {
+  const toggleLogin = () =>  {
+    state => ({
+      loggedIn: state.loggedIn === false ? true : false
+    })
+  }
+
+  const initialVal = {
+    loggedIn: false, 
+    toggleLogin: toggleLogin
+  }
+
   return (
-    <LoginContext.Provider login={false}>
+    <LoginContext.Provider value={initialVal}>
       <NavigationContainer>
         <StatusBar
           animated={true}
