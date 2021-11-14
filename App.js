@@ -14,7 +14,8 @@ function App() {
 
 
   const toggleLogin = (logInState) =>  {
-    setLoggedIn({...loggedIn, loggedIn: logInState})
+    console.log("state " + logInState.toString())
+    setLoggedIn(logInState)
   }
 
   const initialValue = {

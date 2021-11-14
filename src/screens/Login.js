@@ -7,11 +7,9 @@ export default Login = () => {
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("")
 
-  const loggedIn = useContext(LoginContext)
+  const context = useContext(LoginContext)
 
-  console.log(loggedIn)
-  loggedIn.toggleLogin(true)
-  console.log(loggedIn)
+  console.log(context)
 
   return (
     <View style={style.container}>
@@ -44,11 +42,11 @@ export default Login = () => {
           title="Sign up" color="#3BBA6C"
         />
           <View>
-                  <Text>{"state "}</Text>
-                  <Button 
-                    title="Login" color="#3BBA6C"
-                    onPress={() => context.setLoggedIn}
-                  />
+            <Text>{"state " + context.loggedIn.toString()}</Text>
+            <Button 
+              title="Login" color="#3BBA6C"
+              onPress={() => {context.toggleLogin(!context.loggedIn)}}
+            />
           </View>
       </View>
     </View>
