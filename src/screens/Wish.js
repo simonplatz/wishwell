@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, ScrollView, Text, View, Image } from 'react-native';
-import { scrollEnv, header as headerStyle, subHeader} from "../styleobject/Text.js"
+import { scrollEnv, header as headerStyle, subHeader} from "../styleobject/Objects.js"
 import {card} from "../styleobject/CardStyle.js"
 import { useFonts, OpenSans_700Bold, OpenSans_600SemiBold } from "@expo-google-fonts/open-sans"
 import { LoremIpsum } from "lorem-ipsum";

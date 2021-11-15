@@ -36,6 +36,41 @@ export const textInput = {
   }
 }
 
+export const buttons = {
+  button: {
+    width: '45%',
+    borderRadius: 4,
+    borderWidth: 2,
+    backgroundColor: '#35a761',
+    borderColor: '#35a761', 
+    height: 45,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 5
+  },
+  contrastButton: {
+    width: '45%',
+    borderRadius: 4,
+    display: 'flex',
+    height: 45,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 5,
+    backgroundColor: '#fff', 
+    borderColor: '#dfdfdf', 
+    borderWidth: 2
+  },
+  buttonText: {
+    fontFamily: 'OpenSans_600SemiBold',
+    color: '#fff'
+  },
+  contrastButtonText: {
+    fontFamily: 'OpenSans_600SemiBold',
+    color: '#0E1D31'
+  }
+}
+
 export const scrollEnv = {
   scrollEnv: {
     padding: "2.5%",

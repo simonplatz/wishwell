@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Animated, Pressable, StyleSheet, FlatList, Text, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faShare } from '@fortawesome/free-solid-svg-icons'
-import { header as headerStyle, scrollEnv} from "../styleobject/Text.js"
+import { header as headerStyle, scrollEnv} from "../styleobject/Objects.js"
 
 import Card from '../components/Card.js'
 import AddButton from "../components/AddButton.js"

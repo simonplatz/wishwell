@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, FlatList, View, Text} from 'react-native';
 import Card from "../components/Card.js"
-import { header as headerStyle, scrollEnv} from "../styleobject/Text.js"
+import { header as headerStyle, scrollEnv} from "../styleobject/Objects.js"
 
 function separator() {
   return (

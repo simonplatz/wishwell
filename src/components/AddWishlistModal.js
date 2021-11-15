@@ -1,10 +1,10 @@
 import React, {useState, useRef} from 'react';
 import { Modal, StyleSheet, TextInput, View, Pressable, Text } from 'react-native';
 import { useFonts, OpenSans_600SemiBold, OpenSans_400Regular } from "@expo-google-fonts/open-sans"
-import { subHeader } from "../styleobject/Text.js"
+import { subHeader, buttons} from "../styleobject/Objects.js"
 import generateBoxShadowStyle from "../tools/dropShadow.js"
 import {card} from "../styleobject/CardStyle.js"
-import {textInput} from "../styleobject/Text.js"
+import {textInput} from "../styleobject/Objects.js"
 
 
 export default function AddWishlistModal(props) {
@@ -62,11 +62,11 @@ export default function AddWishlistModal(props) {
               style={styles.buttonContainer}
             >
               <Pressable
-                style={[styles.button, {backgroundColor: '#fff', borderColor: '#dfdfdf', borderWidth: 2}]}
+                style={styles.contrastButton}
                 onPress={() => props.setModalVisible(false)}
               >
                 <Text 
-                  style={[styles.text, {color: "#0E1D31"}]}
+                  style={styles.contrastButtonText}
                 >{'Cancel'}</Text>
               </Pressable>
               <Pressable
@@ -74,7 +74,7 @@ export default function AddWishlistModal(props) {
                 onPress={() => props.setModalVisible(false)}
               >
                 <Text 
-                  style={styles.text}
+                  style={styles.buttonText}
                 >{'Add'}</Text>
               </Pressable>
             </View>
@@ -86,6 +86,7 @@ export default function AddWishlistModal(props) {
 }
 
 const styles = StyleSheet.create({
+  ...buttons,
   ...card,
   ...textInput,
   modal: {
@@ -119,21 +120,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
     width: '100%'
-  },
-  button: {
-    width: '45%',
-    borderRadius: 4,
-    borderWidth: 0,
-    backgroundColor: '#35a761',
-    height: 40,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 5
-  },
-  text: {
-    fontFamily: 'OpenSans_600SemiBold',
-    color: '#fff'
   },
   focused: {
     borderColor: '#35a761',

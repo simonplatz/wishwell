@@ -1,9 +1,9 @@
-import React, {useContext}  from "react";
+import React, {useContext, useState}  from "react";
 import { ScrollView, View, Image, StyleSheet, Text, TextInput, Pressable, Button } from "react-native";
 import { useFonts, OpenSans_600SemiBold, OpenSans_400Regular } from "@expo-google-fonts/open-sans"
-import ModalButtonView from "../components/ModalButtonView";
 import { LoginContext } from '../contexts/LoginContext.js'
-import {textInput, scrollEnv} from "../styleobject/Text.js"
+import generateBoxShadowStyle from "../tools/dropShadow.js"
+import {textInput, buttons} from "../styleobject/Objects.js"
 
 const USERDATA = {
   id: 'id1',
@@ -16,19 +16,35 @@ export default Settings = ({navigation}) => {
   let [fontsLoaded] = useFonts({OpenSans_600SemiBold, OpenSans_400Regular, });
 
   const loginContext = useContext(LoginContext)
+  generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717', style);
+
+  const [changedState, setChangedState] = useState(false)
+  const [changes, setChangedProperties] = useState({})
+
+  function textChanged(event, property) {
+    setChangedState(true)
+    changes[property] = event
+    console.log(changes)
+  }
 
   let button;
   if (loginContext.loggedIn) {
     button = 
-      <Button 
-        title = "logout" 
+      <Pressable 
+        style={[style.contrastButton, style.saveButton, style.boxShadow]}
         color = "#3BBA6C" 
         onPress={() => loginContext.toggleLogin(false)}
-      />
+      >
+        <Text style={style.contrastButtonText}>{"Logout"}</Text>
+      </Pressable>
   } else  {
-    button = <Button title = "login" color = "#3BBA6C" 
-      onPress={() => navigation.navigate("Login")}
-    />
+    button = 
+      <Pressable 
+        style={[style.button, style.saveButton, style.boxShadow]}
+        onPress={() => navigation.navigate("Login")}
+      >
+        <Text style={style.buttonText}>{"Login"}</Text>
+      </Pressable>
   }
 
   if(!fontsLoaded) {
@@ -44,51 +60,65 @@ export default Settings = ({navigation}) => {
           <Information
             info={"Name"}
             initialValue={USERDATA.title}
+            changeText={textChanged}
           />
           <Information 
             info={"Email"}
             initialValue={USERDATA.email}
+            changeText={textChanged}
           />
           <Information 
             info={"Birthday"}
             initialValue={USERDATA.date}
+            changeText={textChanged}
           />
-          <View style={style.bottombuttom}>
-            <ModalButtonView 
-              text="Change your password here!"
-              buttontext="Change Password"
-            />
-            <View style={style.space}/>
+          <View
+            style={{flex: 1, alignItems: "center"}}
+          >
+            <Pressable
+              style={[style.button, changedState ? {} : {backgroundColor: "#dfdfdf", borderColor: "#dfdfdf"}, {width: '100%'} ]}
+            >
+              <Text style={style.saveButtonText}>
+                {"Gem ændringer"}
+              </Text>
+            </Pressable>
           </View>
-          {button}
         </ScrollView>
-        <Pressable
-          style={style.saveButton}
-        >
-          <Text style={style.saveButtonText}>
-            {"Gem ændringer"}
-            </Text>
-        </Pressable>
+        {button}
       </View>
     )};
 };
 
 // uses userdata to set the title
-const Information = (props) => (
-  <View style={style.informationContainer}>
-    <Text style={style.informationText}>{props.info}</Text>
-    <TextInput style={style.input}>
-      {props.initialValue}
-    </TextInput>
-  </View>
-)
+const Information = (props) => {
+
+  function changed(e) {
+    props.changeText(e, props.info)
+  }
+
+  return( 
+    <View style={style.informationContainer}>
+      <Text style={style.informationText}>{props.info}</Text>
+      <TextInput 
+        style={style.input}
+        onChangeText={changed}
+      >
+        {props.initialValue}
+      </TextInput>
+    </View>
+  )
+}
 
 
 const style = StyleSheet.create({
-  ...scrollEnv,
+  scrollEnv: {
+    padding: "5%",
+  },
+  ...buttons,
   ...textInput,
   container: {
     flex: 1,
+    flexDirection: 'column'
   },
   item:{
     marginVertical: 10,   
@@ -99,23 +129,16 @@ const style = StyleSheet.create({
   },
   informationContainer:{
     width: "100%",
-    marginBottom: 10
+    marginBottom: 15
   },
   informationText: {
     fontFamily: 'OpenSans_600SemiBold',
-    marginBottom: 6,
+    marginBottom: 4,
     marginLeft: 5
-  },
-  button: {
-    alignItems: "center"
   },
   space: {
     width: 30,
     height: 30
-  },
-  bottombuttom:{
-    alignItems: "center",
-    paddingTop: 40
   },
   image:{
     borderColor: "black",
@@ -136,19 +159,16 @@ const style = StyleSheet.create({
   },
   saveButton: {
     position: 'absolute',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#3BBA6C',
-    borderRadius: 4,
     bottom: 10,
-    width: '90%',
-    left: '5%',
-    height: 45
+    width: '91%',
+    left: '4.5%',
+    height: 45,
+    margin: 0 
   },
   saveButtonText: {
     color: '#fff',
     fontFamily: 'OpenSans_600SemiBold'
-  }
+  },
+  boxShadow: {}
 });
 

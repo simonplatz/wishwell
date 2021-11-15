@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { StyleSheet, FlatList, Pressable, Text, View } from 'react-native';
 import { useFonts, OpenSans_700Bold } from "@expo-google-fonts/open-sans"
-import { header as headerStyle, scrollEnv} from "../styleobject/Text.js"
+import { header as headerStyle, scrollEnv} from "../styleobject/Objects.js"
 
 import AddWishlistModal from "../components/AddWishlistModal.js"
 import AddButton from "../components/AddButton.js"
