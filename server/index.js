@@ -81,10 +81,9 @@ app.post('/createUser/:name/:email/:password/:dateofbirth', async function(req,r
   
 
 function name() {
-    console.log("abc")
     
-    console.log(checkpassword('email@hotmail.com'))
-    console.log(array)
+    console.log(checkpassword('email@hotmail.com', 'password'))
+    //console.log(array)
 }
 
 
@@ -97,16 +96,21 @@ function createwish(name, price, link, wishlistid){
     })
 
   }
-async function  checkpassword(email) {
+async function  checkpassword(email, password1) {
     pool.query('SELECT * from usertable where email =$1' , [email],(err, results) => {
         if(err){console.log("lortet virker ikke")}else
 
-        //if(results.rows.password = hashe)
-
+        if(passwordHash.comparePassword(password1, results.rows[0].password)){
         array = results.rows[0]
+            console.log('true  det viker altså'+results.rows[0].password)
             console.log(array)
-         return  array  //array 
-      })
+         return  true 
+        } else {
+        array = results.rows[0]
+            console.log('password matcher ikke') 
+            return false
+        }
+    })
 
 
 } 

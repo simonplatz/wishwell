@@ -10,12 +10,7 @@ function hashPassword(password){
     return hash
 }
 
-function comparePassword(password, hashedPassword){
-    if (bcrypt.compareSync(password, hashedPassword) == true) {
-        return true
-    } else {
-        return false
-    }
-    
-
+function comparePassword(password, passwordDB){
+    const compare = bcrypt.compareSync(password, passwordDB)
+    return compare 
 }
