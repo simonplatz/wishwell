@@ -6,6 +6,7 @@ const router = express.Router()
 //import { database } from 'pg/lib/defaults';
 //import Database from './Database.js'
 var d = require('./Database.js');
+var passwordHash = require('./PasswordHash')
 const http = require('http');
 const { rows } = require('pg/lib/defaults');
 //var a = require('./Database.js').User
@@ -64,7 +65,7 @@ app.post('/createUser/:name/:email/:password/:dateofbirth', async function(req,r
     console.log("abc")
     let name = req.params.name
     let email = req.params.email
-    let password = req.params.password
+    let password = passwordHash.hashPassword(req.params.password)
     let dateofbirth = req.params.dateofbirth
    res.end( d.createUser(name,email,password,dateofbirth))})
   
