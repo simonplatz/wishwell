@@ -1,10 +1,21 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Animated, Pressable, StyleSheet, FlatList, Text, View, Image } from 'react-native';
+import React from 'react';
+import { StyleSheet, FlatList, View, Text} from 'react-native';
 import Card from "../components/Card.js"
+import { header as headerStyle, scrollEnv} from "../styleobject/Text.js"
 
 function separator() {
   return (
     <View style={{height:10}}>
+    </View>
+  )
+}
+
+function header() { 
+  return ( 
+    <View >
+      <Text style={styles.headerText} >
+        Shared with me
+      </Text>
     </View>
   )
 }
@@ -40,13 +51,17 @@ export default function SharedWithMe() {
     <View style={styles.main}>
       <FlatList
         data={wishList}
+        style={styles.scrollEnv}
         renderItem={renderItem}
+        ListHeaderComponent={header}
         ItemSeparatorComponent={separator}
       />
     </View>
   );
 }
 const styles = StyleSheet.create({
+  ...headerStyle,
+  ...scrollEnv,
   main: {
     width: '100%',
   },
