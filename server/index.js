@@ -83,7 +83,7 @@ app.get("/getUser/:email",async function(req,res) {
         if(err){console.log("lortet virker ikke")}else 
         array = res.json(results.rows[0])
             console.log("abc")
-         return  array  //res.json(results.rows[0])  //array 
+         return  array   + res.json(array)  //array 
       })
       console.log(array)
 })
