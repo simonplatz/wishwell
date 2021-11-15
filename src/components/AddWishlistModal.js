@@ -10,10 +10,7 @@ import {textInput} from "../styleobject/Text.js"
 export default function AddWishlistModal(props) {
   let [fontsLoaded] = useFonts({OpenSans_600SemiBold, OpenSans_400Regular, });
 
-
   generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717', styles);
-
-
 
   const [focus, setFocus] = useState(false)
   const customStyle = focus ? styles.focused : {}

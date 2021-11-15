@@ -24,13 +24,14 @@ export const subHeader = {
 export const textInput = {
   input: {
     backgroundColor: "#F5F3F5",
-    padding: 10,
+    padding: 8,
     paddingLeft: 10,
     borderRadius: 5,
     borderWidth: 2,
-    fontSize: 16,
+    fontSize: 14,
     width: '100%',
     borderColor: "#F5F3F5",
+    color: '#0E1D31',
     fontFamily: 'OpenSans_400Regular',
   }
 }

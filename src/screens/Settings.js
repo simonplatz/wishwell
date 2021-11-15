@@ -1,16 +1,21 @@
 import React, {useContext}  from "react";
-import { View, Image, StyleSheet, Text, SafeAreaView, Button } from "react-native";
-import {FlatList } from "react-native-gesture-handler";
+import { ScrollView, View, Image, StyleSheet, Text, TextInput, Pressable, Button } from "react-native";
+import { useFonts, OpenSans_600SemiBold, OpenSans_400Regular } from "@expo-google-fonts/open-sans"
 import ModalButtonView from "../components/ModalButtonView";
 import { LoginContext } from '../contexts/LoginContext.js'
+import {textInput, scrollEnv} from "../styleobject/Text.js"
+
+const USERDATA = {
+  id: 'id1',
+  title: 'Joakim',
+  email:'email@email.com',
+  date: '17-07-1997'
+}
 
 export default Settings = ({navigation}) => {
+  let [fontsLoaded] = useFonts({OpenSans_600SemiBold, OpenSans_400Regular, });
 
   const loginContext = useContext(LoginContext)
-
-  const InformationRender = ({item}) => (
-    <Information title = {item.title} />
-  );
 
   let button;
   if (loginContext.loggedIn) {
@@ -26,49 +31,64 @@ export default Settings = ({navigation}) => {
     />
   }
 
-  return (
-    <View style={style.container}>
-      <Image style={style.image}
-        source={require("../../assets/wishwlll.png")} />
-      <View style={style.text, {paddingTop: 10, alignSelf: "center"}}></View>
-      <SafeAreaView style={style.item}>
-        <FlatList style={style.flatlistview}
-          data={USERDATA}  
-          renderItem={InformationRender}
-          keyExtractor={item => item.id}
-        />
-        <View style={style.button}>
-          <ModalButtonView text="Change your name here!" buttontext="Change Name"/>
-          <View style={style.space}/>
-          <ModalButtonView text="Change your email here!" buttontext="Change Email"/>
-          <View style={style.space}/>
-          <ModalButtonView text="Change your birthdate here!" buttontext="Change Birthdate"/>
-        </View>              
-      </SafeAreaView>
-      <View style={style.bottombuttom}>
-        <ModalButtonView 
-          text="Change your password here!"
-          buttontext="Change Password"
-        />
-        <View style={style.space}/>
+  if(!fontsLoaded) {
+    return <View></View>
+  } else {
+    return (
+      <View style={style.container}>
+        <ScrollView
+          contentContainerStyle={style.scrollEnv}
+        >
+          <Image style={style.image}
+            source={require("../../assets/wishwlll.png")} />
+          <Information
+            info={"Name"}
+            initialValue={USERDATA.title}
+          />
+          <Information 
+            info={"Email"}
+            initialValue={USERDATA.email}
+          />
+          <Information 
+            info={"Birthday"}
+            initialValue={USERDATA.date}
+          />
+          <View style={style.bottombuttom}>
+            <ModalButtonView 
+              text="Change your password here!"
+              buttontext="Change Password"
+            />
+            <View style={style.space}/>
+          </View>
+          {button}
+        </ScrollView>
+        <Pressable
+          style={style.saveButton}
+        >
+          <Text style={style.saveButtonText}>
+            {"Gem ændringer"}
+            </Text>
+        </Pressable>
       </View>
-      {button}
-    </View>
-  );
+    )};
 };
 
 // uses userdata to set the title
-const Information = ({title}) => (
-  <View style={style.flatlistview}>
-    <Text style={style.text}>{title}</Text>
+const Information = (props) => (
+  <View style={style.informationContainer}>
+    <Text style={style.informationText}>{props.info}</Text>
+    <TextInput style={style.input}>
+      {props.initialValue}
+    </TextInput>
   </View>
 )
 
 
 const style = StyleSheet.create({
+  ...scrollEnv,
+  ...textInput,
   container: {
-    width: "100%",
-    padding: 4,
+    flex: 1,
   },
   item:{
     marginVertical: 10,   
@@ -77,11 +97,14 @@ const style = StyleSheet.create({
     height:"45%",
     alignItems: "center"
   },
-  flatlistview:{
-    paddingBottom: 12,
-    paddingTop: 12,
-    paddingLeft: 5,
-    width: "90%"
+  informationContainer:{
+    width: "100%",
+    marginBottom: 10
+  },
+  informationText: {
+    fontFamily: 'OpenSans_600SemiBold',
+    marginBottom: 6,
+    marginLeft: 5
   },
   button: {
     alignItems: "center"
@@ -110,20 +133,22 @@ const style = StyleSheet.create({
     borderColor: "#F5F3F5",
     borderRadius: 5,
     borderWidth: 1.5,
+  },
+  saveButton: {
+    position: 'absolute',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#3BBA6C',
+    borderRadius: 4,
+    bottom: 10,
+    width: '90%',
+    left: '5%',
+    height: 45
+  },
+  saveButtonText: {
+    color: '#fff',
+    fontFamily: 'OpenSans_600SemiBold'
   }
 });
 
-const USERDATA = [
-  {
-    id: 'id1',
-    title: 'Joakim'
-  },
-  {
-    id:'id2',
-    title:'email@email.com'
-  },
-  {
-    id: 'id3',
-    title: '17-07-1997'
-  }
-]
