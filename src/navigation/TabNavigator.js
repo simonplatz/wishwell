@@ -24,7 +24,7 @@ function TabNavigator() {
       },
     }} >
       <Tab.Screen 
-        name="Wishlists" 
+        name="Wishlist Screen" 
         component={HomeStackNavigator} 
         options={{
           tabBarIcon: ({ color, size }) => (
@@ -37,7 +37,7 @@ function TabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Shared with me" 
+        name="Shared With Me Screen" 
         component={SharedStackNavigator} 
         options={{
           tabBarIcon: ({ color, size }) => (
@@ -50,7 +50,7 @@ function TabNavigator() {
         }}
       />
       <Tab.Screen 
-        name="Settings" 
+        name="SettingScreen" 
         component={SettingsStackNavigator} 
         options={{
           tabBarIcon: ({ color, size }) => (

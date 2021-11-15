@@ -3,7 +3,7 @@ import { Button, StyleSheet, View, Image } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { LoginContext } from '../contexts/LoginContext.js'
 
-export default Login = () => {
+export default Login = ({navigation}) => {
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("")
 
@@ -36,7 +36,10 @@ export default Login = () => {
           style={style.button} 
           title="Login" 
           color="#3BBA6C"
-          onPress={() => {context.toggleLogin(true)}}
+          onPress={() => {
+            context.toggleLogin(true)
+            navigation.pop()
+          }}
         />
       </View>
       <View style={style.space}/>
