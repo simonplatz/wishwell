@@ -141,7 +141,17 @@ app.get("/getwishlists/:userid",async function(req,res) {
          })
          console.log(array)
    })
-
+   app.get("/getwishlist/:wishlistid",async function(req,res) {
+    pool.query('select * from wishlist join user_wishlist on wishlist.wishlistid ='
+    +' user_wishlist.wishlistid where wishlist.wishlistid = $1' , [req.params.wishlistid],function (err, results)  {
+           if(err){console.log("lortet virker ikke")}else 
+            array = results.rows
+   
+               console.log(array)
+            return array + res.json(array)   //res.json(results.rows[0])  //array 
+         })
+         console.log(array)
+   })
 
    app.post('/createwish/:name/:price/:link/:wishlistid', async function(req,res){
     res.send(req.params)
@@ -154,6 +164,81 @@ app.get("/getwishlists/:userid",async function(req,res) {
    res.end( d.createwish(name,price,link,wishlistid))})
 
 
-   app.get("/getwishes",function () {
-       
+   app.get("/getwishes/:wishlistid",function (req,res) {
+    pool.query('select * from wish where wishlistid = $1' , [req.params.wishlistid],function (err, results)  {
+           if(err){console.log("lortet virker ikke")}else 
+            array = results.rows
+   
+               console.log(array)
+            return array + res.json(array)   //res.json(results.rows[0])  //array 
+         })
+         console.log(array)
    })
+
+   app.get("/getwish/:wishid",function (req,res) {
+    pool.query('select * from wish where wishid = $1' , [req.params.wishid],function (err, results)  {
+           if(err){console.log("lortet virker ikke")}else 
+            array = results.rows
+   
+               console.log(array)
+            return array + res.json(array)   //res.json(results.rows[0])  //array 
+         })
+         console.log(array)
+   })
+
+   
+app.put("/deleteUser/:email",function(req,res) {
+    pool.query("Update usertable set email = $1, deleted = true where email =$2", [req.params.email],function (err, results)  {
+        if(err){
+            console.log("lortet virker ikke")
+        }else 
+        array = res.json(results.rows[0])
+            console.log(results.rows[0])
+            console.log("abc")
+            res.end
+      })
+
+})
+
+app.put("/updateWishlist/:name/:wishlistid",function(req,res) {
+    pool.query("Update wishlist set name = $1 where wishlistid =$2", [req.params.name,req.params.wishlistid],function (err, results)  {
+        if(err){
+            console.log("lortet virker ikke")
+            console.log()
+            res.end
+        
+        }else 
+    
+        
+        array = res.json(results.rows[0])
+
+
+            console.log(results.rows[0])
+            console.log("abc")
+            res.end
+        
+      })
+
+})
+
+app.put("/updateWish/:name/:wishid/:link/:price",function(req,res) {
+    pool.query("Update wishlist set name = $1, link = $2, price = $3 where wishlistid =$2"
+    , [req.params.name,req.params.link,req.params.price,req.params.wishlistid],function (err, results)  {
+        if(err){
+            console.log("lortet virker ikke")
+            console.log()
+            res.end
+        
+        }else 
+    
+        
+        array = res.json(results.rows[0])
+
+
+            console.log(results.rows[0])
+            console.log("abc")
+            res.end
+        
+      })
+
+})
