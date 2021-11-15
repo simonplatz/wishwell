@@ -1,80 +1,119 @@
-import React from 'react';
-import { Modal, StyleSheet, Button, TextInput, View, Pressable, Text } from 'react-native';
-import { header as headerStyle } from "../styleobject/Text.js"
+import React, {useState, useRef} from 'react';
+import { Modal, StyleSheet, TextInput, View, Pressable, Text } from 'react-native';
+import { useFonts, OpenSans_600SemiBold, OpenSans_400Regular } from "@expo-google-fonts/open-sans"
+import { subHeader } from "../styleobject/Text.js"
 import generateBoxShadowStyle from "../tools/dropShadow.js"
 import {card} from "../styleobject/CardStyle.js"
-import TextBox from "../components/TextBox";
+import {textInput} from "../styleobject/Text.js"
+
 
 export default function AddWishlistModal(props) {
+  let [fontsLoaded] = useFonts({OpenSans_600SemiBold, OpenSans_400Regular, });
+
+
   generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717', styles);
 
+
+
+  const [focus, setFocus] = useState(false)
+  const customStyle = focus ? styles.focused : {}
+
+  const fieldRef = useRef(null)
+
+  if(!fontsLoaded) {
+    return <View></View>
+  } else {
   return (
     <Modal
       visible={props.modalVisible}
+      animationType={"fade"}
       transparent={true}
     >
-      <View
-        style={styles.modalContainer}
+      <Pressable
+        style={{flex: 1}}
+        onPress={() => {
+          console.log("pressed")
+          fieldRef.current.blur()
+          props.setModalVisible(false)
+        }}
       >
-        <View style={[
-          styles.card, 
-          styles.boxShadow, 
-          styles.cardContent
-          ]}
+        <View
+          style={styles.modalContainer}
         >
-          <TextInput
-            style={styles.input}
-            placeholder={"Wishlist title"}
-          />
-          <View
-            style={styles.buttonContainer}
+          <View style={[
+            styles.card, 
+            styles.boxShadow, 
+            styles.cardContent,
+            {backgroundColor:"#fff"}
+          ]}
           >
-            <Pressable
-              style={styles.button}
-              onPress={() => props.setModalVisible(false)}
+            <Text
+              style={styles.head}
             >
-              <Text>{'Cancel'}</Text>
-            </Pressable>
-            <Pressable
-              style={styles.button}
-              onPress={() => props.setModalVisible(false)}
+              {"Tilføj ønskeliste"}
+            </Text>
+            <TextInput
+              placeholder={"My wishlist"}
+              style={[styles.input, customStyle]}
+              ref={fieldRef}
+              onFocus={() => setFocus(true)}
+              onBlur={() => { 
+                console.log("blurring") 
+                setFocus(false)}}
+            />
+            <View
+              style={styles.buttonContainer}
             >
-              <Text>{'Add'}</Text>
-            </Pressable>
+              <Pressable
+                style={[styles.button, {backgroundColor: '#fff', borderColor: '#dfdfdf', borderWidth: 2}]}
+                onPress={() => props.setModalVisible(false)}
+              >
+                <Text 
+                  style={[styles.text, {color: "#0E1D31"}]}
+                >{'Cancel'}</Text>
+              </Pressable>
+              <Pressable
+                style={styles.button}
+                onPress={() => props.setModalVisible(false)}
+              >
+                <Text 
+                  style={styles.text}
+                >{'Add'}</Text>
+              </Pressable>
+            </View>
           </View>
         </View>
-      </View>
+      </Pressable>
     </Modal>
-  )
+  )}
 }
 
 const styles = StyleSheet.create({
   ...card,
+  ...textInput,
   modal: {
     width: 100,
     height: 100,
+  },
+  head: {
+    ...subHeader.subHeader,
+    marginTop: 0,
+    marginLeft: 0,
+    marginBottom: 15,
   },
   modalContainer: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)'
   },
   cardContent: {
-    padding: 20,
+    padding: 25,
     width: '90%', 
     display: "flex",
-    justifyContent: 'center',
     flexDirection: "row",
     flexWrap: 'wrap'
-  },
-  input: {
-    ...headerStyle.headerText,
-    borderWidth: 2,
-    borderRadius: 4,
-    padding: 5,
-    paddingLeft: 10,
-    borderColor: "#3BBA6C",
   },
   buttonContainer: {
     display: "flex",
@@ -85,14 +124,21 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   button: {
-    width: 100,
+    width: '45%',
     borderRadius: 4,
-    borderWidth: 3,
-    borderColor: '#35a761',
+    borderWidth: 0,
+    backgroundColor: '#35a761',
     height: 40,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     margin: 5
-  }
+  },
+  text: {
+    fontFamily: 'OpenSans_600SemiBold',
+    color: '#fff'
+  },
+  focused: {
+    borderColor: '#35a761',
+  },
 })
