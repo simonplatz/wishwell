@@ -242,3 +242,10 @@ app.put("/updateWish/:name/:wishid/:link/:price",function(req,res) {
       })
 
 })
+
+app.post("/shareWishlist/:shareduserid/:wishlistid", function (req,res) {
+    pool.query("insert into shared(shareduserid,wishlistid) values($1,$2)",[req.params.shareduserid,req.params.wishlistid],function (err,results) {
+        console.log(err, res)
+        //client.end() 
+    })
+})
