@@ -168,7 +168,7 @@ app.post('/createWishlist/:userid/:name', function(req,res){
 })
 
 app.get("/getwishlists/:userid",async function(req,res) {
-    pool.query('select * from wishlist join user_wishlist on wishlist.wishlistid ='
+   await pool.query('select * from wishlist join user_wishlist on wishlist.wishlistid ='
     +' user_wishlist.wishlistid where userid = $1' , [req.params.userid],function (err, results)  {
            if(err){console.log("lortet virker ikke")}else 
             array = results.rows
@@ -179,7 +179,7 @@ app.get("/getwishlists/:userid",async function(req,res) {
          console.log(array)
    })
    app.get("/getwishlist/:wishlistid",async function(req,res) {
-    pool.query('select * from wishlist join user_wishlist on wishlist.wishlistid ='
+   await pool.query('select * from wishlist join user_wishlist on wishlist.wishlistid ='
     +' user_wishlist.wishlistid where wishlist.wishlistid = $1' , [req.params.wishlistid],function (err, results)  {
            if(err){console.log("lortet virker ikke")}else 
             array = results.rows
@@ -202,7 +202,7 @@ app.get("/getwishlists/:userid",async function(req,res) {
 
 
    app.get("/getwishes/:wishlistid",function (req,res) {
-    pool.query('select * from wish where wishlistid = $1' , [req.params.wishlistid],function (err, results)  {
+   await pool.query('select * from wish where wishlistid = $1' , [req.params.wishlistid],function (err, results)  {
            if(err){console.log("lortet virker ikke")}else 
             array = results.rows
    
@@ -213,7 +213,7 @@ app.get("/getwishlists/:userid",async function(req,res) {
    })
 
    app.get("/getwish/:wishid",function (req,res) {
-    pool.query('select * from wish where wishid = $1' , [req.params.wishid],function (err, results)  {
+   await pool.query('select * from wish where wishid = $1' , [req.params.wishid],function (err, results)  {
            if(err){console.log("lortet virker ikke")}else 
             array = results.rows
    
