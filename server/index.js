@@ -53,7 +53,7 @@ var pool = new Pool({
   })
 
 connectToDb()
-//name()
+//testCheckPassword()
 
 
 function connectToDb() {
@@ -80,7 +80,7 @@ app.post('/createUser/:name/:email/:password/:dateofbirth', async function(req,r
   
   
 
-/*function name() {
+/*function testCheckPassword() {
     
     console.log(checkPassword('email@hotmail.com', 'password'))
     //console.log(array)
