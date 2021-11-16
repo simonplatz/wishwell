@@ -42,7 +42,7 @@ export default Wish = ({route, navigation}) => {
       <View style={{flex: 1}}>
         <View style={[styles.buyButton, styles.boxShadow]}>
           <Text style={styles.colorHeader}>
-              Køb
+              Buy
           </Text>
         </View>
         <ScrollView
@@ -94,10 +94,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: "center",
     alignItems: "center",
+    alignSelf:"center",
     width: '70%',
     borderRadius: 4,
     bottom: 10,
-    left: '15%',
     height: 55,
     backgroundColor: "#3BBA6C",
     zIndex: 2
