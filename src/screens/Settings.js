@@ -1,4 +1,4 @@
-import React, {useContext, useState}  from "react";
+import React, {useContext, useEffect, useState}  from "react";
 import { ScrollView, View, Image, StyleSheet, Text, TextInput, Pressable } from "react-native";
 import { useFonts, OpenSans_600SemiBold, OpenSans_400Regular } from "@expo-google-fonts/open-sans"
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -11,7 +11,7 @@ const USERDATA = {
   id: 'id1',
   title: 'Joakim',
   email:'email@email.com',
-  date: '17-07-1997'
+  date: '1637911922589'
 }
 
 export default Settings = ({navigation}) => {
@@ -22,8 +22,12 @@ export default Settings = ({navigation}) => {
 
   const [changedState, setChangedState] = useState(false)
   const [changes, setChangedProperties] = useState({})
+
   const [showDatePicker, setShowDatePicker] = useState(false)
-  const [date, setDate] = useState(new Date())
+  const [date, setDate] = useState({
+    date: new Date(),
+    displayString: ''
+  })
 
   function textChanged(event, property) {
     setChangedState(true)
@@ -31,12 +35,27 @@ export default Settings = ({navigation}) => {
     console.log(changes)
   }
 
-  function dateChanged(event, selectedDate) {
-    setShowDatePicker(false)
-    const date = new Date(selectedDate)
-    setDate(date)
-    textChanged(date, "Birthday")
+  function getDisplayDate(date) {
+    return date.getDate() + "-" + parseInt(date.getMonth() + 1).toString() + "-" + date.getFullYear();
   }
+
+  function dateChanged(event, selectedDate) {
+    if (selectedDate != undefined) {
+      console.log(selectedDate)
+      setShowDatePicker(false)
+      const newDate = new Date(selectedDate)
+      
+      setDate({
+        date: newDate,
+        displayString: getDisplayDate(newDate)
+      })
+      console.log(date)
+    }
+  }
+
+  useEffect(() => {
+    dateChanged("event", parseInt(USERDATA.date))
+  }, [])
 
   let button;
   if (loginContext.loggedIn) {
@@ -83,7 +102,7 @@ export default Settings = ({navigation}) => {
           >
             <Information 
               info={"Birthday"}
-              initialValue={USERDATA.date}
+              initialValue={date.displayString}
               editable={false}
             />
           </Pressable>
@@ -94,13 +113,13 @@ export default Settings = ({navigation}) => {
               style={[style.button, changedState ? {} : {backgroundColor: "#dfdfdf", borderColor: "#dfdfdf"}, {width: '100%'} ]}
             >
               <Text style={style.saveButtonText}>
-                {"Gem ændringer"}
+                {"Save changes"}
               </Text>
             </Pressable>
 
           </View>
           {showDatePicker && <DateTimePicker
-            value={date}
+            value={date.date}
             mode={"date"}
             is24Hour={true}
             onChange={dateChanged}
