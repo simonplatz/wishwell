@@ -53,7 +53,7 @@ var pool = new Pool({
   })
 
 connectToDb()
-name()
+//name()
 
 
 function connectToDb() {
@@ -80,11 +80,11 @@ app.post('/createUser/:name/:email/:password/:dateofbirth', async function(req,r
   
   
 
-function name() {
+/*function name() {
     
-    console.log(checkpassword('email@hotmail.com', 'password'))
+    console.log(checkPassword('email@hotmail.com', 'password'))
     //console.log(array)
-}
+}*/
 
 
 function createwish(name, price, link, wishlistid){
@@ -96,13 +96,13 @@ function createwish(name, price, link, wishlistid){
     })
 
   }
-async function  checkpassword(email, password1) {
+async function  checkPassword(email, password1) {
     pool.query('SELECT * from usertable where email =$1' , [email],(err, results) => {
         if(err){console.log("lortet virker ikke")}else
 
         if(passwordHash.comparePassword(password1, results.rows[0].password)){
         array = results.rows[0]
-            console.log('true  det viker altså'+results.rows[0].password)
+            //console.log('true  det viker altså'+results.rows[0].password)
             console.log(array)
          return  true 
         } else {
