@@ -49,12 +49,14 @@ export default Settings = ({navigation}) => {
         date: newDate,
         displayString: getDisplayDate(newDate)
       })
-      console.log(date)
+      if (event != "initial") {
+        textChanged(newDate.getTime(), "Birthday")
+      }
     }
   }
 
   useEffect(() => {
-    dateChanged("event", parseInt(USERDATA.date))
+    dateChanged("initial", parseInt(USERDATA.date))
   }, [])
 
   let button;
