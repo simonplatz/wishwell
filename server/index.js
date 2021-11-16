@@ -53,9 +53,11 @@ var pool = new Pool({
   })
 
 connectToDb()
-//testCheckPassword()
+testCheckPassword()
 
-
+var callback1 = function (data) {
+    return data
+}
 function connectToDb() {
      
     pool.connect(function(err) {
@@ -80,11 +82,11 @@ app.post('/createUser/:name/:email/:password/:dateofbirth', async function(req,r
   
   
 
-/*function testCheckPassword() {
+function testCheckPassword() {
     
     console.log(checkPassword('email@hotmail.com', 'password'))
     //console.log(array)
-}*/
+}
 
 
 function createwish(name, price, link, wishlistid){
@@ -96,7 +98,7 @@ function createwish(name, price, link, wishlistid){
     })
 
   }
-async function  checkPassword(email, password1) {
+async function  checkPassword(email, password1, callback1) {
     pool.query('SELECT * from usertable where email =$1' , [email],(err, results) => {
         if(err){console.log("lortet virker ikke")}else
 
@@ -104,7 +106,7 @@ async function  checkPassword(email, password1) {
         array = results.rows[0]
             //console.log('true  det viker altså'+results.rows[0].password)
             console.log(array)
-         return  true 
+         return callback1(true) //true 
         } else {
         array = results.rows[0]
             console.log('password matcher ikke') 
@@ -116,18 +118,18 @@ async function  checkPassword(email, password1) {
 } 
 
 app.get("/getUser/:email",async function(req,res) {
- pool.query('SELECT * from usertable where email =$1' , [req.params.email],function (err, results)  {
+await pool.query('SELECT * from usertable where email =$1' , [req.params.email],function (err, results)  {
         if(err){console.log("lortet virker ikke")}else 
         array = results.rows
             console.log("abc")
          return  array   + res.json(array)  //array 
       })
-      console.log(array)
+   console.log(array)
 })
 
 
-app.put("/updateUser/:password/:email",function(req,res) {
-    pool.query("Update usertable set password = $1, email = $2 where email =$2", [req.params.password,req.params.email],function (err, results)  {
+app.put("/updateUser/:password/:email/:dateofbirth",function(req,res) {
+    pool.query("Update usertable set password = $1, email = $2, dataofbirth =$3 where email =$2", [req.params.password,req.params.email,req.params.dateofbirth],function (err, results)  {
         if(err){
             console.log("lortet virker ikke")
             console.log()
@@ -201,7 +203,7 @@ app.get("/getwishlists/:userid",async function(req,res) {
    res.end( d.createwish(name,price,link,wishlistid))})
 
 
-   app.get("/getwishes/:wishlistid",function (req,res) {
+   app.get("/getwishes/:wishlistid",async function (req,res) {
    await pool.query('select * from wish where wishlistid = $1' , [req.params.wishlistid],function (err, results)  {
            if(err){console.log("lortet virker ikke")}else 
             array = results.rows
@@ -212,7 +214,7 @@ app.get("/getwishlists/:userid",async function(req,res) {
          console.log(array)
    })
 
-   app.get("/getwish/:wishid",function (req,res) {
+   app.get("/getwish/:wishid",async function (req,res) {
    await pool.query('select * from wish where wishid = $1' , [req.params.wishid],function (err, results)  {
            if(err){console.log("lortet virker ikke")}else 
             array = results.rows
