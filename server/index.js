@@ -12,6 +12,9 @@ const { rows } = require('pg/lib/defaults');
 //var a = require('./Database.js').User
 const hostname = '127.0.0.1';
 const port = 3000;
+require('dotenv').config()
+
+
 app.use(bodyParser.urlencoded({ extended: true }));
 //app.use(bodyParser.json());
 
@@ -40,15 +43,15 @@ class User  {
     };
 }
 
-app.listen(3000, () => console.log("virk"))
+app.listen(4000, () => console.log("virk"))
 //d.connectToDb()
 
 
 var pool = new Pool({
-    user: 'postgres',
+    user: process.env.username,
     host: 'localhost',
-    database: 'postgres',
-    password: 'user123',
+    database: process.env.dbName,
+    password: process.env.password,
     port: 5432,
   })
 

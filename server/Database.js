@@ -25,10 +25,10 @@ class User  {
     })
   }
 var pool = new Pool({
-    user: 'postgres',
+    user: 'wishwell',
     host: 'localhost',
-    database: 'postgres',
-    password: 'user123',
+    database: 'wishwell_data',
+    password: 'wishwellisgreat',
     port: 5432,
   })
 
