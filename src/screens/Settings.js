@@ -1,9 +1,11 @@
 import React, {useContext, useState}  from "react";
-import { ScrollView, View, Image, StyleSheet, Text, TextInput, Pressable, Button } from "react-native";
+import { ScrollView, View, Image, StyleSheet, Text, TextInput, Pressable } from "react-native";
 import { useFonts, OpenSans_600SemiBold, OpenSans_400Regular } from "@expo-google-fonts/open-sans"
+import DateTimePicker from '@react-native-community/datetimepicker';
 import { LoginContext } from '../contexts/LoginContext.js'
 import generateBoxShadowStyle from "../tools/dropShadow.js"
 import {textInput, buttons} from "../styleobject/Objects.js"
+
 
 const USERDATA = {
   id: 'id1',
@@ -20,11 +22,20 @@ export default Settings = ({navigation}) => {
 
   const [changedState, setChangedState] = useState(false)
   const [changes, setChangedProperties] = useState({})
+  const [showDatePicker, setShowDatePicker] = useState(false)
+  const [date, setDate] = useState(new Date())
 
   function textChanged(event, property) {
     setChangedState(true)
     changes[property] = event
     console.log(changes)
+  }
+
+  function dateChanged(event, selectedDate) {
+    setShowDatePicker(false)
+    const date = new Date(selectedDate)
+    setDate(date)
+    textChanged(date, "Birthday")
   }
 
   let button;
@@ -67,11 +78,15 @@ export default Settings = ({navigation}) => {
             initialValue={USERDATA.email}
             changeText={textChanged}
           />
-          <Information 
-            info={"Birthday"}
-            initialValue={USERDATA.date}
-            changeText={textChanged}
-          />
+          <Pressable
+            onPress={() => setShowDatePicker(true)}
+          >
+            <Information 
+              info={"Birthday"}
+              initialValue={USERDATA.date}
+              editable={false}
+            />
+          </Pressable>
           <View
             style={{flex: 1, alignItems: "center"}}
           >
@@ -82,7 +97,15 @@ export default Settings = ({navigation}) => {
                 {"Gem ændringer"}
               </Text>
             </Pressable>
+
           </View>
+          {showDatePicker && <DateTimePicker
+            value={date}
+            mode={"date"}
+            is24Hour={true}
+            onChange={dateChanged}
+          />
+        }
         </ScrollView>
         {button}
       </View>
@@ -102,6 +125,7 @@ const Information = (props) => {
       <TextInput 
         style={style.input}
         onChangeText={changed}
+        editable={props.editable != undefined ? props.editable : true}
       >
         {props.initialValue}
       </TextInput>
