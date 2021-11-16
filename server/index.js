@@ -12,6 +12,9 @@ const { rows } = require('pg/lib/defaults');
 //var a = require('./Database.js').User
 const hostname = '127.0.0.1';
 const port = 3000;
+require('dotenv').config()
+
+
 app.use(bodyParser.urlencoded({ extended: true }));
 //app.use(bodyParser.json());
 
@@ -40,15 +43,15 @@ class User  {
     };
 }
 
-app.listen(3000, () => console.log("virk"))
+app.listen(4000, () => console.log("virk"))
 //d.connectToDb()
 
 
 var pool = new Pool({
-    user: 'postgres',
+    user: process.env.username,
     host: 'localhost',
-    database: 'postgres',
-    password: 'user123',
+    database: process.env.dbName,
+    password: process.env.password,
     port: 5432,
   })
 
@@ -201,7 +204,7 @@ app.get("/getwishlists/:userid",async function(req,res) {
    res.end( d.createwish(name,price,link,wishlistid))})
 
 
-   app.get("/getwishes/:wishlistid",function (req,res) {
+   app.get("/getwishes/:wishlistid", async function (req,res) {
    await pool.query('select * from wish where wishlistid = $1' , [req.params.wishlistid],function (err, results)  {
            if(err){console.log("lortet virker ikke")}else 
             array = results.rows
@@ -212,7 +215,7 @@ app.get("/getwishlists/:userid",async function(req,res) {
          console.log(array)
    })
 
-   app.get("/getwish/:wishid",function (req,res) {
+   app.get("/getwish/:wishid", async function (req,res) {
    await pool.query('select * from wish where wishid = $1' , [req.params.wishid],function (err, results)  {
            if(err){console.log("lortet virker ikke")}else 
             array = results.rows
