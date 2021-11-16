@@ -46,6 +46,7 @@ export default Login = ({navigation}) => {
       <View style={style.footer}>
         <Button 
           title="Sign up" color="#3BBA6C"
+          onPress={() => navigation.navigate("Signup")}
         />
       </View>
     </View>
