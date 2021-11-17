@@ -1,68 +1,71 @@
-import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, Button, Alert} from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
-import TextBox from '../components/TextBox';
-import Card from '../components/Card';
+import React, {useState} from 'react';
+import { StyleSheet, View, Text, SafeAreaView, ScrollView, ToastAndroid, Pressable} from 'react-native';
+import Information from '../components/TextInfoField.js'
+import generateBoxShadowStyle from "../tools/dropShadow.js"
+import { buttons, floatingButton } from '../styleobject/Objects.js'
+
 
 export default function AddWish() {
-    const textRender = ({item}) => (
-        <TextBox title = {item.title} />
-      );
-    return (
-    <SafeAreaView>
-        <Card 
+  const [inputState, setInputState] = useState({})
+  generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717', styles);
 
-        />
-        <View style={Styling.container}>
+  function inputChanged(event, property) {
+    property = property.toLowerCase()
+    inputState[property] = event
+    console.log(inputState)
+  }
 
-        </View>
-        <FlatList
-            data={addWishData}
-            renderItem={textRender}
-            keyExtractor={item => item.id}
-        />
+  return (
+    <View style={styles.container}>
+      <ScrollView
+        contentContainerStyle={styles.scrollEnv}
+      >
+        {
+          addWishData.map((item, index) => {
+            return (
+              <Information 
+                key={index}
+                info={item} 
+                changeText={inputChanged} 
+              />
+            )})
+        }
 
-        <View style = {Styling.button}>
-        <Button 
-            onPress={() => Alert.alert("Wish added!")}
-            title = "Add wish to wishlist"
-            color = "#3BBA6C"
-        />
-        </View>
-    </SafeAreaView>
-    
+      </ScrollView>
+      <Pressable
+        style={({pressed}) => [
+          styles.button, 
+          styles.boxShadow,
+          styles.floatingButton,
+          pressed ? styles.pressedButton : {}
+        ]}
+        onPress={() => ToastAndroid.show("Wish added!", 10)}
+      >
+        <Text style={styles.buttonText}>{"Add wish to wishlist"} </Text>
+      </Pressable>
+    </View>
+
   );
 }
 
-const Styling = StyleSheet.create({
-    container: {
-        paddingTop: 15,
-    },
-    button: {
-        paddingLeft: 25,
-        paddingRight: 25,
-    }
+const styles = StyleSheet.create({
+  ...buttons,
+  ...floatingButton,
+  container: {
+    paddingTop: 25,
+    flex: 1,
+    flexDirection: 'column',
+  },
+  scrollEnv: {
+    padding: "5%",
+  },
+  boxShadow: {}
 })
 
 const addWishData = [
-{
-    id: 'id1',
-    title: 'Name',
-},
-{
-    id: 'id2',
-    title: 'Price',
-},
-{
-    id: 'id3',
-    title: 'Size',
-},
-{
-    id: 'id4',
-    title: 'Gift type',
-},
-{
-    id: 'id5',
-    title: 'URL',
-}
+  'Name',
+  'Price',
+  'Size',
+  'Gift type',
+  'URL'
 ];

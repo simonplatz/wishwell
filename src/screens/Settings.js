@@ -106,7 +106,7 @@ export default Settings = ({navigation}) => {
                   pressed && changedState ? style.pressedButton : {}
                 ]}
             >
-              <Text style={style.saveButtonText}>
+              <Text style={style.buttonText}>
                 {"Save changes"}
               </Text>
             </Pressable>
