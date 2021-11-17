@@ -61,6 +61,13 @@ export const buttons = {
     borderColor: '#dfdfdf', 
     borderWidth: 2
   },
+  pressedButton: {
+    backgroundColor: '#2c8c51',
+    borderColor: '#2c8c51'
+  },
+  pressedContrastButton: {
+    backgroundColor: '#e5e5e5', 
+  },
   buttonText: {
     fontFamily: 'OpenSans_600SemiBold',
     color: '#fff'
@@ -71,9 +78,23 @@ export const buttons = {
   }
 }
 
+export const floatingButton = {
+  floatingButton: {
+    position: 'absolute',
+    bottom: 10,
+    width: '91%',
+    left: '4.5%',
+    height: 45,
+    margin: 0 
+  },
+  floatingButtonText: {
+    color: '#fff',
+    fontFamily: 'OpenSans_600SemiBold'
+  },
+}
+
 export const scrollEnv = {
   scrollEnv: {
     padding: "2.5%",
-    display: "flex",
   },
 }

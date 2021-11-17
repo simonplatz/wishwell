@@ -151,6 +151,8 @@ export default WishList = ({navigation, route}) => {
           onPress={() => {
             if(showShare && loginContext.loggedIn) {
               navigation.navigate('Share')
+            } else if (showShare && !loginContext.loggedIn) {
+              navigation.navigate('Login')
             }
           }}
           style={({ pressed }) => [

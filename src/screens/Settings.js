@@ -5,7 +5,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import Information from '../components/TextInfoField.js'
 import { LoginContext } from '../contexts/LoginContext.js'
 import generateBoxShadowStyle from "../tools/dropShadow.js"
-import {buttons} from "../styleobject/Objects.js"
+import {buttons, floatingButton} from "../styleobject/Objects.js"
 
 
 const USERDATA = {
@@ -63,7 +63,12 @@ export default Settings = ({navigation}) => {
   if (loginContext.loggedIn) {
     button = 
       <Pressable 
-        style={[style.contrastButton, style.saveButton, style.boxShadow]}
+        style={({pressed}) => [
+          style.contrastButton, 
+          style.floatingButton, 
+          style.boxShadow,
+          pressed ? style.pressedContrastButton : {}
+        ]}
         color = "#3BBA6C" 
         onPress={() => loginContext.toggleLogin(false)}
       >
@@ -94,7 +99,12 @@ export default Settings = ({navigation}) => {
             style={{flex: 1, alignItems: "center"}}
           >
             <Pressable
-              style={[style.button, changedState ? {} : {backgroundColor: "#dfdfdf", borderColor: "#dfdfdf"}, {width: '100%'} ]}
+              style={({pressed}) => 
+                [
+                  style.button, 
+                  changedState ? {} : {backgroundColor: "#dfdfdf", borderColor: "#dfdfdf"}, {width: '100%'} ,
+                  pressed && changedState ? style.pressedButton : {}
+                ]}
             >
               <Text style={style.saveButtonText}>
                 {"Save changes"}
@@ -114,10 +124,15 @@ export default Settings = ({navigation}) => {
   } else  {
     button = 
       <Pressable 
-        style={[style.button, style.saveButton, style.boxShadow]}
+        style={({pressed}) => 
+          [style.button, 
+          style.floatingButton, 
+          style.boxShadow,
+          pressed ? style.pressedButton : {} 
+        ]}
         onPress={() => navigation.navigate("Login")}
       >
-        <Text style={style.buttonText}>{"Login"}</Text>
+        <Text style={style.floatingButtonText}>{"Login"}</Text>
       </Pressable>
       modify = <View></View>
   }
@@ -138,6 +153,7 @@ export default Settings = ({navigation}) => {
 };
 
 const style = StyleSheet.create({
+  ...floatingButton,
   ...buttons,
   scrollEnv: {
     padding: "5%",
@@ -173,18 +189,6 @@ const style = StyleSheet.create({
     borderColor: "#F5F3F5",
     borderRadius: 5,
     borderWidth: 1.5,
-  },
-  saveButton: {
-    position: 'absolute',
-    bottom: 10,
-    width: '91%',
-    left: '4.5%',
-    height: 45,
-    margin: 0 
-  },
-  saveButtonText: {
-    color: '#fff',
-    fontFamily: 'OpenSans_600SemiBold'
   },
   boxShadow: {}
 });

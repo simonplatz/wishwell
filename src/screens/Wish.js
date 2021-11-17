@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { StyleSheet, ScrollView, Text, View, Image } from 'react-native';
-import { scrollEnv, header as headerStyle, subHeader} from "../styleobject/Objects.js"
+import React, { useEffect } from 'react';
+import { StyleSheet, ScrollView, Text, View, Image, Pressable } from 'react-native';
+import { floatingButton, scrollEnv, buttons, header as headerStyle, subHeader} from "../styleobject/Objects.js"
 import {card} from "../styleobject/CardStyle.js"
 import { useFonts, OpenSans_700Bold, OpenSans_600SemiBold } from "@expo-google-fonts/open-sans"
 import { LoremIpsum } from "lorem-ipsum";
@@ -8,7 +8,7 @@ import { LoremIpsum } from "lorem-ipsum";
 import generateBoxShadowStyle from "../tools/dropShadow.js"
 
 const lorem = new LoremIpsum({
- sentencesPerParagraph: {
+  sentencesPerParagraph: {
     max: 8,
     min: 4
   },
@@ -16,7 +16,7 @@ const lorem = new LoremIpsum({
     max: 16,
     min: 4
   }
-  }
+}
 )
 
 const data = [
@@ -32,19 +32,24 @@ export default Wish = ({route, navigation}) => {
 
   const wish = data.find(item => item.key == route.params.key)
   generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717', styles);
-  
   useEffect(() => {navigation.setOptions({ title: wish.name})}, []);
 
   if(!fontsLoaded) {
     return (<View></View>)
   } else {
     return (
-      <View style={{flex: 1}}>
-        <View style={[styles.buyButton, styles.boxShadow]}>
-          <Text style={styles.colorHeader}>
-              Køb
-          </Text>
-        </View>
+      <View style={{flex: 1, flexDirection: 'column'}}>
+          <Pressable style={({pressed}) =>
+              [
+                styles.button, 
+                styles.boxShadow,
+                styles.floatingButton,
+                pressed ? styles.pressedButton : {}
+              ]}>
+            <Text style={styles.floatingButtonText}>
+              Edit
+            </Text>
+          </Pressable>
         <ScrollView
           style={styles.scrollEnv}
         >
@@ -81,9 +86,11 @@ export default Wish = ({route, navigation}) => {
 }
 
 const styles = StyleSheet.create({
+  ...floatingButton,
   ...headerStyle,
   ...scrollEnv,
   ...card,
+  ...buttons,
   image: {
     width: '100%',
     height: 300,

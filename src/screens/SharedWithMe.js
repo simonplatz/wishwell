@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, FlatList, View, Text} from 'react-native';
+import { Pressable, StyleSheet, FlatList, View, Text} from 'react-native';
 import Card from "../components/Card.js"
 import { header as headerStyle, scrollEnv} from "../styleobject/Objects.js"
 
@@ -20,7 +20,7 @@ function header() {
   )
 }
 
-export default function SharedWithMe() {
+export default SharedWithMe = ({navigation}) => {
   let wishList = []
 
     wishList.push({          
@@ -39,12 +39,21 @@ export default function SharedWithMe() {
     })
 
   const renderItem = ({ item }) => (
+    <Pressable
+      onPress={() => {
+        navigation.navigate("Wishlist", {
+          id: 0,
+          title: item.title
+        })
+      }}
+    >
       <Card 
         title={item.title}
         subtitle={item.numGifts + " wishes"}
         imageUri={item.imageUri}
         imageUri2={item.imageUri2}
       />
+    </Pressable>
   )
 
   return (
@@ -53,6 +62,11 @@ export default function SharedWithMe() {
         data={wishList}
         style={styles.scrollEnv}
         renderItem={renderItem}
+        ListFooterComponent={
+          <View
+            style={{ height: 30, width: 320}}
+          />
+        }
         ListHeaderComponent={header}
         ItemSeparatorComponent={separator}
       />

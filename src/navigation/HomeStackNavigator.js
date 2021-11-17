@@ -5,6 +5,7 @@ import WishList from "../screens/WishList.js";
 import Wish from "../screens/Wish.js"
 import Share from '../screens/Share.js';
 import AddWish from '../screens/AddWish.js'
+import Login from '../screens/Login.js'
 
 const HomeStack = createStackNavigator();
 
@@ -38,6 +39,10 @@ export default function HomeStackNavigator() {
       <HomeStack.Screen
         name="AddWish"
         component={AddWish}
+      />
+      <HomeStack.Screen 
+        name="Login"
+        component={Login}
       />
     </HomeStack.Navigator>
   )

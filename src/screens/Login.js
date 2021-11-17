@@ -45,12 +45,20 @@ export default Login = ({navigation}) => {
 
         <View style={{display: 'flex', flexDirection: "row", alignSelf: "center", justifyContent: 'space-between' }}>
           <Pressable
-            style={[style.contrastButton, {width: '48%'}]}
+            style={({pressed}) =>
+              [style.contrastButton, 
+              {width: '48%'},
+              pressed ? style.pressedContrastButton : {}
+            ]}
           >
             <Text style={style.contrastButtonText}>{"Cancel"}</Text>
           </Pressable>
           <Pressable
-            style={[style.button, {width: '48%'}]}
+            style={({pressed}) => [
+              style.button, 
+              {width: '48%'},
+              pressed ? style.pressedButton : {}
+            ]}
             onPress={() => {
               context.toggleLogin(true)
               navigation.pop()
@@ -61,7 +69,11 @@ export default Login = ({navigation}) => {
         </View>
         <View style={style.divider}/>
         <Pressable
-          style={[style.button, {width: '100%'}]}
+          style={({pressed}) =>
+            [style.button, 
+            {width: '100%'},
+            pressed ? style.pressedButton : {}
+          ]}
         >
           <Text style={style.buttonText}>{"Sign up"}</Text>
         </Pressable>
