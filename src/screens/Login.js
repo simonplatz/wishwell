@@ -12,49 +12,41 @@ export default Login = ({navigation}) => {
 
   return (
     <View style={style.container}>
-    <ScrollView
-      style={style.scrollEnv}
-    >
-      <View style={style.space}/>
-      <Image 
-        style={style.image}
-        source={require("../../assets/img/wish.png")} 
-      />
-      <View style={style.body}>
+      <ScrollView
+        style={style.scrollEnv}
+      >
+        <Image 
+          style={style.image}
+          source={require("../../assets/img/path549.png")} 
+        />
         <TextInput 
           placeholder= "Email" 
           style={style.input}
           emailValue={emailValue}
           onChangeText={(EmailValue) => setEmailValue(EmailValue)}/>
-        <View style={style.space}/>
         <TextInput
           placeholder= "Password" 
           style={style.input}
           passwordValue={passwordValue} 
           onChangeText={(PasswordValue) => setPasswordValue(PasswordValue)}/>
-      </View>
-      <View style={{flexDirection: "row", alignSelf: "center" }}>
-        <Button style={style.button} title="Cancel" color="#3BBA6C"/>
-        <View style={style.space}/>
-        <Button 
-          style={style.button} 
-          title="Login" 
-          color="#3BBA6C"
-          onPress={() => {
-            context.toggleLogin(true)
-            navigation.pop()
-          }}
-        />
-      </View>
-      <View style={style.space}/>
-      <View style={style.footer}>
+        <View style={{flexDirection: "row", alignSelf: "center" }}>
+          <Button style={style.button} title="Cancel" color="#3BBA6C"/>
+          <Button 
+            style={style.button} 
+            title="Login" 
+            color="#3BBA6C"
+            onPress={() => {
+              context.toggleLogin(true)
+              navigation.pop()
+            }}
+          />
+        </View>
         <Pressable
           style={style.button}
         >
           <Text style={style.buttonText}>{"Sign up"}</Text>
         </Pressable>
-      </View>
-    </ScrollView>
+      </ScrollView>
     </View>
   )
 }
@@ -72,10 +64,7 @@ const style = StyleSheet.create({
 
   },  
   image:{
-    width: '100%',
+    width: '70%',
     resizeMode: 'contain',
-    borderWidth: 2,
-    borderColor: '#000'
-
   },
 });
