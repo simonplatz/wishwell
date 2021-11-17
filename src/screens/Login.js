@@ -12,7 +12,6 @@ export default Login = ({navigation}) => {
 
   const context = useContext(LoginContext)
 
-
   function inputChanged(event, property) {
     property = property.toLowerCase()
     input[property] = event
@@ -74,6 +73,7 @@ export default Login = ({navigation}) => {
             {width: '100%'},
             pressed ? style.pressedButton : {}
           ]}
+          onPress={() => navigation.navigate("Sign Up")}
         >
           <Text style={style.buttonText}>{"Sign up"}</Text>
         </Pressable>
