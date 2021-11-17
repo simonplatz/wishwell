@@ -85,13 +85,14 @@ export default WishList = ({navigation, route}) => {
   const wishlist = data.find(item => item.key == route.params.id) 
 
   const loginContext = useContext(LoginContext)
-
   const [showShare, setShowShare] = useState(true)
+
+  const sharedState = route.params.shared != undefined ? route.params.shared : false
 
   function scrollOn(event) {
     event = event.nativeEvent
-    if (event.contentSize.height - 100 >
-      (event.contentOffset.y + event.layoutMeasurement.height)
+    if ((event.contentSize.height - 100 >
+      (event.contentOffset.y + event.layoutMeasurement.height) && !sharedState)
     ) {
       fadeIn()
       setShowShare(true)
@@ -106,7 +107,8 @@ export default WishList = ({navigation, route}) => {
       onPress={() => {
         navigation.navigate("Wish",
           {
-            key: item.key
+            key: item.key,
+            shared: sharedState
           }
         )
       }}
@@ -122,7 +124,7 @@ export default WishList = ({navigation, route}) => {
 
   generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717', styles);
 
-  const fadeShare = useRef(new Animated.Value(1)).current
+  const fadeShare = useRef(new Animated.Value(sharedState ? 0 : 1)).current
 
   const fadeIn = () => {
     Animated.timing(fadeShare, {

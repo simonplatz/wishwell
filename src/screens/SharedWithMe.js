@@ -43,7 +43,8 @@ export default SharedWithMe = ({navigation}) => {
       onPress={() => {
         navigation.navigate("Wishlist", {
           id: 0,
-          title: item.title
+          title: item.title,
+          shared: true
         })
       }}
     >

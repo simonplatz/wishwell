@@ -29,27 +29,45 @@ const data = [
 export default Wish = ({route, navigation}) => {
   let [fontsLoaded] = useFonts({OpenSans_700Bold, OpenSans_600SemiBold });
 
+  const sharedState = route.params.shared != undefined ? route.params.shared : false
 
   const wish = data.find(item => item.key == route.params.key)
   generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717', styles);
   useEffect(() => {navigation.setOptions({ title: wish.name})}, []);
+
+  let buyOrEdit;
+  if (sharedState) {
+    buyOrEdit = <Pressable style={({pressed}) =>
+        [
+          styles.button, 
+          styles.boxShadow,
+          styles.floatingButton,
+          pressed ? styles.pressedButton : {}
+        ]}>
+      <Text style={styles.floatingButtonText}>
+        Buy
+      </Text>
+    </Pressable>
+  } else {
+    buyOrEdit = <Pressable style={({pressed}) =>
+        [
+          styles.button, 
+          styles.boxShadow,
+          styles.floatingButton,
+          pressed ? styles.pressedButton : {}
+        ]}>
+      <Text style={styles.floatingButtonText}>
+        Edit
+      </Text>
+    </Pressable>
+  }
 
   if(!fontsLoaded) {
     return (<View></View>)
   } else {
     return (
       <View style={{flex: 1, flexDirection: 'column'}}>
-          <Pressable style={({pressed}) =>
-              [
-                styles.button, 
-                styles.boxShadow,
-                styles.floatingButton,
-                pressed ? styles.pressedButton : {}
-              ]}>
-            <Text style={styles.floatingButtonText}>
-              Edit
-            </Text>
-          </Pressable>
+        {buyOrEdit}
         <ScrollView
           style={styles.scrollEnv}
         >
