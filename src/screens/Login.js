@@ -1,10 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { Button, StyleSheet, View, Image, Pressable, Text, ScrollView} from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import { StyleSheet, View, Image, Pressable, Text, ScrollView} from 'react-native';
 import Information from '../components/TextInfoField.js'
-
 import { LoginContext } from '../contexts/LoginContext.js'
-
 import { textInput, buttons } from '../styleobject/Objects.js'
 
 export default Login = ({navigation}) => {
@@ -30,10 +27,9 @@ export default Login = ({navigation}) => {
         <View style={style.imageContainer}>
           <Image 
             style={style.image}
-            source={require("../../assets/logo/3x/logoxxhdpi.png")} 
+            source={require("../../assets/wishlogo/1.5x/logo_background_hdpi.png")} 
           />
         </View>
-        
         <Information
           info={"Email"}
           initialValue={input.email}
@@ -95,14 +91,14 @@ const style = StyleSheet.create({
   imageContainer: {
     width: '100%',
     display: 'flex',
-    marginTop: "20%",
-    marginBottom: '20%',
+    marginBottom: "15%",
     justifyContent: 'center',
     alignItems: 'center'
   },
   image:{
     width: '100%',
-    height: 90,
-    resizeMode: 'contain',
+    height: 170,
+    resizeMode: 'center',
+    borderRadius: 5,
   },
 });

@@ -1,8 +1,9 @@
-import React, { useState, useRef } from 'react';
+import React, { useContext, useState, useRef } from 'react';
 import { Animated, Pressable, StyleSheet, FlatList, Text, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faShare } from '@fortawesome/free-solid-svg-icons'
 import { header as headerStyle, scrollEnv} from "../styleobject/Objects.js"
+import { LoginContext } from '../contexts/LoginContext.js'
 
 import Card from '../components/Card.js'
 import AddButton from "../components/AddButton.js"
@@ -83,6 +84,7 @@ function footer(navigation) {
 export default WishList = ({navigation, route}) => {
   const wishlist = data.find(item => item.key == route.params.id) 
 
+  const loginContext = useContext(LoginContext)
 
   const [showShare, setShowShare] = useState(true)
 
@@ -147,7 +149,7 @@ export default WishList = ({navigation, route}) => {
       >
         <Pressable 
           onPress={() => {
-            if(showShare) {
+            if(showShare && loginContext.loggedIn) {
               navigation.navigate('Share')
             }
           }}

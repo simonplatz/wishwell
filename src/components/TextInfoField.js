@@ -23,6 +23,7 @@ export default function Information(props) {
         <TextInput 
           style={style.input}
           onChangeText={changed}
+          selectTextOnFocus={props.selectTextOnFocus != undefined ? props.selectTextOnFocus : false}
           editable={props.editable != undefined ? props.editable : true}
           onPressOut={() => {
             if(props.onPress != undefined) {
