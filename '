@@ -32,6 +32,7 @@ export default Settings = ({navigation}) => {
   function textChanged(event, property) {
     setChangedState(true)
     changes[property] = event
+    console.log(changes)
   }
 
   function getDisplayDate(date) {
@@ -39,10 +40,12 @@ export default Settings = ({navigation}) => {
   }
 
   function dateChanged(event, selectedDate) {
-    setShowDatePicker(false)
+    setShowDatePicker(Platform.OS === 'ios');
     if (selectedDate != undefined) {
+      console.log(selectedDate)
+      setShowDatePicker(false)
       const newDate = new Date(selectedDate)
-
+      
       setDate({
         date: newDate,
         displayString: getDisplayDate(newDate)
@@ -97,12 +100,19 @@ export default Settings = ({navigation}) => {
             initialValue={USERDATA.email}
             changeText={textChanged}
           />
-          <Information 
-            info={"Birthday"}
-            initialValue={date.displayString}
-            editable={false}
-            onPress={setShowDatePicker}
-          />
+          <Pressable
+            style={{flex:1, backgroundColor: "#f00", zIndex: 2}}
+          >
+            <Information 
+              info={"Birthday"}
+              initialValue={date.displayString}
+              editable={false}
+            onPress={() => {
+              console.log("pressed date")
+              setShowDatePicker(!showDatePicker)
+            }}
+            />
+          </Pressable>
           <View
             style={{flex: 1, alignItems: "center"}}
           >
@@ -122,14 +132,12 @@ export default Settings = ({navigation}) => {
             onChange={dateChanged}
             style={{width: 420, backgroundColor: "white"}}
           />
-          }
+        }
         </ScrollView>
         {button}
       </View>
     )};
 };
-
-
 
 // uses userdata to set the title
 const Information = (props) => {
@@ -138,32 +146,17 @@ const Information = (props) => {
     props.changeText(e, props.info)
   }
 
-  return (
-    <Pressable
-      onPress={() => {
-        if(props.onPress != undefined) {
-          props.onPress(true)
-        }
-      }}
-    >
-      <View style={style.informationContainer}>
-        <Text style={style.informationText}>{props.info}</Text>
-        <TextInput 
-          style={style.input}
-          onChangeText={changed}
-          editable={props.editable != undefined ? props.editable : true}
-          onPressOut={() => {
-            if(props.onPress != undefined) {
-              props.onPress(true)
-            }
-          }}
-        >
-          {props.initialValue}
-        </TextInput>
-      </View>
-    </Pressable>
-
-
+  return( 
+    <View style={style.informationContainer}>
+      <Text style={style.informationText}>{props.info}</Text>
+      <TextInput 
+        style={style.input}
+        onChangeText={changed}
+        editable={props.editable != undefined ? props.editable : true}
+      >
+        {props.initialValue}
+      </TextInput>
+    </View>
   )
 }
 
@@ -187,7 +180,7 @@ const style = StyleSheet.create({
   },
   informationContainer:{
     width: "100%",
-    marginBottom: 15,
+    marginBottom: 15
   },
   informationText: {
     fontFamily: 'OpenSans_600SemiBold',

@@ -1,7 +1,8 @@
 import React, { useState, useContext } from 'react';
-import { Button, StyleSheet, View, Image } from 'react-native';
+import { Button, StyleSheet, View, Image, Pressable, Text, ScrollView} from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import { LoginContext } from '../contexts/LoginContext.js'
+import { textInput, buttons } from '../styleobject/Objects.js'
 
 export default Login = ({navigation}) => {
   const [emailValue, setEmailValue] = useState("");
@@ -11,22 +12,25 @@ export default Login = ({navigation}) => {
 
   return (
     <View style={style.container}>
+    <ScrollView
+      style={style.scrollEnv}
+    >
       <View style={style.space}/>
       <Image 
         style={style.image}
-        source={require("../../assets/wishwlll.png")} 
+        source={require("../../assets/img/wish.png")} 
       />
       <View style={style.body}>
-        <View style={style.space}/>
-        <View style={style.space}/>
         <TextInput 
           placeholder= "Email" 
-          emailValue={emailValue} style={style.text} 
+          style={style.input}
+          emailValue={emailValue}
           onChangeText={(EmailValue) => setEmailValue(EmailValue)}/>
         <View style={style.space}/>
         <TextInput
           placeholder= "Password" 
-          passwordValue={passwordValue} style={style.text} 
+          style={style.input}
+          passwordValue={passwordValue} 
           onChangeText={(PasswordValue) => setPasswordValue(PasswordValue)}/>
       </View>
       <View style={{flexDirection: "row", alignSelf: "center" }}>
@@ -44,51 +48,34 @@ export default Login = ({navigation}) => {
       </View>
       <View style={style.space}/>
       <View style={style.footer}>
-        <Button 
-          title="Sign up" color="#3BBA6C"
-        />
+        <Pressable
+          style={style.button}
+        >
+          <Text style={style.buttonText}>{"Sign up"}</Text>
+        </Pressable>
       </View>
+    </ScrollView>
     </View>
   )
-};
+}
 
 const style = StyleSheet.create({
+  scrollEnv: {
+    flex: 1,
+    padding: '5%'
+  },
+  ...textInput,
+  ...buttons,
   container: {
-    padding: 4,
+    flex: 1,
+    flexDirection: 'column'
+
   },  
   image:{
-    borderColor: "black",
-    borderWidth: 1,
-    height: "40%",
-    width: "80%",
-    alignSelf:"center"
+    width: '100%',
+    resizeMode: 'contain',
+    borderWidth: 2,
+    borderColor: '#000'
+
   },
-  space:{
-    width:25,
-    height:25
-  },
-  body:{
-    flexDirection:"column",
-    paddingBottom: "10%", 
-    width: "80%",
-    alignSelf:"center"
-  },
-  text:{
-    padding: 10,
-    height: 40,
-    fontFamily: "OpenSans_700Bold",
-    color: "#0E1D31",
-    borderColor: "#3BBA6C",
-    borderRadius: 10,
-    borderWidth: 1,
-    textAlign: "center"
-  },
-  footer:{
-    paddingLeft: 5,
-    paddingRight: 5
-  },
-  button:{
-    width:80,
-    height:80
-  }
 });
