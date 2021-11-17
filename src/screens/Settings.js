@@ -59,6 +59,7 @@ export default Settings = ({navigation}) => {
   }, [])
 
   let button;
+  let modify;
   if (loginContext.loggedIn) {
     button = 
       <Pressable 
@@ -68,26 +69,11 @@ export default Settings = ({navigation}) => {
       >
         <Text style={style.contrastButtonText}>{"Logout"}</Text>
       </Pressable>
-  } else  {
-    button = 
-      <Pressable 
-        style={[style.button, style.saveButton, style.boxShadow]}
-        onPress={() => navigation.navigate("Login")}
-      >
-        <Text style={style.buttonText}>{"Login"}</Text>
-      </Pressable>
-  }
 
-  if(!fontsLoaded) {
-    return <View></View>
-  } else {
-    return (
-      <View style={style.container}>
-        <ScrollView
-          contentContainerStyle={style.scrollEnv}
-        >
-            <Image style={style.image}
-              source={require("../../assets/img/img4.jpg")} />
+      modify = 
+        <View> 
+         <Image style={style.image}
+            source={require("../../assets/img/img4.jpg")} />
           <Information
             info={"Name"}
             initialValue={USERDATA.title}
@@ -123,7 +109,28 @@ export default Settings = ({navigation}) => {
             onChange={dateChanged}
             style={{width: 420, backgroundColor: "white"}}
           />
-          }
+        }
+        </View>
+  } else  {
+    button = 
+      <Pressable 
+        style={[style.button, style.saveButton, style.boxShadow]}
+        onPress={() => navigation.navigate("Login")}
+      >
+        <Text style={style.buttonText}>{"Login"}</Text>
+      </Pressable>
+      modify = <View></View>
+  }
+
+  if(!fontsLoaded) {
+    return <View></View>
+  } else {
+    return (
+      <View style={style.container}>
+        <ScrollView
+          contentContainerStyle={style.scrollEnv}
+        >
+          {modify}
         </ScrollView>
         {button}
       </View>

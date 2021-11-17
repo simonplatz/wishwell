@@ -47,20 +47,25 @@ export default Login = ({navigation}) => {
           secure={true}
         />
 
-        <View style={{flexDirection: "row", alignSelf: "center" }}>
-          <Button style={style.button} title="Cancel" color="#3BBA6C"/>
-          <Button 
-            style={style.button} 
-            title="Login" 
-            color="#3BBA6C"
+        <View style={{display: 'flex', flexDirection: "row", alignSelf: "center", justifyContent: 'space-between' }}>
+          <Pressable
+            style={[style.contrastButton, {width: '48%'}]}
+          >
+            <Text style={style.contrastButtonText}>{"Cancel"}</Text>
+          </Pressable>
+          <Pressable
+            style={[style.button, {width: '48%'}]}
             onPress={() => {
               context.toggleLogin(true)
               navigation.pop()
             }}
-          />
+          >
+            <Text style={style.buttonText}>{"Login"}</Text>
+          </Pressable>
         </View>
+        <View style={style.divider}/>
         <Pressable
-          style={style.button}
+          style={[style.button, {width: '100%'}]}
         >
           <Text style={style.buttonText}>{"Sign up"}</Text>
         </Pressable>
@@ -71,8 +76,8 @@ export default Login = ({navigation}) => {
 
 const style = StyleSheet.create({
   scrollEnv: {
-    flex: 1,
-    padding: '5%'
+    padding: '5%',
+    height: '100%'
   },
   ...textInput,
   ...buttons,
@@ -80,17 +85,24 @@ const style = StyleSheet.create({
     flex: 1,
     flexDirection: 'column'
   },  
+  divider: {
+    width: '100%',
+    height: 1.5,
+    backgroundColor: '#dfdfdf',
+    marginTop: 20,
+    marginBottom: 20
+  },
   imageContainer: {
     width: '100%',
     display: 'flex',
-    marginTop: 60,
-    marginBottom: 60,
+    marginTop: "20%",
+    marginBottom: '20%',
     justifyContent: 'center',
     alignItems: 'center'
   },
   image:{
-    width: '70%',
-    height: 70,
+    width: '100%',
+    height: 90,
     resizeMode: 'contain',
   },
 });
