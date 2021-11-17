@@ -2,9 +2,10 @@ import React, {useContext, useEffect, useState}  from "react";
 import { ScrollView, View, Image, StyleSheet, Text, TextInput, Pressable } from "react-native";
 import { useFonts, OpenSans_600SemiBold, OpenSans_400Regular } from "@expo-google-fonts/open-sans"
 import DateTimePicker from '@react-native-community/datetimepicker';
+import Information from '../components/TextInfoField.js'
 import { LoginContext } from '../contexts/LoginContext.js'
 import generateBoxShadowStyle from "../tools/dropShadow.js"
-import {textInput, buttons} from "../styleobject/Objects.js"
+import {buttons} from "../styleobject/Objects.js"
 
 
 const USERDATA = {
@@ -85,8 +86,8 @@ export default Settings = ({navigation}) => {
         <ScrollView
           contentContainerStyle={style.scrollEnv}
         >
-          <Image style={style.image}
-            source={require("../../assets/wishwlll.png")} />
+            <Image style={style.image}
+              source={require("../../assets/img/img4.jpg")} />
           <Information
             info={"Name"}
             initialValue={USERDATA.title}
@@ -129,51 +130,11 @@ export default Settings = ({navigation}) => {
     )};
 };
 
-
-
-// uses userdata to set the title
-const Information = (props) => {
-
-  function changed(e) {
-    props.changeText(e, props.info)
-  }
-
-  return (
-    <Pressable
-      onPress={() => {
-        if(props.onPress != undefined) {
-          props.onPress(true)
-        }
-      }}
-    >
-      <View style={style.informationContainer}>
-        <Text style={style.informationText}>{props.info}</Text>
-        <TextInput 
-          style={style.input}
-          onChangeText={changed}
-          editable={props.editable != undefined ? props.editable : true}
-          onPressOut={() => {
-            if(props.onPress != undefined) {
-              props.onPress(true)
-            }
-          }}
-        >
-          {props.initialValue}
-        </TextInput>
-      </View>
-    </Pressable>
-
-
-  )
-}
-
-
 const style = StyleSheet.create({
+  ...buttons,
   scrollEnv: {
     padding: "5%",
   },
-  ...buttons,
-  ...textInput,
   container: {
     flex: 1,
     flexDirection: 'column'
@@ -184,15 +145,6 @@ const style = StyleSheet.create({
     width:"100%",
     height:"45%",
     alignItems: "center"
-  },
-  informationContainer:{
-    width: "100%",
-    marginBottom: 15,
-  },
-  informationText: {
-    fontFamily: 'OpenSans_600SemiBold',
-    marginBottom: 4,
-    marginLeft: 5
   },
   space: {
     width: 30,
