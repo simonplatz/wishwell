@@ -11,7 +11,7 @@ const http = require('http');
 const { rows } = require('pg/lib/defaults');
 //var a = require('./Database.js').User
 const hostname = '127.0.0.1';
-const port = 3000;
+const port = 4000;
 require('dotenv').config()
 
 
@@ -58,7 +58,7 @@ var pool = new Pool({
 connectToDb()
 testCheckPassword()
 
-var callback1 = function (data) {
+function callback1 (data) {
     return data
 }
 function connectToDb() {
@@ -69,9 +69,6 @@ function connectToDb() {
     })
     pool.end
 } 
-/*server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});*/
 
 app.post('/createUser/:name/:email/:password/:dateofbirth', async function(req,res){
     res.send(req.params)
@@ -87,7 +84,7 @@ app.post('/createUser/:name/:email/:password/:dateofbirth', async function(req,r
 
 function testCheckPassword() {
     
-    console.log(checkPassword('email@hotmail.com', 'password'))
+    console.log(checkPassword('email@hotmail.com', 'password', callback1))
     //console.log(array)
 }
 
@@ -131,8 +128,8 @@ await pool.query('SELECT * from usertable where email =$1' , [req.params.email],
 })
 
 
-app.put("/updateUser/:password/:email/:dateofbirth",function(req,res) {
-    pool.query("Update usertable set password = $1, email = $2, dataofbirth =$3 where email =$2", [req.params.password,req.params.email,req.params.dateofbirth],function (err, results)  {
+app.put("/updateUser/:newPassword/:email/:dateofbirth/:name",function(req,res) {
+    pool.query("Update usertable set password = $1, email = $2, dataofbirth =$3, name = $4 where email =$2", [req.params.newPassword,req.params.email,req.params.dateofbirth, req.params.name],function (err, results)  {
         if(err){
             console.log("lortet virker ikke")
             console.log()
