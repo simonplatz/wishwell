@@ -128,33 +128,64 @@ await pool.query('SELECT * from usertable where email =$1' , [req.params.email],
 })
 
 
-app.put("/updateUser/:newPassword/:email/:dateofbirth/:name",function(req,res) {
-    pool.query("Update usertable set password = $1, email = $2, dataofbirth =$3, name = $4 where email =$2", [req.params.newPassword,req.params.email,req.params.dateofbirth, req.params.name],function (err, results)  {
+app.put("/updatePassword/:newpassword/:userid/",function(req,res) {
+    pool.query("update usertable set password = $1 where email =$2", [req.params.newpassword,req.params.userid],function (err, results)  {
         if(err){
             console.log("lortet virker ikke")
-            console.log()
             res.end
         
-        }else 
-        //console.log(results.rows[0])
-        //client.end()
-        //console.log(results)
-       /*array = [results.rows[0].userid,results.rows[0].name,results.rows[0].email,results.rows[0].password,
-        results.rows[0].dateofbirth, results.rows[0].shareduserid]
-        */
-        
-        array = res.json(results.rows[0])
+        } else 
+	array = res.json(results.rows[0])
 
-        //var user = new User());   
-        //console.log(user)
-        //console.log(array)
 
             console.log(results.rows[0])
-            console.log("abc")
             res.end
-         //return  array  //res.json(results.rows[0])  //array 
-      })
+	})
+})
 
+app.put("/updateEmail/:email/:userid/",function(req,res) {
+    pool.query("update usertable set email = $1 where userid =$2", [req.params.email,req.params.userid],function (err, results)  {
+        if(err){
+            console.log("lortet virker ikke")
+            res.end
+        
+        } else 
+	array = res.json(results.rows[0])
+
+
+            console.log(results.rows[0])
+            res.end
+	})
+})
+
+app.put("/updateBirth/:dateofbirth/:userid",function(req,res) {
+    pool.query("update usertable set dataofbirth = $1, where userid =$2", [req.params.dateofbirth,req.params.userid],function (err, results)  {
+        if(err){
+            console.log("lortet virker ikke")
+            res.end
+        
+        } else 
+	array = res.json(results.rows[0])
+
+
+            console.log(results.rows[0])
+            res.end
+	})
+})
+
+app.put("/updateName/:name/:userid",function(req,res) {
+    pool.query("update usertable set name = $1, where userid =$2", [req.params.name,req.params.userid],function (err, results)  {
+        if(err){
+            console.log("lortet virker ikke")
+            res.end
+        
+        } else 
+	array = res.json(results.rows[0])
+
+
+            console.log(results.rows[0])
+            res.end
+	})
 })
 
 app.post('/createWishlist/:userid/:name', function(req,res){
