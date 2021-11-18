@@ -40,6 +40,7 @@ export default Login = ({navigation}) => {
           initialValue={input.password}
           changeText={inputChanged}
           secure={true}
+
         />
 
         <View style={{display: 'flex', flexDirection: "row", alignSelf: "center", justifyContent: 'space-between' }}>
