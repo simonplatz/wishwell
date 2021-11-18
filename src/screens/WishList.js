@@ -151,9 +151,9 @@ export default WishList = ({navigation, route}) => {
       >
         <Pressable 
           onPress={() => {
-            if(showShare && loginContext.loggedIn) {
+            if(showShare && loginContext.userState.loggedIn) {
               navigation.navigate('Share')
-            } else if (showShare && !loginContext.loggedIn) {
+            } else if (showShare && !loginContext.userState.loggedIn) {
               navigation.navigate('Login')
             }
           }}

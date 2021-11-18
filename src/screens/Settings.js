@@ -31,6 +31,7 @@ export default Settings = ({navigation}) => {
   })
 
   function textChanged(event, property) {
+    property = property.toLowerCase()
     setChangedState(true)
     changes[property] = event
   }
@@ -60,7 +61,7 @@ export default Settings = ({navigation}) => {
 
   let button;
   let modify;
-  if (loginContext.loggedIn) {
+  if (loginContext.userState.loggedIn) {
     button = 
       <Pressable 
         style={({pressed}) => [
@@ -70,7 +71,7 @@ export default Settings = ({navigation}) => {
           pressed ? style.pressedContrastButton : {}
         ]}
         color = "#3BBA6C" 
-        onPress={() => loginContext.toggleLogin(false)}
+        onPress={() => loginContext.setUserState(...loginContext.userState, {loggedIn: false})}
       >
         <Text style={style.contrastButtonText}>{"Logout"}</Text>
       </Pressable>
@@ -81,7 +82,7 @@ export default Settings = ({navigation}) => {
             source={require("../../assets/img/img4.jpg")} />
           <Information
             info={"Name"}
-            initialValue={USERDATA.title}
+            initialValue={loginContext.userState.name}
             changeText={textChanged}
           />
           <Information 

@@ -6,22 +6,21 @@ import TabNavigator from "./src/navigation/TabNavigator.js"
 import { LoginContext } from './src/contexts/LoginContext.js'
 
 function App() {
-  const logInState = {
-    loggedIn: false, 
+  const inititalState = {
+    loggedIn: false,
+    userId: '',
+    dateOfBith: '',
+    name: ''
   }
 
-  const [loggedIn, setLoggedIn] = useState(logInState)
-
-
-  const toggleLogin = (logInState) =>  {
-    console.log("state " + logInState.toString())
-    setLoggedIn(logInState)
-  }
+  const [userState, setUserState] = useState(inititalState)
 
   const initialValue = {
-    loggedIn: loggedIn, 
-    toggleLogin: toggleLogin
-  }  
+    userState: userState, 
+    setUserState: (userState) =>  {
+      setUserState(userState)
+    }  
+  }
 
   return (
     <LoginContext.Provider value={initialValue}>

@@ -4,6 +4,7 @@ import Information from '../components/TextInfoField.js'
 import { LoginContext } from '../contexts/LoginContext.js'
 import { textInput, buttons } from '../styleobject/Objects.js'
 
+
 export default Login = ({navigation}) => {
   const [input, setInput] = useState({
     email: "",
@@ -16,6 +17,24 @@ export default Login = ({navigation}) => {
     property = property.toLowerCase()
     input[property] = event
     console.log(input)
+  }
+
+  function login() {
+    fetch('https://pratgen.dk/wishwell/getUser/' + encodeURI(input.email))
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+        const user = data[0]
+        let stateObject
+        if (typeof(user) != "object") {
+          stateObject.name = user.name
+          stateObject.userId = user.userid
+          stateObject.dateOfBith = user.dataofbirth
+          stateObject.loggedIn = true
+        }
+        context.setUserState(stateObject)
+      })
+      .catch(err => console.log(err))
   }
 
   return (
@@ -40,7 +59,6 @@ export default Login = ({navigation}) => {
           initialValue={input.password}
           changeText={inputChanged}
           secure={true}
-
         />
 
         <View style={{display: 'flex', flexDirection: "row", alignSelf: "center", justifyContent: 'space-between' }}>
@@ -59,9 +77,11 @@ export default Login = ({navigation}) => {
               {width: '48%'},
               pressed ? style.pressedButton : {}
             ]}
-            onPress={() => {
-              context.toggleLogin(true)
-              navigation.pop()
+            onPress={async () => {
+              await login()
+              if (context.userState.loggedIn) {
+                navigation.pop()
+              }
             }}
           >
             <Text style={style.buttonText}>{"Login"}</Text>
