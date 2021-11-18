@@ -61,6 +61,8 @@ export default Settings = ({navigation}) => {
 
   let button;
   let modify;
+  console.log("user state")
+  console.log(loginContext.userState)
   if (loginContext.userState.loggedIn) {
     button = 
       <Pressable 
@@ -71,7 +73,7 @@ export default Settings = ({navigation}) => {
           pressed ? style.pressedContrastButton : {}
         ]}
         color = "#3BBA6C" 
-        onPress={() => loginContext.setUserState(...loginContext.userState, {loggedIn: false})}
+        onPress={() => loginContext.setUserState({...loginContext.userState, ...{loggedIn: false}})}
       >
         <Text style={style.contrastButtonText}>{"Logout"}</Text>
       </Pressable>

@@ -19,20 +19,17 @@ export default Login = ({navigation}) => {
     console.log(input)
   }
 
-  function login() {
+  async function login() {
     fetch('https://pratgen.dk/wishwell/getUser/' + encodeURI(input.email))
       .then(response => response.json())
       .then(data => {
-        console.log(data)
         const user = data[0]
-        let stateObject
-        if (typeof(user) != "object") {
-          stateObject.name = user.name
-          stateObject.userId = user.userid
-          stateObject.dateOfBith = user.dataofbirth
-          stateObject.loggedIn = true
-        }
-        context.setUserState(stateObject)
+        context.setUserState({
+          name: user.name,
+          userId: user.userid,
+          dateOfBirth: user.dataofbirth,
+          loggedIn: true
+        })
       })
       .catch(err => console.log(err))
   }
@@ -77,11 +74,11 @@ export default Login = ({navigation}) => {
               {width: '48%'},
               pressed ? style.pressedButton : {}
             ]}
-            onPress={async () => {
-              await login()
-              if (context.userState.loggedIn) {
+            onPress={() => {
+              login().then(() => {
                 navigation.pop()
-              }
+                }
+              )
             }}
           >
             <Text style={style.buttonText}>{"Login"}</Text>
