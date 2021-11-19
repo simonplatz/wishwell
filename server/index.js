@@ -213,7 +213,7 @@ app.get("/getwishlists/:userid",async function(req,res) {
          console.log(array)
    })
 
-   app.post('/createwish/:name/:price/:link/:wishlistid/:picturelink', async function(req,res){
+   app.post('/createwish/:name/:price/:link/:wishlistid/:picturelink/:description/:manufacturer', async function(req,res){
     res.send(req.params)
     console.log(res.dateofbirth)
     console.log("abc")
@@ -222,7 +222,9 @@ app.get("/getwishlists/:userid",async function(req,res) {
     let link = req.params.link
     let wishlistid = req.params.wishlistid
     let picturelink = req.params.picturelink
-   res.end( d.createwish(name,price,link,wishlistid, picturelink))})
+    let desc = req.params.description
+    let manu = req.params.manufacturer
+   res.end( d.createwish(name,price,link,wishlistid, picturelink,desc,manu))})
 
 
    app.get("/getwishes/:wishlistid",async function (req,res) {
