@@ -211,7 +211,7 @@ app.get("/getwishlists/:userid",async function(req,res) {
          console.log(array)
    })
 
-   app.post('/createWish/:name/:price/:link/:wishlistid/:pictureLink', async function(req,res){
+   app.post('/createwish/:name/:price/:link/:wishlistid/:picturelink', async function(req,res){
     res.send(req.params)
     console.log(res.dateofbirth)
     console.log("abc")
@@ -219,8 +219,8 @@ app.get("/getwishlists/:userid",async function(req,res) {
     let price = req.params.price
     let link = req.params.link
     let wishlistid = req.params.wishlistid
-	let pictureLink = req.params.pictureLink
-   res.end( d.createwish(name,price,link,wishlistid, pictureLink))})
+    let picturelink = req.params.picturelink
+   res.end( d.createwish(name,price,link,wishlistid, picturelink))})
 
 
    app.get("/getwishes/:wishlistid",async function (req,res) {
@@ -280,9 +280,9 @@ app.put("/updateWishlist/:name/:wishlistid",function(req,res) {
 
 })
 
-app.put("/updateWish/:name/:wishid/:link/:price",function(req,res) {
-    pool.query("Update wishlist set name = $1, link = $2, price = $3 where wishlistid =$2"
-    , [req.params.name,req.params.link,req.params.price,req.params.wishlistid],function (err, results)  {
+app.put("/updateWish/:name/:wishid/:link/:price/:picturelink",function(req,res) {
+    pool.query("Update wishlist set name = $1, link = $2, price = $3, picturelink = $4 where wishlistid =$2"
+    , [req.params.name,req.params.link,req.params.price,req.params.wishlistid, req.params.picturelink],function (err, results)  {
         if(err){
             console.log("lortet virker ikke")
             console.log()
@@ -307,4 +307,18 @@ app.post("/shareWishlist/:shareduserid/:wishlistid", function (req,res) {
         console.log(err, res)
         //client.end() 
     })
+})
+
+app.get('/getSharedwishlists/:shareduserid', function (req,res) {
+    pool.query("select * from shared where shareduserid = $1",[req.params.shareduserid],function (err,results) {
+        console.log(err, res)
+        //client.end()
+
+
+        array = results.rows
+   
+               console.log(array)
+            return array + res.json(array) 
+        
+})
 })
