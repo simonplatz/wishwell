@@ -11,7 +11,7 @@ const http = require('http');
 const { rows } = require('pg/lib/defaults');
 //var a = require('./Database.js').User
 const hostname = '127.0.0.1';
-const port = 3000;
+const port = 4000;
 require('dotenv').config()
 
 
@@ -58,7 +58,7 @@ var pool = new Pool({
 connectToDb()
 testCheckPassword()
 
-var callback1 = function (data) {
+function callback1 (data) {
     return data
 }
 function connectToDb() {
@@ -69,9 +69,6 @@ function connectToDb() {
     })
     pool.end
 } 
-/*server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
-});*/
 
 app.post('/createUser/:name/:email/:password/:dateofbirth', async function(req,res){
     res.send(req.params)
@@ -87,7 +84,7 @@ app.post('/createUser/:name/:email/:password/:dateofbirth', async function(req,r
 
 function testCheckPassword() {
     
-    console.log(checkPassword('email@hotmail.com', 'password'))
+    console.log(checkPassword('email@hotmail.com', 'password', callback1))
     //console.log(array)
 }
 
@@ -131,33 +128,53 @@ await pool.query('SELECT * from usertable where email =$1' , [req.params.email],
 })
 
 
-app.put("/updateUser/:password/:email/:dateofbirth",function(req,res) {
-    pool.query("Update usertable set password = $1, email = $2, dataofbirth =$3 where email =$2", [req.params.password,req.params.email,req.params.dateofbirth],function (err, results)  {
+app.put("/updatePassword/:newpassword/:userid/",function(req,res) {
+    pool.query("update usertable set password = $1 where userid =$2", [req.params.newpassword,req.params.userid],function (err, results)  {
         if(err){
             console.log("lortet virker ikke")
-            console.log()
             res.end
         
-        }else 
-        //console.log(results.rows[0])
-        //client.end()
-        //console.log(results)
-       /*array = [results.rows[0].userid,results.rows[0].name,results.rows[0].email,results.rows[0].password,
-        results.rows[0].dateofbirth, results.rows[0].shareduserid]
-        */
-        
-        array = res.json(results.rows[0])
-
-        //var user = new User());   
-        //console.log(user)
-        //console.log(array)
-
-            console.log(results.rows[0])
-            console.log("abc")
+        } else 
             res.end
-         //return  array  //res.json(results.rows[0])  //array 
-      })
+	})
+})
 
+app.put("/updateEmail/:email/:userid/",function(req,res) {
+    pool.query("update usertable set email =$1 where userid =$2", [req.params.email,req.params.userid],function (err, results)  {
+        if(err){
+            console.log("lortet virker ikke")
+            res.end
+        
+        } else 
+            res.end
+	})
+})
+
+app.put("/updateBirth/:dateofbirth/:userid", function(req,res) {
+	const birthString = req.params.dateofbirth.toString()
+	console.log(birthString)
+    pool.query("update usertable set dataofbirth = $1 where userid = $2", [birthString ,req.params.userid], function (err, results)  {
+        if(err){
+            console.log("lortet virker ikke")
+		console.log(err)
+            res.end
+        
+        } else 
+            res.end
+	})
+})
+
+app.put("/updateName/:name/:userid", function(req,res) {
+    pool.query("update usertable set name = $1 where userid = $2", [req.params.name,req.params.userid],function (err, results)  {
+	console.log("name " + req.params.name)
+	console.log("id " + req.params.userid)
+        if(err){
+            console.log("lortet virker ikke")
+            res.end
+        
+	} else 
+            	res.end
+	})
 })
 
 app.post('/createWishlist/:userid/:name', function(req,res){
