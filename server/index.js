@@ -16,7 +16,7 @@ require('dotenv').config()
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
-//app.use(bodyParser.json());
+app.use(bodyParser.json());
 
 //app.use("/", router)
 /*const server = http.createServer((req, res) => {
@@ -117,6 +117,26 @@ async function  checkPassword(email, password1, callback1) {
 
 } 
 
+app.put("/deleteWishlist/:wishlistid/",function(req,res) {
+	pool.query("DELETE from wish wish.wherelistid = $1", [req.params.wishlistid.toString()], function (err, results) {
+		if(err) {
+			console.log(err)
+		}})
+	
+
+    pool.query("DELETE from wishlist where wish.wishlistid = $1", [req.params.wishlistid.toString()],function (err, results)  {
+        if(err){
+            console.log("lortet virker ikke")
+		console.log(err)
+            res.end()
+        
+        } else 
+            res.end()
+	})
+})
+
+
+
 app.get("/getUser/:email",async function(req,res) {
 await pool.query('SELECT * from usertable where email =$1' , [req.params.email],function (err, results)  {
         if(err){console.log("lortet virker ikke")}else 
@@ -211,20 +231,19 @@ app.get("/getwishlists/:userid",async function(req,res) {
          console.log(array)
    })
 
-   app.post('/createwish/:name/:price/:link/:wishlistid/:picturelink', async function(req,res){
+   app.post('/createwish/', async function(req,res){
     res.send(req.params)
-    console.log(res.dateofbirth)
-    console.log("abc")
-    let name = req.params.name
-    let price = req.params.price
-    let link = req.params.link
-    let wishlistid = req.params.wishlistid
-    let picturelink = req.params.picturelink
+    console.log(req.body)
+    let name = req.body.name
+    let price = req.body.price
+    let link = req.body.link
+    let wishlistid = req.body.wishlistid.toString()
+    let picturelink = req.body.picturelink
    res.end( d.createwish(name,price,link,wishlistid, picturelink))})
 
 
    app.get("/getwishes/:wishlistid",async function (req,res) {
-   await pool.query('select *, count(wishid) from wish where wish.wishlistid = $1' , [req.params.wishlistid],function (err, results)  {
+   await pool.query('select * from wish where wish.wishlistid = $1' , [req.params.wishlistid],function (err, results)  {
            if(err){
 		   console.log(err) 
 		   console.log("lortet virker ikke")
