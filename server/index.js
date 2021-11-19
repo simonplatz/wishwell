@@ -224,7 +224,8 @@ app.get("/getwishlists/:userid",async function(req,res) {
 
 
    app.get("/getwishes/:wishlistid",async function (req,res) {
-   await pool.query('select *, count(wishid) from wish where wishlistid = $1' , [req.params.wishlistid],function (err, results)  {
+   await pool.query('select *, count(wishid) from wish where wishlistid = $'+
+   ' group by id, wishid, name, link, price, wishlistid, deleted, pictureLink;' , [req.params.wishlistid],function (err, results)  {
            if(err){console.log("lortet virker ikke")}else 
             array = results.rows
    
