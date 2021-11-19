@@ -209,8 +209,10 @@ app.post('/createWishlist/:userid/:name', function(req,res){
 })
 
 app.get("/getwishlists/:userid",async function(req,res) {
-   await pool.query('select * from wishlist join user_wishlist on wishlist.wishlistid ='
-    +' user_wishlist.wishlistid where userid = $1' , [req.params.userid],function (err, results)  {
+   await pool.query('select distinct wishlist.* , abc.wishcount from wishlist' +
+   'join user_wishlist on wishlist.wishlistid  = user_wishlist.wishlistid' +
+   'join ( select count(wishid) as wishcount, wishlistid from wish group by wishlistid) as abc on abc.wishlistid = wishlist.wishlistid'+
+   'where userid = $1' , [req.params.userid],function (err, results)  {
            if(err){console.log("lortet virker ikke")}else 
             array = results.rows
    
@@ -239,7 +241,10 @@ app.get("/getwishlists/:userid",async function(req,res) {
     let link = req.body.link
     let wishlistid = req.body.wishlistid.toString()
     let picturelink = req.body.picturelink
-   res.end( d.createwish(name,price,link,wishlistid, picturelink))})
+	   let description = req.body.description
+	   let manufacturer = req.body.manufacturer
+   res.end( d.createwish(name,price,link,wishlistid, picturelink, description, manufacturer))})
+
 
 
    app.get("/getwishes/:wishlistid",async function (req,res) {
@@ -248,14 +253,15 @@ app.get("/getwishlists/:userid",async function(req,res) {
 		   console.log(err) 
 		   console.log("lortet virker ikke")
 	   }else  {
+
             array = results.rows
    
                console.log(array)
             return array + res.json(array)   //res.json(results.rows[0])  //array 
-         }
+         })
          console.log(array)
    })
-   })
+   
 
    app.get("/getwish/:wishid",async function (req,res) {
    await pool.query('select * from wish where wishid = $1' , [req.params.wishid],function (err, results)  {
