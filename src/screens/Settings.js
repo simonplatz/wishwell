@@ -28,7 +28,8 @@ export default Settings = ({navigation}) => {
     const options = {
       method: 'PUT'
     }
-    for (key of Object.keys(changes)) {
+    for (const key of Object.keys(changes)) {
+      
       switch(key) {
         case 'password': 
           fetch(baseUrl + "updatePassword/"
@@ -94,8 +95,11 @@ export default Settings = ({navigation}) => {
   }
 
   useEffect(() => {
+    console.log("date of b " + loginContext.userState.dateOfBirth)
+    console.log(loginContext.userState)
     dateChanged("initial", parseInt(loginContext.userState.dateOfBirth))
   }, [])
+
 
   let button;
   let modify;
