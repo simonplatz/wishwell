@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState}  from "react";
-import { ScrollView, View, Image, StyleSheet, Text, TextInput, Pressable } from "react-native";
+import { ScrollView, View, Image, StyleSheet, Text, Pressable } from "react-native";
 import { useFonts, OpenSans_600SemiBold, OpenSans_400Regular } from "@expo-google-fonts/open-sans"
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Information from '../components/TextInfoField.js'
@@ -119,7 +119,9 @@ export default Settings = ({navigation}) => {
       </Pressable>
 
       modify = 
-        <View> 
+        <View
+          key={0}
+        > 
           <Image style={style.image}
             source={require("../../assets/img/img4.jpg")} />
           <Information

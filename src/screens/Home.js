@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useContext, useEffect } from 'react';
 import { StyleSheet, FlatList, Pressable, Text, View } from 'react-native';
 import { useFonts, OpenSans_700Bold } from "@expo-google-fonts/open-sans"
 import { header as headerStyle, scrollEnv} from "../styleobject/Objects.js"
+import { LoginContext } from '../contexts/LoginContext.js'
 
 import AddWishlistModal from "../components/AddWishlistModal.js"
 import AddButton from "../components/AddButton.js"
@@ -28,31 +29,34 @@ function separator() {
 export default Home = ({navigation}) => {
   let [fontsLoaded] = useFonts({OpenSans_700Bold, });
 
-  let wishList = []
+  let context = useContext(LoginContext)
+  let [wishlists, setWishlists] = useState([])
 
-  for(let i = 0; i < 5; i++) {
-    wishList.push({          
-      id: i,
-      title: "WishList" + i,
-      numGifts: i * 10 + 2,
-      imageUri: require('../../assets/img/img1.jpg'),
-      imageUri2: require('../../assets/img/img2.jpg')
-    })
-  }
+  useEffect(() => {
+    if (context.userState.loggedIn) {
+      fetch('https://pratgen.dk/wishwell/getwishlists/' + context.userState.userId)
+        .then(response => response.json())
+        .then(data => {
+          console.log("return lists")
+          console.log(data)
+          setWishlists(wishlists.concat([data[0]]))
+        })
+    }
+  }, [context.userState.loggedIn])
 
   const renderItem = ({ item }) => (
     <Pressable
       onPress={() => {
         navigation.navigate('Wishes', 
           {
-            id: item.id,
-            title: item.title 
+            id: item.wishlistid,
+            title: item.name 
           }
         )
       }}
     >
       <Card 
-        title={item.title}
+        title={item.name}
         subtitle={item.numGifts + " wishes"}
         imageUri={item.imageUri}
         imageUri2={item.imageUri2}
@@ -69,7 +73,7 @@ export default Home = ({navigation}) => {
     return (
       <View style={styles.main}>
         <FlatList
-          data={wishList}
+          data={wishlists}
           renderItem={renderItem}
           contentContainerStyle={styles.scrollEnv}
           ListHeaderComponent={header}
@@ -81,6 +85,7 @@ export default Home = ({navigation}) => {
             </Pressable>
           }
           ItemSeparatorComponent={separator}
+          keyExtractor={(item) => item.id}
         />
         <AddWishlistModal
           modalVisible={modalVisible}

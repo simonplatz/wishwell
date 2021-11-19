@@ -31,6 +31,7 @@ export default function Information(props) {
             }
           }}
           secureTextEntry={props.secure != undefined ? props.secure : false}
+          multiline={props.multiline != undefined ? props.multiline : false}
         >
           {props.initialValue}
         </TextInput>

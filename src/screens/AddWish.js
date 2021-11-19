@@ -5,7 +5,7 @@ import generateBoxShadowStyle from "../tools/dropShadow.js"
 import { buttons, floatingButton } from '../styleobject/Objects.js'
 
 
-export default function AddWish() {
+export default function AddWish({navigation, route}, props) {
   const [inputState, setInputState] = useState({})
   generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717', styles);
 
@@ -13,6 +13,24 @@ export default function AddWish() {
     property = property.toLowerCase()
     inputState[property] = event
     console.log(inputState)
+  }
+
+  async function submitWish(wishlistid) {
+    fetch('https://pratgen.dk/wishwell/createwish/', {
+      method: 'POST',
+      body: JSON.stringify({
+        name: inputState.name,
+        price: inputState.price,
+        link: inputState.url,
+        manufacturer: inputState.manufacturer,
+        description : inputState.description,
+        picturelink: inputState.picturelink,
+        wishlistid:  wishlistid
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
   }
 
   return (
@@ -27,10 +45,13 @@ export default function AddWish() {
                 key={index}
                 info={item} 
                 changeText={inputChanged} 
+                multiline={item == "Description" ? true : false}
               />
             )})
         }
-
+        <View 
+          key={12312039123}
+          style={{height: 50}}></View>
       </ScrollView>
       <Pressable
         style={({pressed}) => [
@@ -39,7 +60,13 @@ export default function AddWish() {
           styles.floatingButton,
           pressed ? styles.pressedButton : {}
         ]}
-        onPress={() => ToastAndroid.show("Wish added!", 10)}
+        onPress={() => {
+          submitWish(route.params.wishlistid).then(() => {
+            props.updateWishes().then(
+              () => navigation.pop()
+            )
+          })
+        }}
       >
         <Text style={styles.buttonText}>{"Add wish to wishlist"} </Text>
       </Pressable>
@@ -67,5 +94,8 @@ const addWishData = [
   'Price',
   'Size',
   'Gift type',
-  'URL'
+  'URL',
+  'Manufacturer',
+  'Description',
+  'Picturelink'
 ];

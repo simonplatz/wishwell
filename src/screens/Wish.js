@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, ScrollView, Text, View, Image, Pressable } from 'react-native';
 import { floatingButton, scrollEnv, buttons, header as headerStyle, subHeader} from "../styleobject/Objects.js"
 import {card} from "../styleobject/CardStyle.js"
@@ -23,7 +23,7 @@ const data = [
   {key: '10', name: "Kettle", price: '1299', manufacturer: 'Chemex', description: lorem.generateParagraphs(2)},
   {key: '11', name: 'Coffee', price: '100', manufacturer: 'BestCoffee', description: lorem.generateParagraphs(2)},
   {key: '12', name: 'Espresso Machine', price: '3899', manufacturer: 'Rancilio', description: lorem.generateParagraphs(2)},
-  {key: '13', name: 'Tamper', price: '400', manufacturer: 'Joe Frex', description: lorem.generateParagraphs(2)}
+  {key: '13', name: 'Tamper', price: '400', manufacturer: 'Joe Flex', description: lorem.generateParagraphs(2)}
 ]
 
 export default Wish = ({route, navigation}) => {
@@ -31,9 +31,19 @@ export default Wish = ({route, navigation}) => {
 
   const sharedState = route.params.shared != undefined ? route.params.shared : false
 
-  const wish = data.find(item => item.key == route.params.key)
+  const [wish, setWish] = useState({})
+
   generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717', styles);
-  useEffect(() => {navigation.setOptions({ title: wish.name})}, []);
+  useEffect(() => {
+    navigation.setOptions({ title: wish.name})
+    console.log("id " + route.params.id)
+    fetch('https://pratgen.dk/wishwell/getwish/' + encodeURI(route.params.id))
+      .then(response => response.json())
+      .then(data => {
+        setWish(data[0])
+      })
+      .catch(err => console.log(err))
+  }, []);
 
   let buyOrEdit;
   if (sharedState) {
@@ -80,7 +90,7 @@ export default Wish = ({route, navigation}) => {
             >
               <Image 
                 style={styles.image}
-                source={require('../../assets/img/img1.jpg')} 
+                source={{uri: wish.picturelink}} 
               /> 
             </View>
             <View style={styles.textContainer}>

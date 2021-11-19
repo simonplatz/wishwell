@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { Animated, Pressable, StyleSheet, FlatList, Text, View } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faShare } from '@fortawesome/free-solid-svg-icons'
@@ -9,18 +9,6 @@ import Card from '../components/Card.js'
 import AddButton from "../components/AddButton.js"
 import SuggestionCard from "../components/SuggestionCard.js"
 import generateBoxShadowStyle from "../tools/dropShadow.js"
-
-const data = [
-  { key: '0', wishes: [
-    {key: '10', name: "Kettle", price: '1299', manufacturer: 'Chemex'},
-    {key: '11', name: 'Coffee', price: '100', manufacturer: 'BestCoffee'},
-    {key: '12', name: 'Espresso Machine', price: '3899', manufacturer: 'Rancilio'},
-    {key: '13', name: 'Tamper', price: '400', manufacturer: 'Joe Frex'}
-  ]},
-  { key: '2'},
-  { key: '3'},
-  { key: '4'}
-]
 
 const suggestionData = [
   {key: '1231j' , name: "Filters", manufacturer: "Chemex"},
@@ -46,7 +34,7 @@ function separator() {
 }
 
 
-function footer(navigation) {
+function footer(navigation, listid, updateWishes) {
   const renderItem = ({ item, index }) => (
     <View
       key={index}
@@ -59,15 +47,20 @@ function footer(navigation) {
       /> 
     </View>
   )
+  console.log("listid " + listid)
 
   return (
     <View style={{height: 430}}>
       <Pressable
           onPress={() => {
-            navigation.navigate('AddWish')
+            navigation.navigate('AddWish', {
+              wishlistid: listid
+            })
           }}
           >
-          <AddButton/>
+          <AddButton
+            updateWishes={updateWishes}
+        />
         </Pressable>
       <View style={{flexDirection: "row"}}>
         <FlatList
@@ -82,10 +75,26 @@ function footer(navigation) {
 
 
 export default WishList = ({navigation, route}) => {
-  const wishlist = data.find(item => item.key == route.params.id) 
-
   const loginContext = useContext(LoginContext)
   const [showShare, setShowShare] = useState(true)
+  const [wishlist, setWishlist] = useState([])
+
+  console.log("wish id " + route.params.id)
+
+  async function loadWishes() {
+    fetch('https://pratgen.dk/wishwell/getwishes/' + encodeURI(route.params.id))
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+        setWishlist(data)
+      })
+      .catch(err => console.log(err))
+  }
+
+  useEffect(() => {
+    console.log("wishlist id" + route.params.id)
+    loadWishes()
+  }, [])
 
   const sharedState = route.params.shared != undefined ? route.params.shared : false
 
@@ -107,7 +116,7 @@ export default WishList = ({navigation, route}) => {
       onPress={() => {
         navigation.navigate("Wish",
           {
-            key: item.key,
+            id: item.wishid,
             shared: sharedState
           }
         )
@@ -117,7 +126,7 @@ export default WishList = ({navigation, route}) => {
         title={item.name}
         price={item.price}
         subtitle={item.manufacturer}
-        imageUri={require('../../assets/img/img1.jpg')}
+        imageUri={ {uri: item.picturelink}}
       />
     </Pressable>
   )
@@ -173,11 +182,11 @@ export default WishList = ({navigation, route}) => {
         </Pressable>
       </Animated.View>
       <FlatList
-        data={wishlist.wishes}
+        data={wishlist}
         renderItem={renderItem}
         contentContainerStyle={styles.scrollEnv}
         ListHeaderComponent={header(route)}
-        ListFooterComponent={footer(navigation)}
+        ListFooterComponent={footer(navigation, route.params.id, loadWishes)}
         ItemSeparatorComponent={separator}
         scrollEventThrottle={16}
         onScroll={scrollOn}
