@@ -4,6 +4,8 @@ import { StatusBar } from 'react-native'
 import TabNavigator from "./src/navigation/TabNavigator.js"
 
 import { LoginContext } from './src/contexts/LoginContext.js'
+import { UpdateContext } from './src/contexts/UpdateContext.js'
+
 
 function App() {
   const inititalState = {
@@ -23,8 +25,17 @@ function App() {
     }  
   }
 
+  const [update, setUpdate] = useState(false)
+  const updateInitialValue = {
+    update: update,
+    setUpdate: (update) => {
+      setUpdate(update)
+    }
+  }
+
   return (
     <LoginContext.Provider value={initialValue}>
+      <UpdateContext.Provider value={updateInitialValue}>
       <NavigationContainer>
         <StatusBar
           animated={true}
@@ -34,6 +45,7 @@ function App() {
         />
         <TabNavigator/>
       </NavigationContainer>
+        </UpdateContext.Provider>
     </LoginContext.Provider>
   );
 }

@@ -1,13 +1,16 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import { StyleSheet, View, Text, SafeAreaView, ScrollView, ToastAndroid, Pressable} from 'react-native';
 import Information from '../components/TextInfoField.js'
 import generateBoxShadowStyle from "../tools/dropShadow.js"
 import { buttons, floatingButton } from '../styleobject/Objects.js'
 
+import { UpdateContext } from '../contexts/UpdateContext.js'
 
-export default function AddWish({navigation, route}, props) {
+export default function AddWish({navigation, route, props}) {
   const [inputState, setInputState] = useState({})
   generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717', styles);
+
+  const updateContext = useContext(UpdateContext)
 
   function inputChanged(event, property) {
     property = property.toLowerCase()
@@ -62,16 +65,14 @@ export default function AddWish({navigation, route}, props) {
         ]}
         onPress={() => {
           submitWish(route.params.wishlistid).then(() => {
-            props.updateWishes().then(
-              () => navigation.pop()
-            )
+            updateContext.setUpdate({updateContext, ...{update: true}})
+            navigation.pop()
           })
         }}
       >
         <Text style={styles.buttonText}>{"Add wish to wishlist"} </Text>
       </Pressable>
     </View>
-
   );
 }
 

@@ -3,7 +3,9 @@ import { Animated, Pressable, StyleSheet, FlatList, Text, View } from 'react-nat
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faShare } from '@fortawesome/free-solid-svg-icons'
 import { header as headerStyle, scrollEnv} from "../styleobject/Objects.js"
+
 import { LoginContext } from '../contexts/LoginContext.js'
+import { UpdateContext } from '../contexts/UpdateContext.js'
 
 import Card from '../components/Card.js'
 import AddButton from "../components/AddButton.js"
@@ -34,67 +36,75 @@ function separator() {
 }
 
 
-function footer(navigation, listid, updateWishes) {
-  const renderItem = ({ item, index }) => (
-    <View
-      key={index}
-      style={{ height: 400, width: 320}}
-    >
-      <SuggestionCard
-        title={item.name}
-        subtitle={item.manufacturer}
-        imageUri={require("../../assets/img/img1.jpg")}
-      /> 
-    </View>
-  )
-  console.log("listid " + listid)
-
-  return (
-    <View style={{height: 430}}>
-      <Pressable
-          onPress={() => {
-            navigation.navigate('AddWish', {
-              wishlistid: listid
-            })
-          }}
-          >
-          <AddButton
-            updateWishes={updateWishes}
-        />
-        </Pressable>
-      <View style={{flexDirection: "row"}}>
-        <FlatList
-          horizontal
-          data={suggestionData}
-          renderItem={renderItem}
-        />
-      </View>
-    </View>
-  )
-}
 
 
 export default WishList = ({navigation, route}) => {
   const loginContext = useContext(LoginContext)
+  const updateContext = useContext(UpdateContext)
+
+  const [refreshing, setRefreshing] = useState(false)
   const [showShare, setShowShare] = useState(true)
   const [wishlist, setWishlist] = useState([])
 
   console.log("wish id " + route.params.id)
 
-  async function loadWishes() {
+  function loadWishes() {
+    setRefreshing(true)
     fetch('https://pratgen.dk/wishwell/getwishes/' + encodeURI(route.params.id))
       .then(response => response.json())
       .then(data => {
         console.log(data)
         setWishlist(data)
+        setRefreshing(false)
       })
-      .catch(err => console.log(err))
+  }
+
+
+
+  function footer() {
+    const renderItem = ({ item, index }) => (
+      <View
+        key={index}
+        style={{ height: 400, width: 320}}
+      >
+        <SuggestionCard
+          title={item.name}
+          subtitle={item.manufacturer}
+          imageUri={require("../../assets/img/img1.jpg")}
+        /> 
+      </View>
+    )
+    return (
+      <View style={{height: 430}}>
+        <Pressable
+          onPress={() => {
+            navigation.navigate('AddWish', {
+              wishlistid: route.params.id
+            })
+          }}
+        >
+          <AddButton />
+        </Pressable>
+        <View style={{flexDirection: "row"}}>
+          <FlatList
+            horizontal
+            data={suggestionData}
+            renderItem={renderItem}
+          />
+        </View>
+      </View>
+    )
   }
 
   useEffect(() => {
     console.log("wishlist id" + route.params.id)
     loadWishes()
   }, [])
+
+  useEffect(() => {
+    console.log("wishlist updated context" + route.params.id)
+    loadWishes()
+  }, [updateContext.update])
 
   const sharedState = route.params.shared != undefined ? route.params.shared : false
 
@@ -170,7 +180,7 @@ export default WishList = ({navigation, route}) => {
             styles.button,
             {
               backgroundColor: pressed ? 
-               '#ababab' : '#ebebeb',
+              '#ababab' : '#ebebeb',
             },
           ]}
         >
@@ -186,9 +196,11 @@ export default WishList = ({navigation, route}) => {
         renderItem={renderItem}
         contentContainerStyle={styles.scrollEnv}
         ListHeaderComponent={header(route)}
-        ListFooterComponent={footer(navigation, route.params.id, loadWishes)}
+        ListFooterComponent={footer}
         ItemSeparatorComponent={separator}
         scrollEventThrottle={16}
+        refreshing={refreshing}
+        onRefresh={loadWishes}
         onScroll={scrollOn}
       />
     </View>
