@@ -291,3 +291,17 @@ app.post("/shareWishlist/:shareduserid/:wishlistid", function (req,res) {
         //client.end() 
     })
 })
+
+app.get('/getSharedwishlists/:shareduserid', function (req,res) {
+    pool.query("select * from shared where shareduserid = $1",[req.params.shareduserid],function (err,results) {
+        console.log(err, res)
+        //client.end()
+
+
+        array = results.rows
+   
+               console.log(array)
+            return array + res.json(array) 
+        
+})
+})
