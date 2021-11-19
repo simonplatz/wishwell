@@ -81,7 +81,7 @@ var pool = new Pool({
   function createwish(name, price, link, wishlistid, pictureLink){
 
     pool.query('Insert into wish(name,price,link, wishlistid, pictureLink  ) Values($1,$2,$3,$4, $5)'
-    , [name,price,link,wishlistid], (err, res) => {
+    , [name,price,link,wishlistid, pictureLink], (err, res) => {
         console.log(err, res)
         //client.end() 
     })

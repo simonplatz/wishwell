@@ -224,14 +224,18 @@ app.get("/getwishlists/:userid",async function(req,res) {
 
 
    app.get("/getwishes/:wishlistid",async function (req,res) {
-   await pool.query('select *, count(wishid) from wish where wishlistid = $1' , [req.params.wishlistid],function (err, results)  {
-           if(err){console.log("lortet virker ikke")}else 
+   await pool.query('select *, count(wishid) from wish where wish.wishlistid = $1' , [req.params.wishlistid],function (err, results)  {
+           if(err){
+		   console.log(err) 
+		   console.log("lortet virker ikke")
+	   }else  {
             array = results.rows
    
                console.log(array)
             return array + res.json(array)   //res.json(results.rows[0])  //array 
-         })
+         }
          console.log(array)
+   })
    })
 
    app.get("/getwish/:wishid",async function (req,res) {
