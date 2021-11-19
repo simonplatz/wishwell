@@ -51,7 +51,7 @@ export default Home = ({navigation}) => {
                 wishlist.numGifts = data.length
                 }
               ).then()
-            setWishlists(data.append(wishlist))
+            setWishlists(data.concat([wishlist]))
           }
         })
     }
