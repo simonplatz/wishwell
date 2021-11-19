@@ -132,10 +132,10 @@ app.put("/updatePassword/:newpassword/:userid/",function(req,res) {
     pool.query("update usertable set password = $1 where userid =$2", [req.params.newpassword,req.params.userid],function (err, results)  {
         if(err){
             console.log("lortet virker ikke")
-            res.end
+            res.end()
         
         } else 
-            res.end
+            res.end()
 	})
 })
 
@@ -143,24 +143,24 @@ app.put("/updateEmail/:email/:userid/",function(req,res) {
     pool.query("update usertable set email =$1 where userid =$2", [req.params.email,req.params.userid],function (err, results)  {
         if(err){
             console.log("lortet virker ikke")
-            res.end
+            res.end()
         
         } else 
-            res.end
+            res.end()
 	})
 })
 
 app.put("/updateBirth/:dateofbirth/:userid", function(req,res) {
 	const birthString = req.params.dateofbirth.toString()
 	console.log(birthString)
-    pool.query("update usertable set dataofbirth = $1 where userid = $2", [birthString ,req.params.userid], function (err, results)  {
+    pool.query("update usertable set dataofbirth = $1 where userid = $2", [birthString, req.params.userid], function (err, results)  {
         if(err){
             console.log("lortet virker ikke")
 		console.log(err)
-            res.end
+            res.end()
         
         } else 
-            res.end
+            res.end()
 	})
 })
 
@@ -170,10 +170,9 @@ app.put("/updateName/:name/:userid", function(req,res) {
 	console.log("id " + req.params.userid)
         if(err){
             console.log("lortet virker ikke")
-            res.end
-        
+		res.end()
 	} else 
-            	res.end
+	    res.end()
 	})
 })
 
@@ -212,7 +211,7 @@ app.get("/getwishlists/:userid",async function(req,res) {
          console.log(array)
    })
 
-   app.post('/createwish/:name/:price/:link/:wishlistid', async function(req,res){
+   app.post('/createWish/:name/:price/:link/:wishlistid/:pictureLink', async function(req,res){
     res.send(req.params)
     console.log(res.dateofbirth)
     console.log("abc")
@@ -220,7 +219,8 @@ app.get("/getwishlists/:userid",async function(req,res) {
     let price = req.params.price
     let link = req.params.link
     let wishlistid = req.params.wishlistid
-   res.end( d.createwish(name,price,link,wishlistid))})
+	let pictureLink = req.params.pictureLink
+   res.end( d.createwish(name,price,link,wishlistid, pictureLink))})
 
 
    app.get("/getwishes/:wishlistid",async function (req,res) {
