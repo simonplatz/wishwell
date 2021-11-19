@@ -37,9 +37,22 @@ export default Home = ({navigation}) => {
       fetch('https://pratgen.dk/wishwell/getwishlists/' + context.userState.userId)
         .then(response => response.json())
         .then(data => {
-          console.log("return lists")
-          console.log(data)
-          setWishlists(wishlists.concat([data[0]]))
+          for(const wishlist of data){
+            fetch('https://pratgen.dk/wishwell/getwishes/' + wishlist.wishlistid)
+              .then(response => response.json())
+              .then(data => {
+                for (const wish of data)
+                  if (wishlist.imageUri == undefined) {
+                    wishlist.imageUri = wish.picturelink 
+                  } else if (wishlist.imageUri2 == undefined) {
+                    wishlist.imageUri2 = wish.picturelink
+                  }
+                console.log(wishlists)
+                wishlist.numGifts = data.length
+                }
+              ).then()
+            setWishlists(data.append(wishlist))
+          }
         })
     }
   }, [context.userState.loggedIn])
@@ -58,8 +71,8 @@ export default Home = ({navigation}) => {
       <Card 
         title={item.name}
         subtitle={item.numGifts + " wishes"}
-        imageUri={item.imageUri}
-        imageUri2={item.imageUri2}
+        imageUri={{uri: item.imageUri}}
+        imageUri2={{uri: item.imageUri2}}
       />
     </Pressable>
   )
