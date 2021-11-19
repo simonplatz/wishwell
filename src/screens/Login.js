@@ -28,7 +28,8 @@ export default Login = ({navigation}) => {
           name: user.name,
           userId: user.userid,
           dateOfBirth: user.dataofbirth,
-          loggedIn: true
+          loggedIn: true,
+          email: input.email
         })
       })
       .catch(err => console.log(err))

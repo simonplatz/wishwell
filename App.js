@@ -10,7 +10,8 @@ function App() {
     loggedIn: false,
     userId: '',
     dateOfBith: '',
-    name: ''
+    name: '',
+    email: ''
   }
 
   const [userState, setUserState] = useState(inititalState)

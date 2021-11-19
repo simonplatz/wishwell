@@ -4,8 +4,9 @@ export const LoginContext = createContext({
   userState:  {
     loggedIn: false,
     userId: '',
-    dateOfBith: '',
-    name: ''
+    dateOfBirth: '',
+    name: '',
+    email: ''
   },
   setUserState: () => { }
 })

@@ -8,13 +8,6 @@ import generateBoxShadowStyle from "../tools/dropShadow.js"
 import {buttons, floatingButton} from "../styleobject/Objects.js"
 
 
-const USERDATA = {
-  id: 'id1',
-  title: 'Joakim',
-  email:'email@email.com',
-  date: '1637911922589'
-}
-
 export default Settings = ({navigation}) => {
   let [fontsLoaded] = useFonts({OpenSans_600SemiBold, OpenSans_400Regular, });
 
@@ -30,10 +23,55 @@ export default Settings = ({navigation}) => {
     displayString: ''
   })
 
+  function updateUser() {
+    const baseUrl = 'https://pratgen.dk/wishwell/'
+    const options = {
+      method: 'PUT'
+    }
+    for (key of Object.keys(changes)) {
+      switch(key) {
+        case 'password': 
+          fetch(baseUrl + "updatePassword/"
+            + encodeURI(changes.password) + '/' + encodeURI(loginContext.userState.userId),
+            options
+          )
+          break;
+
+        case 'email': 
+          fetch(baseUrl + "updateEmail/"
+            + encodeURI(changes.email) + '/' + encodeURI(loginContext.userState.userId),
+            options
+          )
+          break;
+
+        case 'birthday':
+          fetch(baseUrl + "updateBirth/"
+            + encodeURI(changes.birthday) + '/' + encodeURI(loginContext.userState.userId),
+            options
+          )
+          break;
+
+        case 'name':
+          console.log("changing name")
+          console.log(loginContext.userState.userId)
+          console.log(changes.name)
+          fetch(baseUrl + "updateName/" 
+            + encodeURI(changes.name) + '/' + encodeURI(loginContext.userState.userId),
+            options
+          )
+          break
+
+      }
+    }
+    setChangedProperties({})
+    setChangedState(false)
+  }
+
   function textChanged(event, property) {
     property = property.toLowerCase()
     setChangedState(true)
     changes[property] = event
+    console.log(changes)
   }
 
   function getDisplayDate(date) {
@@ -56,13 +94,11 @@ export default Settings = ({navigation}) => {
   }
 
   useEffect(() => {
-    dateChanged("initial", parseInt(USERDATA.date))
+    dateChanged("initial", parseInt(loginContext.userState.dateOfBirth))
   }, [])
 
   let button;
   let modify;
-  console.log("user state")
-  console.log(loginContext.userState)
   if (loginContext.userState.loggedIn) {
     button = 
       <Pressable 
@@ -80,7 +116,7 @@ export default Settings = ({navigation}) => {
 
       modify = 
         <View> 
-         <Image style={style.image}
+          <Image style={style.image}
             source={require("../../assets/img/img4.jpg")} />
           <Information
             info={"Name"}
@@ -89,7 +125,7 @@ export default Settings = ({navigation}) => {
           />
           <Information 
             info={"Email"}
-            initialValue={USERDATA.email}
+            initialValue={loginContext.userState.email}
             changeText={textChanged}
           />
           <Information 
@@ -98,16 +134,22 @@ export default Settings = ({navigation}) => {
             editable={false}
             onPress={setShowDatePicker}
           />
+          <Information 
+            info={"Password"}
+            secure={true}
+            changeText={textChanged}
+          />
           <View
             style={{flex: 1, alignItems: "center"}}
           >
             <Pressable
               style={({pressed}) => 
-                [
-                  style.button, 
-                  changedState ? {} : {backgroundColor: "#dfdfdf", borderColor: "#dfdfdf"}, {width: '100%'} ,
-                  pressed && changedState ? style.pressedButton : {}
-                ]}
+                  [
+                    style.button, 
+                    changedState ? {} : {backgroundColor: "#dfdfdf", borderColor: "#dfdfdf"}, {width: '100%'} ,
+                    pressed && changedState ? style.pressedButton : {}
+                  ]}
+              onPress={() => updateUser()}
             >
               <Text style={style.buttonText}>
                 {"Save changes"}
@@ -122,17 +164,17 @@ export default Settings = ({navigation}) => {
             onChange={dateChanged}
             style={{width: 420, backgroundColor: "white"}}
           />
-        }
+          }
         </View>
   } else  {
     button = 
       <Pressable 
         style={({pressed}) => 
-          [style.button, 
-          style.floatingButton, 
-          style.boxShadow,
-          pressed ? style.pressedButton : {} 
-        ]}
+            [style.button, 
+              style.floatingButton, 
+              style.boxShadow,
+              pressed ? style.pressedButton : {} 
+            ]}
         onPress={() => navigation.navigate("Login")}
       >
         <Text style={style.floatingButtonText}>{"Login"}</Text>
