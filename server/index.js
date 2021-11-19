@@ -235,6 +235,7 @@ app.get("/getwishlists/:userid",async function(req,res) {
          })
          console.log(array)
    })
+   
 
    app.get("/getwish/:wishid",async function (req,res) {
    await pool.query('select * from wish where wishid = $1' , [req.params.wishid],function (err, results)  {
