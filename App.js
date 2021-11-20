@@ -1,14 +1,16 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'react-native'
 import TabNavigator from "./src/navigation/TabNavigator.js"
+
+import { getObjectData} from './src/tools/Storage.js'
 
 import { LoginContext } from './src/contexts/LoginContext.js'
 import { UpdateContext } from './src/contexts/UpdateContext.js'
 
 
 function App() {
-  const inititalState = {
+  const initialState = {
     loggedIn: false,
     userId: '',
     dateOfBith: '',
@@ -16,7 +18,19 @@ function App() {
     email: ''
   }
 
-  const [userState, setUserState] = useState(inititalState)
+  const [userState, setUserState] = useState(initialState)
+
+  useEffect(() => {
+    getObjectData("userState")
+      .then(data => {
+        if (data !== null) {
+          console.log("saved data")
+          console.log(data)
+          setUserState(data)
+        }
+      })
+  }, [])
+
 
   const initialValue = {
     userState: userState, 
