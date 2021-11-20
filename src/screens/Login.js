@@ -56,6 +56,9 @@ export default Login = ({navigation}) => {
         <Information
           info={"Email"}
           initialValue={input.email}
+          autoComplete={'email'}
+          keyboardType={"email-address"}
+          autoCapitalize={'none'}
           changeText={inputChanged}
         />
 
