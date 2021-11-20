@@ -8,6 +8,11 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@expo-google-fonts/open-sans": "^0.2.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@fortawesome/react-native-fontawesome": "^0.2.7",
+    "@react-native-async-storage/async-storage": "~1.15.0",
     "@react-navigation/bottom-tabs": "^6.0.9",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
@@ -30,13 +35,23 @@
     "react-dom": "17.0.1",
     "react-native": "0.64.2",
     "react-native-crypto": "^2.2.0",
+    "i": "^0.3.7",
+    "lorem-ipsum": "^2.0.4",
+    "npm": "^8.1.2",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-native": "0.64.2",
+    "react-native-dialog": "^9.2.0",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-randombytes": "^3.6.1",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-safe-area-view": "^1.1.1",
     "react-native-web": "0.17.1",
     "tls": "^0.0.1",
-    "util": "^0.12.4"
+    "util": "^0.12.4",
+    "react-native-svg": "^12.1.1",
+    "react-native-web": "0.17.1",
+    "@react-native-community/datetimepicker": "3.5.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
