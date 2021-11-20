@@ -136,6 +136,20 @@ app.put("/deleteWishlist/:wishlistid/",function(req,res) {
 })
 
 
+app.put("/deleteWish/:wishid/",function(req,res) {
+	pool.query("DELETE from wish where wish.wishid = $1", [req.params.wishid], function (err, results) {
+		if(err) {
+			console.log(err)
+			res.end()
+		}
+		else {
+			res.end()
+
+	}})
+	
+
+})
+
 
 app.get("/getUser/:email",async function(req,res) {
 await pool.query('SELECT * from usertable where email =$1' , [req.params.email],function (err, results)  {
@@ -209,11 +223,13 @@ app.post('/createWishlist/:userid/:name', function(req,res){
 })
 
 app.get("/getwishlists/:userid",async function(req,res) {
-   await pool.query('select distinct wishlist.* , abc.wishcount from wishlist' +
-   'join user_wishlist on wishlist.wishlistid  = user_wishlist.wishlistid' +
-   'join ( select count(wishid) as wishcount, wishlistid from wish group by wishlistid) as abc on abc.wishlistid = wishlist.wishlistid'+
-   'where userid = $1' , [req.params.userid],function (err, results)  {
-           if(err){console.log("lortet virker ikke")}else 
+   await pool.query('select * from wishlist join user_wishlist on wishlist.wishlistid ='
+    +' user_wishlist.wishlistid where userid = $1', [req.params.userid], function (err, results)  {
+           if(err){
+		   console.log(err)
+		   console.log("lortet virker ikke")
+
+	   }else 
             array = results.rows
    
                console.log(array)
@@ -239,7 +255,7 @@ app.get("/getwishlists/:userid",async function(req,res) {
     let name = req.body.name
     let price = req.body.price
     let link = req.body.link
-    let wishlistid = req.body.wishlistid.toString()
+    let wishlistid = req.body.wishlistid
     let picturelink = req.body.picturelink
 	   let description = req.body.description
 	   let manufacturer = req.body.manufacturer
@@ -258,7 +274,7 @@ app.get("/getwishlists/:userid",async function(req,res) {
    
                console.log(array)
             return array + res.json(array)   //res.json(results.rows[0])  //array 
-         })
+         }})
          console.log(array)
    })
    
