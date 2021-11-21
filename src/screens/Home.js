@@ -34,8 +34,8 @@ export default Home = ({navigation}) => {
   let [refreshing, setRefreshing] = useState(false)
 
   function loadList() {
-    setRefreshing(true)
     if (context.userState.loggedIn) {
+    setRefreshing(true)
       let newList = [];
       fetch('https://pratgen.dk/wishwell/getwishlists/' + context.userState.userId)
         .then(response => response.json())
@@ -63,8 +63,13 @@ export default Home = ({navigation}) => {
   }
 
   useEffect(() => {
-    loadList()
-  }, [context.userState.loggedIn])
+    console.log("loading " + JSON.stringify(context.userState))
+    if (!context.userState.loggedIn) {
+      setWishlists([])
+    } else {
+      loadList()
+    }
+  }, [context.userState])
 
   const renderItem = ({ item }) => (
     <Pressable

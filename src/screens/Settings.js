@@ -4,6 +4,7 @@ import { useFonts, OpenSans_600SemiBold, OpenSans_400Regular } from "@expo-googl
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Information from '../components/TextInfoField.js'
 import { LoginContext } from '../contexts/LoginContext.js'
+import { UpdateContext } from '../contexts/UpdateContext.js'
 import generateBoxShadowStyle from "../tools/dropShadow.js"
 import {buttons, floatingButton} from "../styleobject/Objects.js"
 
@@ -12,6 +13,7 @@ export default Settings = ({navigation}) => {
   let [fontsLoaded] = useFonts({OpenSans_600SemiBold, OpenSans_400Regular, });
 
   const loginContext = useContext(LoginContext)
+  const updateContext = useContext(UpdateContext)
   generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717', style);
 
   const [changedState, setChangedState] = useState(false)
@@ -120,7 +122,9 @@ export default Settings = ({navigation}) => {
             dateOfBirth: '',
             name: '',
             email: ''})
-        }}
+            updateContext.setUpdate(false)
+        }
+        }
       >
         <Text style={style.contrastButtonText}>{"Logout"}</Text>
       </Pressable>
