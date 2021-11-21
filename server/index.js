@@ -313,17 +313,10 @@ app.put("/updateWishlist/:name/:wishlistid",function(req,res) {
         if(err){
             console.log("lortet virker ikke")
             console.log()
-            res.end
+            res.end()
         
         }else 
-    
-        
-        array = res.json(results.rows[0])
-
-
-            console.log(results.rows[0])
-            console.log("abc")
-            res.end
+            res.end()
         
       })
 
@@ -347,18 +340,10 @@ console.log(req.body)
         if(err){
             console.log("lortet virker ikke")
             console.log()
-            res.end
+            res.end()
         
         }else 
-    
-        
-        array = res.json(results.rows[0])
-
-
-            console.log(results.rows[0])
-            console.log("abc")
-            res.end
-        
+            res.end()
       })
 
 })
