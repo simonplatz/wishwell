@@ -27,15 +27,15 @@ export default SharedWithMe = ({navigation}) => {
       id: 1,
       title: "Lone's wishlist",
       numGifts: 40,
-      imageUri: require('../../assets/img/img3.jpg'),
+      imageUri: require('../../assets/img/img1.jpg'),
       imageUri2: require('../../assets/img/img1.jpg')
     })
     wishList.push({
       id: 2,
       title: "Bjarne's amazing wishlist",
       numGifts: 5,
-      imageUri: require('../../assets/img/img4.jpg'),
-      imageUri2: require('../../assets/img/img2.jpg')
+      imageUri: require('../../assets/img/img1.jpg'),
+      imageUri2: require('../../assets/img/img1.jpg')
     })
 
   const renderItem = ({ item }) => (

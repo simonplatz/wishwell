@@ -88,15 +88,15 @@ export default Settings = ({navigation}) => {
         date: newDate,
         displayString: getDisplayDate(newDate)
       })
+
       if (event != "initial") {
+        loginContext.userState.dateOfBirth = newDate.getTime()
         textChanged(newDate.getTime(), "Birthday")
       }
     }
   }
 
   useEffect(() => {
-    console.log("date of b " + loginContext.userState.dateOfBirth)
-    console.log(loginContext.userState)
     dateChanged("initial", parseInt(loginContext.userState.dateOfBirth))
   }, [])
 
@@ -113,7 +113,14 @@ export default Settings = ({navigation}) => {
           pressed ? style.pressedContrastButton : {}
         ]}
         color = "#3BBA6C" 
-        onPress={() => loginContext.setUserState({...loginContext.userState, ...{loggedIn: false}})}
+        onPress={() => {
+          loginContext.setUserState({
+            loggedIn: false,
+            userId: '',
+            dateOfBirth: '',
+            name: '',
+            email: ''})
+        }}
       >
         <Text style={style.contrastButtonText}>{"Logout"}</Text>
       </Pressable>

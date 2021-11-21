@@ -50,7 +50,6 @@ export default WishList = ({navigation, route}) => {
     fetch('https://pratgen.dk/wishwell/getwishes/' + encodeURI(route.params.id))
       .then(response => response.json())
       .then(data => {
-        console.log(data)
         setWishlist(data)
         setRefreshing(false)
       })
@@ -101,7 +100,7 @@ export default WishList = ({navigation, route}) => {
   useEffect(() => {
     console.log("wishlist updated context" + route.params.id)
     loadWishes()
-  }, [updateContext.update.updateWishlist])
+  }, [updateContext.update])
 
   const sharedState = route.params.shared != undefined ? route.params.shared : false
 

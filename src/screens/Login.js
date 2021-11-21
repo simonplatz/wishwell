@@ -76,6 +76,7 @@ export default Login = ({navigation}) => {
               {width: '48%'},
               pressed ? style.pressedContrastButton : {}
             ]}
+            onPress={() => navigation.pop()}
           >
             <Text style={style.contrastButtonText}>{"Cancel"}</Text>
           </Pressable>

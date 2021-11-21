@@ -13,7 +13,7 @@ function App() {
   const initialState = {
     loggedIn: false,
     userId: '',
-    dateOfBith: '',
+    dateOfBirth: '',
     name: '',
     email: ''
   }
@@ -24,8 +24,6 @@ function App() {
     getObjectData("userState")
       .then(data => {
         if (data !== null) {
-          console.log("saved data")
-          console.log(data)
           setUserState(data)
         }
       })
@@ -39,12 +37,8 @@ function App() {
     }  
   }
 
-  const [update, setUpdate] = useState(
-    {
-      updateWishlist: false,
-      updateWish: false
-    }
-  )
+  const [update, setUpdate] = useState(false)
+
   const updateInitialValue = {
     update: update,
     setUpdate: (update) => {

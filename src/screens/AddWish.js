@@ -89,12 +89,12 @@ export default function AddWish({navigation, route}) {
         onPress={() => {
           if (wish == undefined) {
             submitWish(route.params.wishlistid).then(() => {
-              updateContext.setUpdate({updateContext, ...{update : {updateWishlist: true}}})
+              updateContext.setUpdate({updateContext, ...{update : !updateContext.update}})
               navigation.pop()
             })
           } else {
             submitWishChange().then(() => {
-              updateContext.setUpdate({updateContext, ...{update : {updateWish: true}}})
+              updateContext.setUpdate({updateContext, ...{update : !updateContext.update}})
               navigation.pop()
             })
           }

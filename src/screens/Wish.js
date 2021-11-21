@@ -41,8 +41,9 @@ export default Wish = ({route, navigation}) => {
   }, []);
 
   useEffect(() => {
+    console.log("updating wish")
     loadWish()
-  }, [updateContext.update.updateWish])
+  }, [updateContext.update])
 
 
   async function deleteWish(wishid) {
@@ -64,7 +65,7 @@ export default Wish = ({route, navigation}) => {
           ]}
           onPress={() => {
             deleteWish(wish.id).then(() => {
-              updateContext.setUpdate({updateContext, ...{ update: {updateWishlist : !updateContext.update.updateWishlist}}})
+              console.log("deleting wish")
               navigation.pop()
             })
           }}

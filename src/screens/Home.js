@@ -31,9 +31,12 @@ export default Home = ({navigation}) => {
 
   let context = useContext(LoginContext)
   let [wishlists, setWishlists] = useState([])
+  let [refreshing, setRefreshing] = useState(false)
 
-  useEffect(() => {
+  function loadList() {
+    setRefreshing(true)
     if (context.userState.loggedIn) {
+      let newList = [];
       fetch('https://pratgen.dk/wishwell/getwishlists/' + context.userState.userId)
         .then(response => response.json())
         .then(data => {
@@ -41,23 +44,26 @@ export default Home = ({navigation}) => {
             fetch('https://pratgen.dk/wishwell/getwishes/' + wishlist.wishlistid)
               .then(response => response.json())
               .then(data => {
-                console.log(data)
                 for (const wish of data) {
                   if (wishlist.imageUri == undefined) {
                     wishlist.imageUri = wish.picturelink 
                   } else if (wishlist.imageUri2 == undefined) {
                     wishlist.imageUri2 = wish.picturelink
                   }
-                wishlist.numGifts = data.length
                 }
-                console.log(wishlists)
-                setWishlists(wishlists.concat([wishlist]))
-                console.log(wishlists)
+                wishlist.numGifts = data.length != undefined ? data.length : 0
+                newList.push(wishlist)
               })
-            console.log(wishlist)
           }
-        })
+          setRefreshing(false)
+          console.log(newList)
+          return newList
+        }).then((list) => setWishlists(list))
     }
+  }
+
+  useEffect(() => {
+    loadList()
   }, [context.userState.loggedIn])
 
   const renderItem = ({ item }) => (
@@ -74,8 +80,8 @@ export default Home = ({navigation}) => {
       <Card 
         title={item.name}
         subtitle={item.numGifts + " wishes"}
-        imageUri={{uri: item.imageUri}}
-        imageUri2={{uri: item.imageUri2}}
+        imageUri={ item.imageUri != undefined ? {uri: item.imageUri} : require('../../assets/img/placeholder.png')}
+        imageUri2={item.imageUri2 != undefined ? {uri: item.imageUri2} : require('../../assets/img/placeholder.png')}
       />
     </Pressable>
   )
@@ -102,10 +108,13 @@ export default Home = ({navigation}) => {
           }
           ItemSeparatorComponent={separator}
           keyExtractor={(item) => item.id}
+          refreshing={refreshing}
+          onRefresh={() => loadList()}
         />
         <AddWishlistModal
           modalVisible={modalVisible}
           setModalVisible={setModalVisible}
+          userid={context.userState.userId}
         />
       </View>
     );

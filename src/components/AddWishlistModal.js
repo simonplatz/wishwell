@@ -12,10 +12,26 @@ export default function AddWishlistModal(props) {
 
   generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717', styles);
 
+  const [title, setTitle] = useState('')
   const [focus, setFocus] = useState(false)
   const customStyle = focus ? styles.focused : {}
 
   const fieldRef = useRef(null)
+
+  async function submitNewlist() {
+    console.log("submitting " + props.userid + " " + title)
+    fetch('https://pratgen.dk/wishwell/createWishlist/', {
+      body: JSON.stringify({
+        userid: props.userid,
+        name: title
+      }),
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    )
+  }
 
   if(!fontsLoaded) {
     return <View></View>
@@ -53,6 +69,7 @@ export default function AddWishlistModal(props) {
               placeholder={"My wishlist"}
               style={[styles.input, customStyle]}
               ref={fieldRef}
+              onChangeText={(value) => {console.log (value); setTitle(value)}}
               onFocus={() => setFocus(true)}
               onBlur={() => { 
                 console.log("blurring") 
@@ -71,7 +88,10 @@ export default function AddWishlistModal(props) {
               </Pressable>
               <Pressable
                 style={styles.button}
-                onPress={() => props.setModalVisible(false)}
+                onPress={() => {
+                  submitNewlist()
+                  props.setModalVisible(false)
+                }}
               >
                 <Text 
                   style={styles.buttonText}
