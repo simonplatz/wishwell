@@ -153,7 +153,11 @@ app.put("/deleteWish/:wishid/",function(req,res) {
 
 app.get("/getUser/:email",async function(req,res) {
 await pool.query('SELECT * from usertable where email =$1' , [req.params.email],function (err, results)  {
-        if(err){console.log("lortet virker ikke")}else 
+        if(err){
+		console.log("lortet virker ikke")
+		return "error"
+
+	}else 
         array = results.rows
             console.log("abc")
          return  array   + res.json(array)  //array 
