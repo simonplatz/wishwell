@@ -334,14 +334,16 @@ app.put("/updateWish/",function(req,res) {
     let name = req.body.name
     let price = req.body.price
     let link = req.body.link
-    let wishlistid = req.body.wishlistid
+    let wishid = req.body.wishid
     let picturelink = req.body.picturelink
 	   let description = req.body.description
 	   let manufacturer = req.body.manufacturer
 
 
-    pool.query("Update wishlist set name = $1, link = $2, price = $3, picturelink = $5, description = $6, description = $7,  where wishlistid = $4"
-    , [name,link,price,wishlistid, picturelink, description, manufacturer],function (err, results)  {
+console.log(req.body)
+
+    pool.query("Update wish set name = $1, link = $2, price = $3, picturelink = $5, description = $6, description = $7,  where wishid = $4"
+    , [name,link,price,wishid, picturelink, description, manufacturer],function (err, results)  {
         if(err){
             console.log("lortet virker ikke")
             console.log()
