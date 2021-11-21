@@ -1,12 +1,12 @@
 import React, {useState, useContext} from 'react';
-import { StyleSheet, View, Text, SafeAreaView, ScrollView, ToastAndroid, Pressable} from 'react-native';
+import { StyleSheet, View, Text, ScrollView, Pressable} from 'react-native';
 import Information from '../components/TextInfoField.js'
 import generateBoxShadowStyle from "../tools/dropShadow.js"
 import { buttons, floatingButton } from '../styleobject/Objects.js'
 
 import { UpdateContext } from '../contexts/UpdateContext.js'
 
-export default function AddWish({navigation, route, props}) {
+export default function AddWish({navigation, route}) {
   const [inputState, setInputState] = useState({})
   generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717', styles);
 
@@ -24,10 +24,10 @@ export default function AddWish({navigation, route, props}) {
       body: JSON.stringify({
         name: inputState.name,
         price: inputState.price,
-        link: inputState.url,
+        link: inputState.link,
         manufacturer: inputState.manufacturer,
         description : inputState.description,
-        picturelink: inputState.picturelink,
+        picturelink: inputState["picture link"],
         wishlistid:  wishlistid
       }),
       headers: {
@@ -35,6 +35,12 @@ export default function AddWish({navigation, route, props}) {
       }
     })
   }
+
+  async function submitWishChange() {
+
+  }
+
+  const wish = route.params.wish 
 
   return (
     <View style={styles.container}>
@@ -49,6 +55,8 @@ export default function AddWish({navigation, route, props}) {
                 info={item} 
                 changeText={inputChanged} 
                 multiline={item == "Description" ? true : false}
+                keyboardType={item == "Price" ? 'numeric' : "default"}
+                initialValue={wish != undefined ? wish[dataBaseRep[index]] : '' }
               />
             )})
         }
@@ -64,13 +72,22 @@ export default function AddWish({navigation, route, props}) {
           pressed ? styles.pressedButton : {}
         ]}
         onPress={() => {
-          submitWish(route.params.wishlistid).then(() => {
-            updateContext.setUpdate({updateContext, ...{update: true}})
-            navigation.pop()
-          })
+          if (wish == undefined) {
+            submitWish(route.params.wishlistid).then(() => {
+              updateContext.setUpdate({updateContext, ...{update: true}})
+              navigation.pop()
+            })
+          } else {
+            submitWishChange().then(() => {
+              updateContext.setUpdate({updateContext, ...{update: true}})
+              navigation.pop()
+            })
+          }
         }}
       >
-        <Text style={styles.buttonText}>{"Add wish to wishlist"} </Text>
+        <Text style={styles.buttonText}>
+          { wish == undefined ? "Add wish to wishlist" : "Apply changes"} 
+        </Text>
       </Pressable>
     </View>
   );
@@ -95,8 +112,20 @@ const addWishData = [
   'Price',
   'Size',
   'Gift type',
-  'URL',
+  'Link',
   'Manufacturer',
   'Description',
-  'Picturelink'
+  'Picture link'
 ];
+
+const dataBaseRep = [
+  'name',
+  'price',
+  'size',
+  'gifttype',
+  'link',
+  'manufacturer',
+  'description',
+  'picturelink'
+]
+

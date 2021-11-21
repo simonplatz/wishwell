@@ -35,9 +35,6 @@ function separator() {
   )
 }
 
-
-
-
 export default WishList = ({navigation, route}) => {
   const loginContext = useContext(LoginContext)
   const updateContext = useContext(UpdateContext)
@@ -78,7 +75,7 @@ export default WishList = ({navigation, route}) => {
       <View style={{height: 430}}>
         <Pressable
           onPress={() => {
-            navigation.navigate('AddWish', {
+            navigation.navigate('Add Wish', {
               wishlistid: route.params.id
             })
           }}

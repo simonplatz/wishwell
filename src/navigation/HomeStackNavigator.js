@@ -40,7 +40,11 @@ export default function HomeStackNavigator() {
         component={WishList} 
       />
       <HomeStack.Screen
-        name="AddWish"
+        name="Add Wish"
+        component={AddWish}
+      />
+      <HomeStack.Screen
+        name="Edit Wish"
         component={AddWish}
       />
       <HomeStack.Screen 

@@ -1,30 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, ScrollView, Text, View, Image, Pressable } from 'react-native';
 import { floatingButton, scrollEnv, buttons, header as headerStyle, subHeader} from "../styleobject/Objects.js"
 import {card} from "../styleobject/CardStyle.js"
 import { useFonts, OpenSans_700Bold, OpenSans_600SemiBold } from "@expo-google-fonts/open-sans"
-import { LoremIpsum } from "lorem-ipsum";
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+
+import { UpdateContext } from '../contexts/UpdateContext.js'
 
 import generateBoxShadowStyle from "../tools/dropShadow.js"
 
-const lorem = new LoremIpsum({
-  sentencesPerParagraph: {
-    max: 8,
-    min: 4
-  },
-  wordsPerSentence: {
-    max: 16,
-    min: 4
-  }
-}
-)
 
-const data = [
-  {key: '10', name: "Kettle", price: '1299', manufacturer: 'Chemex', description: lorem.generateParagraphs(2)},
-  {key: '11', name: 'Coffee', price: '100', manufacturer: 'BestCoffee', description: lorem.generateParagraphs(2)},
-  {key: '12', name: 'Espresso Machine', price: '3899', manufacturer: 'Rancilio', description: lorem.generateParagraphs(2)},
-  {key: '13', name: 'Tamper', price: '400', manufacturer: 'Joe Flex', description: lorem.generateParagraphs(2)}
-]
+
 
 export default Wish = ({route, navigation}) => {
   let [fontsLoaded] = useFonts({OpenSans_700Bold, OpenSans_600SemiBold });
@@ -32,6 +19,9 @@ export default Wish = ({route, navigation}) => {
   const sharedState = route.params.shared != undefined ? route.params.shared : false
 
   const [wish, setWish] = useState({})
+  const [edit, setEdit] = useState(!sharedState)
+
+  const updateContext = useContext(UpdateContext)
 
   generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717', styles);
   useEffect(() => {
@@ -45,32 +35,95 @@ export default Wish = ({route, navigation}) => {
       .catch(err => console.log(err))
   }, []);
 
+
+  async function deleteWish(wishid) {
+    fetch('https://pratgen.dk/wishwell/deleteWish/' + wishid,
+      {method: 'PUT'}
+    )
+  }
+
+  const TrashBtn = () => {
+    if (edit) {
+      console.log("editing dsplaing trash.")
+      return (
+        <Pressable
+          style={[
+            styles.button, 
+            {
+              flex: 1
+            }
+          ]}
+          onPress={() => {
+            deleteWish(wish.id).then(() => {
+              updateContext.setUpdate({updateContext, ...{update: true}})
+              navigation.pop()
+            })
+          }}
+        >
+          <Text>
+            <FontAwesomeIcon
+              icon={faTrashAlt}
+              size={20}
+              color={'#fff'}
+            />
+          </Text>
+        </Pressable>
+      )
+    } else {
+      return (<View></View>)
+    }
+  }
+
   let buyOrEdit;
   if (sharedState) {
-    buyOrEdit = <Pressable style={({pressed}) =>
+    buyOrEdit = 
+      <Pressable style={({pressed}) =>
         [
           styles.button, 
           styles.boxShadow,
           styles.floatingButton,
           pressed ? styles.pressedButton : {}
-        ]}>
+        ]}
+      >
       <Text style={styles.floatingButtonText}>
         Buy
       </Text>
     </Pressable>
   } else {
-    buyOrEdit = <Pressable style={({pressed}) =>
-        [
-          styles.button, 
-          styles.boxShadow,
+    buyOrEdit = 
+      <View
+        style={[
           styles.floatingButton,
-          pressed ? styles.pressedButton : {}
-        ]}>
-      <Text style={styles.floatingButtonText}>
-        Edit
-      </Text>
-    </Pressable>
+          {
+            display: 'flex',
+            flexDirection: 'row',
+            zIndex: 1
+          }
+        ]
+        }
+      >
+        <TrashBtn />
+        <Pressable 
+          style={({pressed}) =>
+          [
+            styles.button, 
+            styles.boxShadow,
+            pressed ? styles.pressedButton : {},
+            {flex: 4}
+          ]}
+          onPress={() => {
+            navigation.navigate("Edit Wish",
+              {wish: wish}
+            )
+          }}
+        >
+        <Text style={styles.floatingButtonText}>
+          {"Edit" }
+        </Text>
+        </Pressable>
+      </View>
   }
+
 
   if(!fontsLoaded) {
     return (<View></View>)
@@ -168,5 +221,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-end",
+  },
+  rightTopTrash: {
+    margin: 10,
+    marginRight: 20
   }
 })
