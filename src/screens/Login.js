@@ -1,6 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { StyleSheet, View, Image, Pressable, Text, ScrollView} from 'react-native';
+
+import {storeObjectData} from '../tools/Storage.js'
+
 import Information from '../components/TextInfoField.js'
+
 import { LoginContext } from '../contexts/LoginContext.js'
 import { textInput, buttons } from '../styleobject/Objects.js'
 
@@ -16,7 +20,6 @@ export default Login = ({navigation}) => {
   function inputChanged(event, property) {
     property = property.toLowerCase()
     input[property] = event
-    console.log(input)
   }
 
   async function login() {
@@ -24,13 +27,17 @@ export default Login = ({navigation}) => {
       .then(response => response.json())
       .then(data => {
         const user = data[0]
-        context.setUserState({
+        const userState = {
           name: user.name,
           userId: user.userid,
           dateOfBirth: user.dataofbirth,
           loggedIn: true,
           email: input.email
-        })
+        }
+        context.setUserState(userState)
+        console.log("saving")
+        console.log(userState)
+        storeObjectData("userState", userState)
       })
       .catch(err => console.log(err))
   }
@@ -49,6 +56,9 @@ export default Login = ({navigation}) => {
         <Information
           info={"Email"}
           initialValue={input.email}
+          autoComplete={'email'}
+          keyboardType={"email-address"}
+          autoCapitalize={'none'}
           changeText={inputChanged}
         />
 
@@ -76,8 +86,8 @@ export default Login = ({navigation}) => {
               pressed ? style.pressedButton : {}
             ]}
             onPress={() => {
-              login().then(() => {
-                navigation.pop()
+              login().then((data) => {
+                  navigation.pop()
                 }
               )
             }}

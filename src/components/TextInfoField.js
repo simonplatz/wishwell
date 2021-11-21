@@ -32,6 +32,9 @@ export default function Information(props) {
           }}
           secureTextEntry={props.secure != undefined ? props.secure : false}
           multiline={props.multiline != undefined ? props.multiline : false}
+          autoComplete={props.autoComplete != undefined ? props.autoComplete : 'off'}
+          keyboardType={props.keyboardType != undefined ? props.keyboardType : 'default'}
+          autoCapitalize={props.autoCapitalize != undefined ? props.autoCapitalize : 'sentences'}
         >
           {props.initialValue}
         </TextInput>

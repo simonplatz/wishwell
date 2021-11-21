@@ -41,17 +41,20 @@ export default Home = ({navigation}) => {
             fetch('https://pratgen.dk/wishwell/getwishes/' + wishlist.wishlistid)
               .then(response => response.json())
               .then(data => {
-                for (const wish of data)
+                console.log(data)
+                for (const wish of data) {
                   if (wishlist.imageUri == undefined) {
                     wishlist.imageUri = wish.picturelink 
                   } else if (wishlist.imageUri2 == undefined) {
                     wishlist.imageUri2 = wish.picturelink
                   }
-                console.log(wishlists)
                 wishlist.numGifts = data.length
                 }
-              ).then()
-            setWishlists(data.concat([wishlist]))
+                console.log(wishlists)
+                setWishlists(wishlists.concat([wishlist]))
+                console.log(wishlists)
+              })
+            console.log(wishlist)
           }
         })
     }
