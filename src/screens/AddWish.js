@@ -18,6 +18,8 @@ export default function AddWish({navigation, route}) {
     console.log(inputState)
   }
 
+  const wish = route.params.wish 
+
   async function submitWish(wishlistid) {
     fetch('https://pratgen.dk/wishwell/createwish/', {
       method: 'POST',
@@ -37,10 +39,23 @@ export default function AddWish({navigation, route}) {
   }
 
   async function submitWishChange() {
-
+    fetch('https://pratgen.dk/wishwell/updateWish/', {
+      method: 'PUT',
+      body: JSON.stringify({
+        name: inputState.name != undefined ? inputState.name : wish.name,
+        price: inputState.price != undefined ? inputState.price : wish.price,
+        link: inputState.link != undefined ? inputState.link : wish.link,
+        manufacturer: inputState.manufacturer != undefined ? inputState.manufacturer : wish.manufacturer,
+        description : inputState.description != undefined ? inputState.description : wish.description,
+        picturelink: inputState["picture link"] != undefined ? inputState["picture link"] : wish.picturelink,
+        wishid: wish.id
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
   }
 
-  const wish = route.params.wish 
 
   return (
     <View style={styles.container}>
@@ -74,12 +89,12 @@ export default function AddWish({navigation, route}) {
         onPress={() => {
           if (wish == undefined) {
             submitWish(route.params.wishlistid).then(() => {
-              updateContext.setUpdate({updateContext, ...{update: true}})
+              updateContext.setUpdate({updateContext, ...{update : {updateWishlist: true}}})
               navigation.pop()
             })
           } else {
             submitWishChange().then(() => {
-              updateContext.setUpdate({updateContext, ...{update: true}})
+              updateContext.setUpdate({updateContext, ...{update : {updateWish: true}}})
               navigation.pop()
             })
           }

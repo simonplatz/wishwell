@@ -24,7 +24,8 @@ export default Wish = ({route, navigation}) => {
   const updateContext = useContext(UpdateContext)
 
   generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717', styles);
-  useEffect(() => {
+
+  function loadWish()  {
     navigation.setOptions({ title: wish.name})
     console.log("id " + route.params.id)
     fetch('https://pratgen.dk/wishwell/getwish/' + encodeURI(route.params.id))
@@ -33,7 +34,15 @@ export default Wish = ({route, navigation}) => {
         setWish(data[0])
       })
       .catch(err => console.log(err))
+  }
+
+  useEffect(() => {
+    loadWish()
   }, []);
+
+  useEffect(() => {
+    loadWish()
+  }, [updateContext.update.updateWish])
 
 
   async function deleteWish(wishid) {
@@ -55,7 +64,7 @@ export default Wish = ({route, navigation}) => {
           ]}
           onPress={() => {
             deleteWish(wish.id).then(() => {
-              updateContext.setUpdate({updateContext, ...{update: true}})
+              updateContext.setUpdate({updateContext, ...{ update: {updateWishlist : !updateContext.update.updateWishlist}}})
               navigation.pop()
             })
           }}

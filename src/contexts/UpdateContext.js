@@ -1,6 +1,9 @@
 import {createContext} from 'react';
 
 export const UpdateContext = createContext({
-  update: false,
+  update: {
+    updateWishlist: false,
+    updateWish: false
+  },
   setUpdate: () => { }
 })

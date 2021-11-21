@@ -101,7 +101,7 @@ export default WishList = ({navigation, route}) => {
   useEffect(() => {
     console.log("wishlist updated context" + route.params.id)
     loadWishes()
-  }, [updateContext.update])
+  }, [updateContext.update.updateWishlist])
 
   const sharedState = route.params.shared != undefined ? route.params.shared : false
 

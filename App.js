@@ -39,7 +39,12 @@ function App() {
     }  
   }
 
-  const [update, setUpdate] = useState(false)
+  const [update, setUpdate] = useState(
+    {
+      updateWishlist: false,
+      updateWish: false
+    }
+  )
   const updateInitialValue = {
     update: update,
     setUpdate: (update) => {
